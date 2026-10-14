@@ -1,0 +1,966 @@
+#!/usr/bin/env python3
+"""Generate the static Bump to Baby site from data/*.json."""
+
+from __future__ import annotations
+
+import html
+import json
+import re
+import shutil
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+DATA = ROOT / "data"
+SITE = json.loads((DATA / "site.json").read_text(encoding="utf-8"))
+PRODUCTS = json.loads((DATA / "products.json").read_text(encoding="utf-8"))
+QUIZ = json.loads((DATA / "quiz.json").read_text(encoding="utf-8"))
+WEEKS = json.loads((DATA / "weeks.json").read_text(encoding="utf-8"))["weeks"]
+FAQ = json.loads((DATA / "faq.json").read_text(encoding="utf-8"))["questions"]
+
+BASE = SITE["baseurl"].rstrip("/")
+ORIGIN = SITE["url"].rstrip("/")
+NAME = SITE["name"]
+PUBLISHED = SITE["published"]
+OG_IMAGE = f"{ORIGIN}/assets/og.png"
+PLACEHOLDER = PRODUCTS["affiliatePlaceholder"]
+
+WEEK_GROUPS = [
+    ("Before you buy much", ["w-28", "w-27", "w-26", "w-25", "w-24", "w-23", "w-22", "w-21", "w-20"]),
+    ("Set up the room", ["w-19", "w-18", "w-17", "w-16", "w-15", "w-14"]),
+    ("Shopping weeks", ["w-13", "w-12", "w-11", "w-10", "w-9", "w-8", "w-7", "w-6"]),
+    ("Almost here", ["w-5", "w-4", "w-3", "w-2", "w-1"]),
+    ("The first month", ["w-plus-1", "w-plus-2", "w-plus-3", "w-plus-4"]),
+]
+
+
+def esc(value: object) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def site_path(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return BASE + path
+
+
+def canonical(path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    if path == "/":
+        return ORIGIN + "/"
+    return ORIGIN + path
+
+
+def jsonld(data: dict) -> str:
+    raw = json.dumps(data, ensure_ascii=False, indent=2)
+    return raw.replace("<", "\\u003c")
+
+
+def week_code(week: dict) -> str:
+    offset = week["offset"]
+    if offset < 0:
+        return f"W{offset}"
+    return f"W+{offset}"
+
+
+def timing_line(offset: int) -> str:
+    if offset < 0:
+        return (
+            f"About {-offset} weeks before your due date — roughly week {40 + offset} "
+            "of a 40-week pregnancy."
+        )
+    unit = "week" if offset == 1 else "weeks"
+    return f"About {offset} {unit} after your due date."
+
+
+def meta_description(week: dict) -> str:
+    text = f"{week['subject'].rstrip('.')}. Buy now: {week['buyNow']}"
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) < 70:
+        text = text.rstrip(".") + ". A Bump to Baby weekly planning note."
+    if len(text) <= 160:
+        return text
+    trimmed = text[:157].rsplit(" ", 1)[0]
+    return trimmed.rstrip(".,;:") + "..."
+
+
+def item_map() -> dict:
+    return {item["id"]: item for item in PRODUCTS["items"]}
+
+
+def link_token(item: dict) -> str | None:
+    if item.get("link") is False:
+        return None
+    if isinstance(item.get("link"), str) and item["link"]:
+        return item["link"]
+    return PLACEHOLDER
+
+
+def affiliate_html(item: dict) -> str:
+    token = link_token(item)
+    if token is None:
+        return '<p class="affiliate">No product link. This is a task, not a store listing.</p>'
+    if token.startswith("http://") or token.startswith("https://"):
+        return (
+            f'<p class="affiliate"><a href="{esc(token)}" rel="sponsored nofollow noopener" '
+            f'target="_blank">Product link for {esc(item["name"])}</a></p>'
+        )
+    return f'<p class="affiliate">Link placeholder: <code translate="no">{esc(token)}</code></p>'
+
+
+def badge_for(item: dict) -> tuple[str, str]:
+    if item.get("unsafe"):
+        return "Skip — unsafe", "badge-unsafe"
+    return {
+        "must": ("Must-have", "badge-must"),
+        "nice": ("Nice-to-have", "badge-nice"),
+        "wait": ("Wait", "badge-wait"),
+        "skip": ("Skip", "badge-skip"),
+        "exclude": ("Depends on your answers", "badge-exclude"),
+    }[item["status"]]
+
+
+def quantity_html(item: dict) -> str:
+    parts = []
+    for part in item.get("quantities") or []:
+        if part["low"] == part["high"]:
+            parts.append(f'{part["low"]} {part["item"]}')
+        else:
+            parts.append(f'{part["low"]}–{part["high"]} {part["item"]}')
+    if not parts:
+        return ""
+    return f'<p class="plan-line">{esc(", ".join(parts))}</p>'
+
+
+def picks_html(item: dict) -> str:
+    labels = (("budget", "Budget"), ("mid", "Middle"), ("premium", "Premium"))
+    rows = []
+    picks = item.get("picks") or {}
+    for key, label in labels:
+        if picks.get(key):
+            rows.append(f"<div><dt>{label}</dt><dd>{esc(picks[key])}</dd></div>")
+    if not rows:
+        return ""
+    return f'<dl class="picks">{"".join(rows)}</dl>'
+
+
+LOGO = """<svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#23483d"/><path d="M16 25V14" stroke="#f6ddd0" stroke-width="2" stroke-linecap="round"/><path d="M16 16c2-3 5-3 6-6-3 0-5 2-6 6z" fill="#f4efe6"/><path d="M16 18c-2-2.5-5-2.8-6.5-5.5 3.2.2 5.2 2 6.5 5.5z" fill="#e7b199"/></svg>"""
+
+
+def nav(current: str) -> str:
+    links = [
+        ("/quiz/", "Quiz"),
+        ("/timeline/", "Timeline"),
+        ("/gear/", "Gear list"),
+        ("/newsletter/", "Newsletter"),
+    ]
+    items = []
+    for path, label in links:
+        current_attr = ' aria-current="page"' if path == current else ""
+        items.append(f'<a href="{site_path(path)}"{current_attr}>{label}</a>')
+    return f"""
+<a class="skip-link" href="#content">Skip to content</a>
+<header class="site-header">
+  <div class="header-bar">
+    <a class="logo" href="{site_path("/")}">{LOGO}<span>{esc(NAME)}</span></a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  </div>
+  <nav id="site-nav" aria-label="Primary">{"".join(items)}</nav>
+</header>"""
+
+
+def footer() -> str:
+    return f"""
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <h2>About this site</h2>
+      <p class="fine-print">Bump to Baby is a free planning guide for expecting parents. It runs as a static site: the quiz stays in your browser, and the week-by-week notes are ordinary web pages.</p>
+      <p class="fine-print">General information only. Safe-sleep, car-seat, and medicine notes are not personal medical advice. <a href="{site_path("/disclaimer/")}">Read the disclaimer</a>.</p>
+    </div>
+    <div>
+      <h2>Explore</h2>
+      <ul>
+        <li><a href="{site_path("/quiz/")}">Registry quiz</a></li>
+        <li><a href="{site_path("/timeline/")}">Week-by-week timeline</a></li>
+        <li><a href="{site_path("/gear/")}">Master gear list</a></li>
+        <li><a href="{site_path("/newsletter/")}">Newsletter</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Good to know</h2>
+      <ul>
+        <li><a href="{site_path("/disclaimer/")}">Medical and safety disclaimer</a></li>
+        <li><a href="{site_path("/privacy/")}">Privacy</a></li>
+        <li><a href="{site_path("/affiliate-disclosure/")}">Affiliate disclosure</a></li>
+        <li><a href="{site_path("/llms.txt")}">Machine-readable guide</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>"""
+
+
+def newsletter(compact: bool = False) -> str:
+    copy = (
+        "<p>One short note a week, matching the timeline.</p>"
+        if compact
+        else """<p class="eyebrow">Newsletter</p>
+        <h2 id="newsletter-heading">One week at a time, by email</h2>
+        <p>The same 32 notes as the timeline, from 28 weeks before your due date through the first month home. Submitting this preview does not send your email anywhere.</p>"""
+    )
+    heading = "" if compact else ""
+    labelled = 'aria-labelledby="newsletter-heading"' if not compact else 'aria-label="Newsletter signup"'
+    if compact:
+        copy = """<h2 id="newsletter-heading">Want the weekly version?</h2>
+        <p>Enter a due date and email. This preview form does not send anything until a MailerLite embed replaces it.</p>"""
+    return f"""
+<section class="newsletter" id="newsletter" {labelled}>
+  <div class="newsletter-copy">{copy}</div>
+  <!-- MAILERLITE EMBED START
+       Replace this form with your MailerLite embed snippet
+       (MailerLite: Forms, then your form, then Embed code).
+       The static site does not collect email addresses.
+       MAILERLITE EMBED END -->
+  <form class="newsletter-form" data-newsletter-placeholder="mailerlite" method="get" action="{site_path("/timeline/")}">
+    <div class="field">
+      <label for="newsletter-email">Email</label>
+      <input id="newsletter-email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-describedby="newsletter-status">
+    </div>
+    <div class="field">
+      <label for="newsletter-due">Due date <span class="optional">(optional)</span></label>
+      <input id="newsletter-due" name="due" type="date">
+    </div>
+    <button class="button" type="submit">Get the weekly plan</button>
+    <p id="newsletter-status" class="form-note" role="status" data-newsletter-status>Placeholder only. Paste a MailerLite embed over this form when you are ready. Nothing is stored on a server.</p>
+  </form>
+</section>"""
+
+
+def crumbs(parts: list[tuple[str, str]]) -> str:
+    bits = [f'<a href="{site_path("/")}">Home</a>']
+    for path, label in parts[:-1]:
+        bits.append(f'<a href="{site_path(path)}">{esc(label)}</a>')
+    bits.append(f"<span>{esc(parts[-1][1])}</span>")
+    return '<nav class="breadcrumb" aria-label="Breadcrumb">' + " / ".join(bits) + "</nav>"
+
+
+def page(title: str, description: str, path: str, body: str, structured: dict | None = None,
+         og_type: str = "website", robots: str | None = None, scripts: list[str] | None = None,
+         current: str = "") -> str:
+    full_title = title if title == NAME or title.startswith(NAME) else f"{title} · {NAME}"
+    robots_tag = f'\n  <meta name="robots" content="{esc(robots)}">' if robots else ""
+    ld = ""
+    if structured:
+        ld = f'\n  <script type="application/ld+json">\n{jsonld(structured)}\n  </script>'
+    script_tags = []
+    for src in scripts or ["/assets/js/site.js"]:
+        script_tags.append(f'  <script src="{site_path(src)}" defer></script>')
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="btb-base" content="{esc(BASE)}">
+  <meta name="theme-color" content="{esc(SITE["themeColor"])}">
+  <title>{esc(full_title)}</title>
+  <meta name="description" content="{esc(description)}">
+  <link rel="canonical" href="{esc(canonical(path))}">{robots_tag}
+  <meta property="og:type" content="{esc(og_type)}">
+  <meta property="og:site_name" content="{esc(NAME)}">
+  <meta property="og:locale" content="{esc(SITE["locale"])}">
+  <meta property="og:title" content="{esc(full_title)}">
+  <meta property="og:description" content="{esc(description)}">
+  <meta property="og:url" content="{esc(canonical(path))}">
+  <meta property="og:image" content="{esc(OG_IMAGE)}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{esc(full_title)}">
+  <meta name="twitter:description" content="{esc(description)}">
+  <meta name="twitter:image" content="{esc(OG_IMAGE)}">
+  <link rel="icon" href="{site_path("/favicon.svg")}" type="image/svg+xml">
+  <link rel="stylesheet" href="{site_path("/assets/css/style.css")}">
+  <script>document.documentElement.classList.add("js")</script>{ld}
+</head>
+<body>
+{nav(current)}
+<main id="content" class="wrap">
+{body}
+</main>
+{footer()}
+{chr(10).join(script_tags)}
+</body>
+</html>
+"""
+
+
+def write(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    print("wrote", path.relative_to(ROOT))
+
+
+def website_node() -> dict:
+    return {
+        "@type": "WebSite",
+        "@id": canonical("/") + "#website",
+        "name": NAME,
+        "url": canonical("/"),
+        "description": SITE["description"],
+        "inLanguage": "en",
+    }
+
+
+def breadcrumb_ld(parts: list[tuple[str, str]]) -> dict:
+    items = [{"@type": "ListItem", "position": 1, "name": "Home", "item": canonical("/")}]
+    for index, (path, label) in enumerate(parts, start=2):
+        items.append({
+            "@type": "ListItem",
+            "position": index,
+            "name": label,
+            "item": canonical(path),
+        })
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def home_page() -> None:
+    by_id = item_map()
+    samples = ["car-seat", "mattress", "diapers", "thermometer"]
+    sample_items = "".join(f"<li>{esc(by_id[item_id]['name'])}</li>" for item_id in samples)
+    preview = []
+    for week_id in ("w-28", "w-12", "w-plus-1"):
+        week = next(week for week in WEEKS if week["id"] == week_id)
+        preview.append(
+            f'<a class="week-link" href="{site_path("/timeline/" + week["id"] + "/")}">'
+            f'<p class="week-code">{esc(week_code(week))}</p>'
+            f"<h3>{esc(week['title'])}</h3>"
+            f'<p class="week-buy">Buy now: {esc(week["buyNow"])}</p></a>'
+        )
+    faqs = []
+    for entry in FAQ:
+        faqs.append(
+            f'<article class="faq-item"><h3>{esc(entry["question"])}</h3>'
+            f"<p>{esc(entry['answer'])}</p></article>"
+        )
+    body = f"""
+<section class="hero">
+  <div>
+    <p class="eyebrow">For expecting parents</p>
+    <h1>What do you actually need?</h1>
+    <p class="lede">Eight questions build a must-have list for your home, your feeding plan, and your season. Thirty-two weekly pages tell you what to buy now and what can wait.</p>
+    <div class="actions">
+      <a class="button" href="{site_path("/quiz/")}">Start the quiz</a>
+      <a class="button button-secondary" href="{site_path("/timeline/")}">Browse the timeline</a>
+    </div>
+  </div>
+  <aside class="sample-card">
+    <p class="eyebrow">On almost every list</p>
+    <h2>Start here, then let the quiz edit it</h2>
+    <ol>{sample_items}</ol>
+    <p>The full list also names what to skip, including a few things that are unsafe for sleep.</p>
+  </aside>
+</section>
+<section class="section" aria-labelledby="how-heading">
+  <h2 id="how-heading">How it works</h2>
+  <ol class="steps">
+    <li><strong>Answer 8 questions</strong> Budget, space, feeding, season, getting around, first baby or not, childcare, and laundry.</li>
+    <li><strong>Get a list, not a catalog</strong> Must-haves, nice-to-haves, what can wait, and what to skip. Example picks follow your budget style.</li>
+    <li><strong>Buy on a calendar</strong> Enter a due date. The timeline highlights the week you are in, from 28 weeks out through the first month home.</li>
+  </ol>
+</section>
+<section class="section" aria-labelledby="due-heading">
+  <h2 id="due-heading">What should you buy this week?</h2>
+  <p class="section-intro">W-1 is the 7 days ending on your due date. W+1 starts the next day. If you are earlier than 28 weeks out, begin at the welcome note. Nothing there needs buying yet.</p>
+  <form class="due-form panel" data-due-redirect method="get" action="{site_path("/timeline/")}">
+    <div class="field">
+      <label for="home-due">Due date</label>
+      <input id="home-due" name="due" type="date" required>
+    </div>
+    <button class="button" type="submit">Show my week</button>
+  </form>
+</section>
+<section class="section" aria-labelledby="preview-heading">
+  <h2 id="preview-heading">A few weeks from the timeline</h2>
+  <div class="week-grid">{"".join(preview)}</div>
+  <p><a href="{site_path("/timeline/")}">See all 32 weeks</a></p>
+</section>
+<section class="section" aria-labelledby="faq-heading">
+  <h2 id="faq-heading">Questions parents actually ask</h2>
+  <div class="faq-list">{"".join(faqs)}</div>
+</section>
+{newsletter()}
+<p class="disclaimer-strip">Safe sleep, car seats, and medicine on this site are general notes. Your prenatal clinician, your baby's pediatrician, and a certified car seat technician are the right people for your family. <a href="{site_path("/disclaimer/")}">Medical and safety disclaimer</a>.</p>
+"""
+    graph = {
+        "@context": "https://schema.org",
+        "@graph": [
+            website_node(),
+            {
+                "@type": "FAQPage",
+                "@id": canonical("/") + "#faq",
+                "url": canonical("/"),
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": entry["question"],
+                        "acceptedAnswer": {"@type": "Answer", "text": entry["answer"]},
+                    }
+                    for entry in FAQ
+                ],
+            },
+        ],
+    }
+    write(ROOT / "index.html", page(
+        "Bump to Baby — What you actually need",
+        SITE["description"],
+        "/",
+        body,
+        graph,
+        current="/",
+    ))
+
+
+def quiz_page() -> None:
+    topics = "".join(f"<li>{esc(question['prompt'])}</li>" for question in QUIZ["questions"])
+    body = f"""
+<div class="quiz-intro">
+{crumbs([("/quiz/", "Quiz")])}
+<p class="eyebrow">Registry quiz</p>
+<h1>What do we actually need?</h1>
+<p class="lede">Eight questions. Your answers stay in this browser and build a must-have list from the gear guide. We don't receive them.</p>
+<ol class="check-list">{topics}</ol>
+</div>
+<div id="quiz-app" aria-live="polite">
+  <noscript>
+    <p class="callout">The personalized list needs JavaScript. You can still read the <a href="{site_path("/gear/")}">gear list</a> and the <a href="{site_path("/timeline/")}">week-by-week timeline</a>.</p>
+  </noscript>
+</div>
+{newsletter(compact=True)}
+"""
+    structured = {
+        "@context": "https://schema.org",
+        "@graph": [
+            website_node(),
+            breadcrumb_ld([("/quiz/", "Registry quiz")]),
+            {
+                "@type": "WebPage",
+                "name": "Registry quiz",
+                "url": canonical("/quiz/"),
+                "description": "Answer eight questions and get a personalized must-have baby list.",
+            },
+        ],
+    }
+    write(ROOT / "quiz" / "index.html", page(
+        "Registry quiz",
+        "Answer eight questions and get a personalized must-have baby list based on your space, feeding plan, season, and how you get around.",
+        "/quiz/",
+        body,
+        structured,
+        current="/quiz/",
+        scripts=["/assets/js/quiz-engine.js", "/assets/js/quiz-ui.js", "/assets/js/site.js"],
+    ))
+
+
+def gear_page() -> None:
+    jumps = []
+    blocks = []
+    position = 1
+    list_items = []
+    for category in PRODUCTS["categories"]:
+        jumps.append(f'<li><a href="#{esc(category["id"])}">{esc(category["name"])}</a></li>')
+        cards = []
+        for item in PRODUCTS["items"]:
+            if item["category"] != category["id"]:
+                continue
+            label, tone = badge_for(item)
+            note = f'<p class="item-note">{esc(item["note"])}</p>' if item.get("note") else ""
+            cards.append(
+                f'<article class="item-card" id="{esc(item["id"])}">'
+                f'<div class="item-card-head"><h3>{esc(item["name"])}</h3>'
+                f'<p class="badge {tone}">{esc(label)}</p></div>'
+                f"{quantity_html(item)}{picks_html(item)}{note}{affiliate_html(item)}</article>"
+            )
+            description = label
+            if item.get("note"):
+                description += ". " + item["note"]
+            list_items.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": item["name"],
+                "description": description,
+                "url": canonical("/gear/") + "#" + item["id"],
+            })
+            position += 1
+        blocks.append(
+            f'<section class="gear-block" aria-labelledby="cat-{esc(category["id"])}">'
+            f'<h2 id="{esc(category["id"])}">{esc(category["name"])}</h2>'
+            f'<p class="section-intro">{esc(category["intro"])}</p>'
+            f'<div class="gear-list">{"".join(cards)}</div></section>'
+        )
+    body = f"""
+{crumbs([("/gear/", "Gear list")])}
+<p class="eyebrow">Master list</p>
+<h1>The baby gear list, without the haul</h1>
+<p class="lede">Must-have, nice-to-have, wait, and skip. Picks are well-known examples. Check current models and recalls before you buy. There are no prices and no reviews here.</p>
+<ul class="legend">
+  <li><span class="badge badge-must">Must-have</span></li>
+  <li><span class="badge badge-nice">Nice-to-have</span></li>
+  <li><span class="badge badge-wait">Wait</span></li>
+  <li><span class="badge badge-skip">Skip</span></li>
+  <li><span class="badge badge-unsafe">Skip — unsafe</span></li>
+  <li><span class="badge badge-exclude">Depends on your answers</span></li>
+</ul>
+<nav aria-label="Gear categories"><ul class="jump-links">{"".join(jumps)}</ul></nav>
+{"".join(blocks)}
+<p class="disclaimer-strip">Quantities show the full range. The quiz uses the low end if you do laundry every 2–3 days, and the high end if you'd rather do it less. <a href="{site_path("/quiz/")}">Take the quiz</a> for a shorter personal list.</p>
+{newsletter(compact=True)}
+"""
+    structured = {
+        "@context": "https://schema.org",
+        "@graph": [
+            website_node(),
+            breadcrumb_ld([("/gear/", "Gear list")]),
+            {
+                "@type": "ItemList",
+                "name": "Bump to Baby gear list",
+                "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "numberOfItems": len(list_items),
+                "itemListElement": list_items,
+            },
+        ],
+    }
+    write(ROOT / "gear" / "index.html", page(
+        "Baby gear list",
+        "The Bump to Baby master list of must-haves, nice-to-haves, what can wait, and what to skip, with example picks and no made-up prices.",
+        "/gear/",
+        body,
+        structured,
+        current="/gear/",
+    ))
+
+
+def timeline_index() -> None:
+    by_week = {week["id"]: week for week in WEEKS}
+    groups = []
+    list_items = []
+    position = 1
+    for title, ids in WEEK_GROUPS:
+        rows = []
+        for week_id in ids:
+            week = by_week[week_id]
+            href = site_path(f"/timeline/{week['id']}/")
+            rows.append(
+                f'<li class="week-row" data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}" '
+                f'data-week-title="{esc(week["title"])}" data-week-href="{href}">'
+                f'<a href="{href}"><span class="week-code">{esc(week_code(week))}</span>'
+                f'<span class="week-title">{esc(week["title"])}</span>'
+                f'<span class="week-buy">Buy now: {esc(week["buyNow"])}</span></a>'
+                f'<p class="range-label" data-range hidden></p></li>'
+            )
+            list_items.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": f"{week_code(week)}: {week['title']}",
+                "description": week["subject"],
+                "url": canonical(f"/timeline/{week['id']}/"),
+            })
+            position += 1
+        groups.append(f'<section><h2>{esc(title)}</h2><ol class="timeline-groups">{"".join(rows)}</ol></section>')
+    body = f"""
+{crumbs([("/timeline/", "Timeline")])}
+<p class="eyebrow">32 weeks</p>
+<h1>What to buy, week by week</h1>
+<p class="lede">From 28 weeks before your due date (about 12 weeks pregnant) through the fourth week after. Each page has its own buy-now line and can-wait line. Enter your due date to highlight the 7-day block you are in.</p>
+<form class="due-form panel" data-due-redirect method="get" action="{site_path("/timeline/")}">
+  <div class="field">
+    <label for="timeline-due">Due date</label>
+    <input id="timeline-due" name="due" type="date" required>
+  </div>
+  <button class="button" type="submit">Show my week</button>
+</form>
+<div data-timeline-index>
+  <div class="panel result-box" data-week-result hidden></div>
+  {"".join(groups)}
+</div>
+{newsletter(compact=True)}
+"""
+    structured = {
+        "@context": "https://schema.org",
+        "@graph": [
+            website_node(),
+            breadcrumb_ld([("/timeline/", "Timeline")]),
+            {
+                "@type": "ItemList",
+                "name": "Week-by-week baby buying timeline",
+                "numberOfItems": len(list_items),
+                "itemListElement": list_items,
+            },
+        ],
+    }
+    write(ROOT / "timeline" / "index.html", page(
+        "Week-by-week timeline",
+        "32 weeks of what to buy and what can wait, from 28 weeks before your due date through the first month at home.",
+        "/timeline/",
+        body,
+        structured,
+        current="/timeline/",
+        scripts=["/assets/js/timeline.js", "/assets/js/site.js"],
+    ))
+
+
+def week_pages() -> None:
+    valid = {week["id"] for week in WEEKS}
+    timeline_dir = ROOT / "timeline"
+    if timeline_dir.exists():
+        for child in timeline_dir.iterdir():
+            if child.is_dir() and child.name not in valid:
+                shutil.rmtree(child)
+    lookup = item_map()
+    for index, week in enumerate(WEEKS):
+        code = week_code(week)
+        path = f"/timeline/{week['id']}/"
+        paragraphs = "".join(f"<p>{esc(paragraph)}</p>" for paragraph in week["paragraphs"])
+        related = []
+        for item_id in week.get("items") or []:
+            item = lookup[item_id]
+            related.append(
+                f'<li><a href="{site_path("/gear/#" + item_id)}">{esc(item["name"])}</a> '
+                f'{affiliate_html(item)}</li>'
+            )
+        extra = []
+        for link in week.get("links") or []:
+            extra.append(f'<li><a href="{site_path(link["path"])}">{esc(link["label"])}</a></li>')
+        related_html = ""
+        if related or extra:
+            related_html = (
+                '<section aria-labelledby="related-heading"><h2 id="related-heading">Gear mentioned this week</h2>'
+                f'<ul class="related-list">{"".join(related + extra)}</ul></section>'
+            )
+        prev_link = ""
+        next_link = ""
+        if index > 0:
+            prev_week = WEEKS[index - 1]
+            prev_link = f'<a href="{site_path("/timeline/" + prev_week["id"] + "/")}">Previous: {esc(week_code(prev_week))}</a>'
+        else:
+            prev_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
+        if index < len(WEEKS) - 1:
+            next_week = WEEKS[index + 1]
+            next_link = f'<a href="{site_path("/timeline/" + next_week["id"] + "/")}">Next: {esc(week_code(next_week))}</a>'
+        else:
+            next_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
+        description = meta_description(week)
+        body = f"""
+{crumbs([("/timeline/", "Timeline"), (path, code + ": " + week["title"])])}
+<article data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}">
+  <p class="eyebrow">{esc(code)} · {esc(timing_line(week["offset"]))}</p>
+  <h1>{esc(week["title"])}</h1>
+  <p class="dek">{esc(week["subject"])}</p>
+  <div class="week-banner" data-week-banner hidden></div>
+  <form class="due-form" data-due-redirect method="get" action="{site_path("/timeline/")}">
+    <div class="field">
+      <label for="week-due">Due date</label>
+      <input id="week-due" name="due" type="date">
+    </div>
+    <button class="button button-secondary" type="submit">Highlight my week</button>
+  </form>
+  <aside class="buy-box" aria-label="Buy now and can wait">
+    <h2 class="buy-now">Buy now</h2>
+    <p>{esc(week["buyNow"])}</p>
+    <h2 class="wait">Can wait</h2>
+    <p>{esc(week["canWait"])}</p>
+  </aside>
+  <div class="prose">{paragraphs}</div>
+  {related_html}
+  <nav class="pager" aria-label="Nearby weeks">{prev_link}{next_link}</nav>
+</article>
+<p class="disclaimer-strip">General information. For safe sleep, car seats, and any medicine, <a href="{site_path("/disclaimer/")}">read the disclaimer</a> and talk with your care team.</p>
+{newsletter(compact=True)}
+"""
+        structured = {
+            "@context": "https://schema.org",
+            "@graph": [
+                website_node(),
+                breadcrumb_ld([("/timeline/", "Timeline"), (path, f"{code}: {week['title']}")]),
+                {
+                    "@type": "Article",
+                    "headline": week["title"],
+                    "description": description,
+                    "datePublished": PUBLISHED,
+                    "dateModified": PUBLISHED,
+                    "author": {"@type": "Organization", "name": NAME, "url": canonical("/")},
+                    "publisher": {"@type": "Organization", "name": NAME, "url": canonical("/")},
+                    "mainEntityOfPage": canonical(path),
+                    "image": OG_IMAGE,
+                },
+            ],
+        }
+        write(ROOT / "timeline" / week["id"] / "index.html", page(
+            f"{code}: {week['title']}",
+            description,
+            path,
+            body,
+            structured,
+            og_type="article",
+            current="/timeline/",
+            scripts=["/assets/js/timeline.js", "/assets/js/site.js"],
+        ))
+
+
+def simple_page(path: str, title: str, description: str, body: str, current: str = "") -> None:
+    structured = {
+        "@context": "https://schema.org",
+        "@graph": [
+            website_node(),
+            breadcrumb_ld([(path, title)]),
+            {"@type": "WebPage", "name": title, "url": canonical(path), "description": description},
+        ],
+    }
+    write(ROOT / path.strip("/") / "index.html", page(title, description, path, crumbs([(path, title)]) + body, structured, current=current))
+
+
+def newsletter_page() -> None:
+    body = f"""
+<p class="eyebrow">Email</p>
+<h1>Weekly notes for your due date</h1>
+<p class="lede">The timeline is already published as web pages, one per week. The email version is the same set of notes. The form below is ready for a MailerLite embed and does not collect addresses yet.</p>
+{newsletter()}
+<section class="section prose">
+  <h2>How to connect MailerLite</h2>
+  <ol>
+    <li>In MailerLite, create a form and copy its embed code.</li>
+    <li>In each generated page, replace the form inside the comment marked MAILERLITE EMBED.</li>
+    <li>Rebuild, or paste the embed into <code>scripts/build.py</code> if you want every page to share it.</li>
+  </ol>
+  <p>No paid service is wired up in this repository. GitHub Pages will keep serving the placeholder until you replace it.</p>
+</section>
+"""
+    simple_page(
+        "/newsletter/",
+        "Newsletter",
+        "Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet.",
+        body,
+        current="/newsletter/",
+    )
+
+
+def privacy_page() -> None:
+    body = f"""
+<p class="eyebrow">Privacy</p>
+<h1>Privacy</h1>
+<p class="lede">Updated {esc(PUBLISHED)}. Bump to Baby is a static website. It has no accounts and no analytics.</p>
+<div class="prose">
+  <h2>What stays in your browser</h2>
+  <p>The registry quiz runs on your device. Answers are put in the page address when you see results, so you can refresh that list. They are not sent to us.</p>
+  <p>If you enter a due date, the page saves it in this browser under the local storage key <code>btb-due</code>. That lets the timeline highlight your week when you come back. You can clear it by deleting site data for this address in your browser.</p>
+  <h2>Email</h2>
+  <p>The newsletter form is a placeholder. It does not submit your email to a server. The email field has no name, so even without JavaScript it is not added to the address bar. If the site owner later pastes a MailerLite embed, that company's privacy policy will apply. MailerLite is not connected in this repository.</p>
+  <h2>Affiliate links</h2>
+  <p>Product links are the placeholder <code translate="no">{esc(PLACEHOLDER)}</code> until someone replaces them. A placeholder does not contact a store. A real link, once substituted, would be handled by that store. See the <a href="{site_path("/affiliate-disclosure/")}">affiliate disclosure</a>.</p>
+  <h2>Hosting</h2>
+  <p>GitHub Pages hosts the files and may keep ordinary server logs. This site does not add tracking pixels or advertising cookies of its own.</p>
+  <h2>Children</h2>
+  <p>The site is written for expecting parents. It is not directed at children, and it does not ask children to create accounts.</p>
+  <h2>Contact</h2>
+  <p>Questions about this site can go to the <a href="https://github.com/nicolasconnelly-bot/bump-to-baby">GitHub repository</a>.</p>
+</div>
+"""
+    simple_page(
+        "/privacy/",
+        "Privacy",
+        "How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics.",
+        body,
+    )
+
+
+def affiliate_page() -> None:
+    body = f"""
+<p class="eyebrow">Disclosure</p>
+<h1>Affiliate disclosure</h1>
+<p class="lede">Updated {esc(PUBLISHED)}. This site is an editorial gear list. It does not show prices, star ratings, or customer reviews.</p>
+<div class="prose">
+  <h2>The link placeholder</h2>
+  <p>Every commercial item uses the token <code translate="no">{esc(PLACEHOLDER)}</code>. That token lives in <code>data/products.json</code>. Replace it with a full https URL, then rebuild, and the pages and quiz will use the new link. Until then, the token is shown as text and is not a live link.</p>
+  <h2>If those links become affiliate links</h2>
+  <p>The site owner may earn a commission when someone buys through a future affiliate link. That commission would not add a fee on this site. Recommendations come from the editorial list, not from who might pay a commission later.</p>
+  <h2>Example picks</h2>
+  <p>Named products are widely sold examples so a list is easier to picture. They are not paid placements, and they are not a promise that a model is current. Check the latest version, the manual, and any recall before you buy.</p>
+  <p>Some items have no brand on purpose: smoke and carbon monoxide detectors, saline drops, a mini crib, a sun shade, and a few daycare extras. Inventing a model name would not help.</p>
+</div>
+"""
+    simple_page(
+        "/affiliate-disclosure/",
+        "Affiliate disclosure",
+        "How affiliate link placeholders work on Bump to Baby. Example product picks are editorial, and this site shows no prices or reviews.",
+        body,
+    )
+
+
+def disclaimer_page() -> None:
+    body = f"""
+<p class="eyebrow">Please read this</p>
+<h1>Medical and safety disclaimer</h1>
+<p class="lede">Updated {esc(PUBLISHED)}. Bump to Baby is a shopping and planning guide. It is not medical care, not a car-seat inspection, and not dosing advice.</p>
+<div class="prose">
+  <h2>Not medical advice</h2>
+  <p>Nothing here diagnoses, treats, or tells you what your baby needs. Talk with your prenatal clinician and your baby's pediatrician about feeding, illness, medicine, and sleep. If something feels urgent, contact them or emergency services rather than a website.</p>
+  <h2>Safe sleep</h2>
+  <p>The general notes on this site follow a simple pattern: alone, on the back, on a firm flat mattress in a crib, bassinet, or play yard made for sleep, with nothing else in that space. No bumpers, pillows, quilts, stuffed animals, or sleep positioners. A swaddle or wearable sleep sack is the cover, and swaddling stops when a baby shows signs of rolling. Many families room-share for the first months, with the baby in a separate sleep space. A bouncer or swing is not a sleep space. This is general information. Ask your pediatrician what applies to your baby.</p>
+  <h2>Car seats</h2>
+  <p>Most hospitals expect a rear-facing car seat for the ride home. Buy it new, or use one only if you know its history, including whether it has been in a crash. Check the expiration date. Have the install checked by a certified child passenger safety technician or a free check through a hospital or fire station. The "inch test" mentioned in week 12 is a general reminder, not a substitute for that check. Airline rules differ; ask the airline before you fly. The National Highway Traffic Safety Administration publishes car seat information at <a href="https://www.nhtsa.gov/vehicle-safety/car-seats-and-booster-seats">nhtsa.gov</a>.</p>
+  <h2>Medicine</h2>
+  <p>Infant acetaminophen is on the gear list because families are often told to have some on hand. This site does not say whether your baby should have it, and it does not give doses. Ask your pediatrician before you use it. The same is true for saline drops and any other health item named here.</p>
+  <h2>Recalls and standards</h2>
+  <p>Cribs should meet current safety standards and have fixed sides. Mattresses should be firm and tight-fitting. Anchor dressers to the wall. Check recalls before you buy or reuse gear. The U.S. Consumer Product Safety Commission lists recalls at <a href="https://www.cpsc.gov/Recalls">cpsc.gov/Recalls</a>.</p>
+  <h2>Feeding</h2>
+  <p>Insurance may cover a breast pump in the United States. Formula choices and breastfeeding problems belong with your clinician or a lactation consultant. Buy one small can of formula first if you are using it. Store-brand formulas sold in the U.S. have to meet FDA standards; that is a regulatory fact, not a ranking of brands.</p>
+</div>
+"""
+    simple_page(
+        "/disclaimer/",
+        "Medical and safety disclaimer",
+        "Bump to Baby is general planning information, not medical, car-seat, or dosing advice. Talk with your clinicians and a certified car seat technician.",
+        body,
+    )
+
+
+def not_found() -> None:
+    body = f"""
+<h1>That page is not here</h1>
+<p class="lede">The quiz, the gear list, and the 32-week timeline are all linked below.</p>
+<div class="actions">
+  <a class="button" href="{site_path("/")}">Home</a>
+  <a class="button button-secondary" href="{site_path("/quiz/")}">Quiz</a>
+  <a class="button button-secondary" href="{site_path("/timeline/")}">Timeline</a>
+</div>
+"""
+    write(ROOT / "404.html", page(
+        "Page not found",
+        "That Bump to Baby page is not here. Try the quiz, the gear list, or the week-by-week timeline.",
+        "/404.html",
+        body,
+        robots="noindex",
+    ))
+
+
+def robots() -> None:
+    text = f"""User-agent: *
+Allow: /
+
+Sitemap: {ORIGIN}/sitemap.xml
+"""
+    write(ROOT / "robots.txt", text)
+
+
+def sitemap() -> None:
+    paths = ["/", "/quiz/", "/gear/", "/timeline/", "/newsletter/", "/privacy/", "/affiliate-disclosure/", "/disclaimer/"]
+    paths.extend(f"/timeline/{week['id']}/" for week in WEEKS)
+    urls = []
+    for path in paths:
+        urls.append(
+            "  <url>\n"
+            f"    <loc>{esc(canonical(path))}</loc>\n"
+            f"    <lastmod>{PUBLISHED}</lastmod>\n"
+            "  </url>"
+        )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(urls)
+        + "\n</urlset>\n"
+    )
+    write(ROOT / "sitemap.xml", xml)
+
+
+def llms() -> None:
+    lines = [
+        f"# {NAME}",
+        "",
+        "> Free static guide for expecting parents: an 8-question registry quiz, a 32-week buying timeline, and a master gear list. Not medical advice. No prices, ratings, or reviews.",
+        "",
+        "The quiz runs in the browser. Product links are the placeholder "
+        f"`{PLACEHOLDER}` in `data/products.json` until a real URL replaces them. "
+        "Safe sleep, car seats, and medicine notes are general. Parents should talk with their clinicians and a certified car seat technician.",
+        "",
+        "## Start here",
+        "",
+        f"- [Home]({canonical('/')}): What the site is, a due-date form, and the FAQ.",
+        f"- [Registry quiz]({canonical('/quiz/')}): Eight questions that add or remove gear. Results stay on the device.",
+        f"- [Gear list]({canonical('/gear/')}): Must-have, nice-to-have, wait, skip, and unsafe items, with example picks.",
+        f"- [Timeline]({canonical('/timeline/')}): All 32 weeks. A due date highlights the current 7-day block.",
+        f"- [Newsletter]({canonical('/newsletter/')}): Placeholder form for a future MailerLite embed. It does not collect email.",
+        f"- [Disclaimer]({canonical('/disclaimer/')}): Medical, safe-sleep, car-seat, and medicine limits.",
+        f"- [Privacy]({canonical('/privacy/')}): No accounts, no analytics, local due date only.",
+        f"- [Affiliate disclosure]({canonical('/affiliate-disclosure/')}): How the link placeholder works.",
+        "",
+        "## Week-by-week timeline",
+        "",
+    ]
+    for week in WEEKS:
+        lines.append(
+            f"- [{week_code(week)}: {week['title']}]({canonical('/timeline/' + week['id'] + '/')}): "
+            f"{week['subject']} Buy now: {week['buyNow']} Can wait: {week['canWait']}"
+        )
+    lines.extend([
+        "",
+        "## FAQ",
+        "",
+    ])
+    for entry in FAQ:
+        lines.append(f"### {entry['question']}")
+        lines.append("")
+        lines.append(entry["answer"])
+        lines.append("")
+    lines.append("## Optional")
+    lines.append("")
+    lines.append(f"- [Machine-readable guide]({canonical('/llms.txt')}): this file.")
+    lines.append("")
+    write(ROOT / "llms.txt", "\n".join(lines))
+
+
+def validate() -> None:
+    if PLACEHOLDER != "{{AFFILIATE_LINK}}":
+        raise SystemExit("affiliate placeholder must stay {{AFFILIATE_LINK}} until an editor changes it")
+    ids = {item["id"] for item in PRODUCTS["items"]}
+    if len(ids) != len(PRODUCTS["items"]):
+        raise SystemExit("duplicate product ids")
+    categories = {category["id"] for category in PRODUCTS["categories"]}
+    for item in PRODUCTS["items"]:
+        if item["category"] not in categories:
+            raise SystemExit(f"unknown category on {item['id']}")
+        if item["status"] not in {"must", "nice", "wait", "skip", "exclude"}:
+            raise SystemExit(f"bad status on {item['id']}")
+    if len(WEEKS) != 32:
+        raise SystemExit(f"expected 32 weeks, found {len(WEEKS)}")
+    seen = set()
+    for week in WEEKS:
+        if week["id"] in seen:
+            raise SystemExit("duplicate week " + week["id"])
+        seen.add(week["id"])
+        for item_id in week.get("items") or []:
+            if item_id not in ids:
+                raise SystemExit(f"{week['id']} references unknown item {item_id}")
+    grouped = [week_id for _, ids in WEEK_GROUPS for week_id in ids]
+    if grouped != [week["id"] for week in WEEKS]:
+        raise SystemExit("timeline groups do not match week order")
+
+
+def main() -> None:
+    validate()
+    home_page()
+    quiz_page()
+    gear_page()
+    timeline_index()
+    week_pages()
+    newsletter_page()
+    privacy_page()
+    affiliate_page()
+    disclaimer_page()
+    not_found()
+    robots()
+    sitemap()
+    llms()
+    print("build ok")
+
+
+if __name__ == "__main__":
+    main()

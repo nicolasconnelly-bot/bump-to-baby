@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nicolasconnelly-bot.github.io/bump-to-baby/sitemap.xml

@@ -1,0 +1,86 @@
+{
+  "secondhandNote": "Secondhand is fine, except car seats, cribs and mattresses unless you know their history.",
+  "first48Title": "First 48 hours home",
+  "first48Intro": "A short list for the ride home and the first two days. This is planning, not medical advice.",
+  "first48": [
+    "Safe sleep space ready: bassinet or crib, firm flat mattress, fitted sheet only.",
+    "Car seat installed in the car you will leave the hospital in, and checked if you can.",
+    "Going-home outfit plus a backup, a hat, socks, and a swaddle.",
+    "A small pack of diapers, wipes, and diaper cream. Keep the receipts.",
+    "Feeding supplies for the plan you chose, and a small backup if you are still deciding.",
+    "Pediatrician's number written down, including the after-hours line."
+  ],
+  "questions": [
+    {
+      "id": "tier",
+      "prompt": "What's your budget style?",
+      "options": [
+        {"value": "budget", "label": "Budget: essentials only, secondhand is fine"},
+        {"value": "mid", "label": "Middle of the road"},
+        {"value": "premium", "label": "Premium: we'll pay more for convenience or design"}
+      ]
+    },
+    {
+      "id": "space",
+      "prompt": "Where do you live?",
+      "options": [
+        {"value": "small", "label": "Apartment or small home, baby shares our room"},
+        {"value": "nursery", "label": "House with a dedicated nursery"},
+        {"value": "multilevel", "label": "Multi-level home"}
+      ]
+    },
+    {
+      "id": "feed",
+      "prompt": "How do you plan to feed?",
+      "options": [
+        {"value": "breast", "label": "Breastfeeding"},
+        {"value": "formula", "label": "Formula"},
+        {"value": "combo", "label": "Combo, or we'll see"}
+      ]
+    },
+    {
+      "id": "season",
+      "prompt": "When is baby due?",
+      "options": [
+        {"value": "spring", "label": "Spring (Mar–May)"},
+        {"value": "summer", "label": "Summer (Jun–Aug)"},
+        {"value": "fall", "label": "Fall (Sep–Nov)"},
+        {"value": "winter", "label": "Winter (Dec–Feb)"}
+      ]
+    },
+    {
+      "id": "move",
+      "prompt": "How do you usually get around?",
+      "options": [
+        {"value": "car", "label": "Mostly by car"},
+        {"value": "walk", "label": "Mostly on foot or by transit"},
+        {"value": "mix", "label": "A mix of both"},
+        {"value": "travel", "label": "Lots of travel or flying"}
+      ]
+    },
+    {
+      "id": "first",
+      "prompt": "Is this your first baby?",
+      "options": [
+        {"value": "yes", "label": "Yes"},
+        {"value": "no", "label": "No, we already have some gear"}
+      ]
+    },
+    {
+      "id": "care",
+      "prompt": "Will baby go to daycare or a sitter before 6 months?",
+      "options": [
+        {"value": "out", "label": "Yes"},
+        {"value": "home", "label": "No, mostly home"}
+      ]
+    },
+    {
+      "id": "laundry",
+      "prompt": "How much laundry are you willing to do?",
+      "options": [
+        {"value": "low", "label": "As little as possible"},
+        {"value": "normal", "label": "Every 2–3 days is fine"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1108 @@
+{
+  "affiliatePlaceholder": "{{AFFILIATE_LINK}}",
+  "howToSwapLinks": "Replace {{AFFILIATE_LINK}} with a full https URL on any item, or replace every copy at once. Items still set to the placeholder show the token as text and do not link out. Set link to false when an item should never have a product link.",
+  "categories": [
+    {
+      "id": "nursery",
+      "name": "Nursery",
+      "intro": "Safe sleep starts with a firm, empty sleep space. Anchor any dresser to the wall. Skip bumpers, pillows, and quilts in the crib."
+    },
+    {
+      "id": "sleep",
+      "name": "Sleep",
+      "intro": "Alone, on the back, on a firm flat mattress, with nothing else in the sleep space. A swaddle or wearable sleep sack is the cover."
+    },
+    {
+      "id": "clothing",
+      "name": "Clothing",
+      "intro": "Use the low end of each range if you do laundry every 2–3 days, and the high end if you'd rather do it less. Zip-up sleepers with two-way zippers beat snaps at 3 AM. Skip baby shoes before walking, fancy outfits, and newborn-size jeans."
+    },
+    {
+      "id": "feeding",
+      "name": "Feeding",
+      "intro": "If you plan to breastfeed, check insurance before you buy a pump. If you plan to use formula, buy one small can first and talk with your baby's clinician. Don't stock up on one bottle brand until the baby has tried it."
+    },
+    {
+      "id": "diapering",
+      "name": "Diapering",
+      "intro": "Newborns outgrow newborn size fast. Start with one or two small packs plus size 1, and keep receipts."
+    },
+    {
+      "id": "bath",
+      "name": "Bath",
+      "intro": "Newborns only need a few baths a week, and sponge baths until the umbilical cord stump falls off. Bath toys can wait."
+    },
+    {
+      "id": "gear",
+      "name": "Gear",
+      "intro": "Most hospitals expect a rear-facing car seat for the ride home. Buy the car seat new, or only use one whose history you trust. Have the install checked."
+    },
+    {
+      "id": "health",
+      "name": "Health and safety",
+      "intro": "This is a shopping list, not dosing or treatment advice. Ask your pediatrician before using any medicine, including infant acetaminophen."
+    },
+    {
+      "id": "toys",
+      "name": "Toys and development",
+      "intro": "A play mat and a few high-contrast books cover the early months. Big toy hauls before 3 months are easy to skip."
+    }
+  ],
+  "items": [
+    {
+      "id": "crib",
+      "name": "Crib (meets current safety standards)",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "big": true,
+      "caution": true,
+      "picks": {
+        "budget": "IKEA Gulliver/Sniglar",
+        "mid": "Graco Benton / DaVinci Kalani",
+        "premium": "Babyletto Hudson"
+      },
+      "note": "Fixed sides only. No drop-sides. Keep it away from windows, cords, and shelves.",
+      "ownedNote": "Confirm it meets current safety standards and has fixed sides. No drop-side cribs. Replace it if you do not know its history."
+    },
+    {
+      "id": "mini-crib",
+      "name": "Mini or compact crib",
+      "category": "nursery",
+      "status": "exclude",
+      "origin": "quiz",
+      "big": true,
+      "caution": true,
+      "picks": {},
+      "note": "For a small room, this replaces the full-size crib. It still needs current safety standards, fixed sides, and a firm mattress made for that frame.",
+      "ownedNote": "Same checks as a full crib: current standards, fixed sides, and a known history."
+    },
+    {
+      "id": "mattress",
+      "name": "Firm crib mattress",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "big": true,
+      "caution": true,
+      "picks": {
+        "budget": "Graco Premium Foam",
+        "mid": "Newton Baby Essential",
+        "premium": "Naturepedic Organic"
+      },
+      "note": "Firm and tight-fitting. You should not be able to fit more than two fingers between the mattress and the frame. No extra padding.",
+      "ownedNote": "Buy new unless you know its history. It should be firm and fit the frame tightly."
+    },
+    {
+      "id": "sheets",
+      "name": "Fitted crib sheets (2–3)",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Burt's Bees Baby",
+        "premium": "Kyte Baby"
+      },
+      "note": "Fitted sheets only. Match them to the mattress size you are actually using."
+    },
+    {
+      "id": "protector",
+      "name": "Waterproof mattress protector (2)",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Hiccapop / Naturepedic",
+        "premium": "Naturepedic Organic"
+      },
+      "note": "Use a protector made for your mattress. Don't add loose pads."
+    },
+    {
+      "id": "dresser",
+      "name": "Dresser + changing topper",
+      "category": "nursery",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "IKEA Hemnes/Malm (anchor it to the wall)",
+        "mid": "DaVinci",
+        "premium": "Babyletto"
+      },
+      "note": "A dresser with a changing topper replaces a standalone changing table. Anchor it to the wall.",
+      "ownedNote": "Anchor it to the wall before a child can climb. Check that drawers stop so they cannot be pulled all the way out onto a child."
+    },
+    {
+      "id": "changing-pad",
+      "name": "Changing pad + 2 covers",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Summer Infant contoured",
+        "mid": "Keekaroo Peanut",
+        "premium": "Keekaroo + cover"
+      },
+      "note": "Use it on a dresser or another stable surface, not as a reason to buy a separate changing table."
+    },
+    {
+      "id": "glider",
+      "name": "Glider or rocker",
+      "category": "nursery",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "IKEA Poäng",
+        "mid": "DaVinci Olive",
+        "premium": "Babyletto Kiwi"
+      },
+      "note": "A chair you already find comfortable is enough at first.",
+      "ownedNote": "Check that it is stable and that any recalls have been handled."
+    },
+    {
+      "id": "blackout",
+      "name": "Blackout curtains",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Nicetown",
+        "premium": "Custom"
+      },
+      "note": "Keep cords out of reach."
+    },
+    {
+      "id": "white-noise",
+      "name": "White noise machine",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Free phone app",
+        "mid": "Yogasleep Dohm",
+        "premium": "Hatch Rest"
+      },
+      "note": "A free phone app covers the budget option, so you may not need to buy hardware."
+    },
+    {
+      "id": "anchors",
+      "name": "Furniture anchors",
+      "category": "nursery",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Any anti-tip kit",
+        "mid": "Any anti-tip kit",
+        "premium": "Any anti-tip kit"
+      },
+      "note": "Anchor the dresser and any other furniture that could tip once a child climbs."
+    },
+    {
+      "id": "changing-table",
+      "name": "Changing table (standalone)",
+      "category": "nursery",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Use a dresser topper or a changing pad on a stable surface instead."
+    },
+    {
+      "id": "bumpers",
+      "name": "Crib bumpers, pillows, quilts",
+      "category": "nursery",
+      "status": "skip",
+      "origin": "master",
+      "unsafe": true,
+      "picks": {},
+      "note": "These are unsafe in a crib. Leave the sleep space empty."
+    },
+    {
+      "id": "bassinet",
+      "name": "Bassinet (first months)",
+      "category": "sleep",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "Graco Pack 'n Play bassinet",
+        "mid": "Halo BassiNest",
+        "premium": "Snoo"
+      },
+      "note": "Useful beside your bed for the first months, including when a nursery is also ready. Use only the mattress made for it.",
+      "ownedNote": "Check the weight limit, recalls, and that the mattress is the one made for that model."
+    },
+    {
+      "id": "swaddles",
+      "name": "Swaddles (3–4)",
+      "category": "sleep",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Muslin swaddles",
+        "mid": "Halo SleepSack Swaddle / Love to Dream",
+        "premium": "Ollie"
+      },
+      "note": "Try a couple of styles. Babies have opinions. Stop swaddling when the baby shows signs of rolling, and ask your pediatrician if you are unsure."
+    },
+    {
+      "id": "sleep-sacks",
+      "name": "Wearable sleep sacks (2–3)",
+      "category": "sleep",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Halo SleepSack",
+        "mid": "Burt's Bees",
+        "premium": "Woolino / Kyte"
+      },
+      "note": "This is the blanket. Choose a warmer TOG for fall and winter, and a lighter one for spring and summer."
+    },
+    {
+      "id": "monitor",
+      "name": "Video monitor",
+      "category": "sleep",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Infant Optics DXR-8",
+        "mid": "Eufy SpaceView",
+        "premium": "Nanit / Owlet Cam"
+      },
+      "note": "Nice-to-have in a small single-level home. Treat it as a must-have if the baby sleeps in another room or you live on more than one level."
+    },
+    {
+      "id": "play-yard",
+      "name": "Play yard",
+      "category": "sleep",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "Graco Pack 'n Play",
+        "mid": "4moms Breeze",
+        "premium": "Guava Lotus"
+      },
+      "note": "If the baby sleeps here, use only the bassinet or firm mattress made for that model. Don't add extra padding.",
+      "ownedNote": "Check recalls and the weight limit. Use only the mattress made for that model."
+    },
+    {
+      "id": "inclined-sleepers",
+      "name": "Inclined sleepers, sleep positioners",
+      "category": "sleep",
+      "status": "skip",
+      "origin": "master",
+      "unsafe": true,
+      "picks": {},
+      "note": "These are unsafe for sleep. Skip them."
+    },
+    {
+      "id": "clothing-newborn",
+      "name": "Newborn clothing",
+      "category": "clothing",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Simple Joys by Carter's / Cat & Jack",
+        "mid": "Carter's, Burt's Bees Baby",
+        "premium": "Kyte Baby, Hanna Andersson"
+      },
+      "quantities": [
+        {"item": "bodysuits", "low": 5, "high": 7},
+        {"item": "sleepers or footies", "low": 4, "high": 6},
+        {"item": "pants", "low": 2, "high": 3},
+        {"item": "socks", "low": 4, "high": 6},
+        {"item": "hats", "low": 2, "high": 2}
+      ],
+      "note": "Some babies skip this size. Keep the tags on. Gifts often cover it."
+    },
+    {
+      "id": "clothing-0-3",
+      "name": "0–3 month clothing",
+      "category": "clothing",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Simple Joys by Carter's / Cat & Jack",
+        "mid": "Carter's, Burt's Bees Baby",
+        "premium": "Kyte Baby, Hanna Andersson"
+      },
+      "quantities": [
+        {"item": "bodysuits", "low": 7, "high": 10},
+        {"item": "sleepers or footies", "low": 6, "high": 8},
+        {"item": "pants", "low": 3, "high": 5},
+        {"item": "socks", "low": 6, "high": 6},
+        {"item": "hats", "low": 2, "high": 2}
+      ],
+      "note": "The size they'll wear most at first. Prefer zip-up sleepers with two-way zippers."
+    },
+    {
+      "id": "clothing-3-6",
+      "name": "3–6 month clothing",
+      "category": "clothing",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Simple Joys by Carter's / Cat & Jack",
+        "mid": "Carter's, Burt's Bees Baby",
+        "premium": "Kyte Baby, Hanna Andersson"
+      },
+      "quantities": [
+        {"item": "bodysuits", "low": 7, "high": 10},
+        {"item": "sleepers or footies", "low": 6, "high": 8},
+        {"item": "pants", "low": 4, "high": 5},
+        {"item": "socks", "low": 6, "high": 6},
+        {"item": "hats", "low": 1, "high": 2}
+      ],
+      "note": "Buy for the season these months will fall in. Fine to wait for gifts and your shower."
+    },
+    {
+      "id": "clothing-6-9",
+      "name": "6–9 month clothing",
+      "category": "clothing",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "Simple Joys by Carter's / Cat & Jack",
+        "mid": "Carter's, Burt's Bees Baby",
+        "premium": "Kyte Baby, Hanna Andersson"
+      },
+      "quantities": [
+        {"item": "bodysuits", "low": 6, "high": 8},
+        {"item": "sleepers or footies", "low": 5, "high": 7},
+        {"item": "pants", "low": 4, "high": 5},
+        {"item": "socks", "low": 6, "high": 6},
+        {"item": "hats", "low": 1, "high": 1}
+      ],
+      "note": "Wait. Gifts tend to cover these sizes."
+    },
+    {
+      "id": "clothing-9-12",
+      "name": "9–12 month clothing",
+      "category": "clothing",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "Simple Joys by Carter's / Cat & Jack",
+        "mid": "Carter's, Burt's Bees Baby",
+        "premium": "Kyte Baby, Hanna Andersson"
+      },
+      "quantities": [
+        {"item": "bodysuits", "low": 6, "high": 8},
+        {"item": "sleepers or footies", "low": 5, "high": 7},
+        {"item": "pants", "low": 4, "high": 5},
+        {"item": "socks", "low": 6, "high": 6},
+        {"item": "hats", "low": 1, "high": 1}
+      ],
+      "note": "Wait. Buy for the season when you get there."
+    },
+    {
+      "id": "baby-shoes",
+      "name": "Baby shoes before walking",
+      "category": "clothing",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Skip shoes until the baby is walking."
+    },
+    {
+      "id": "fancy-outfits",
+      "name": "Fancy outfits",
+      "category": "clothing",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Photos are nicer in sleepers you will actually use."
+    },
+    {
+      "id": "newborn-jeans",
+      "name": "Newborn-size jeans",
+      "category": "clothing",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Skip these. Soft sleepers and bodysuits are the clothes that get worn."
+    },
+    {
+      "id": "pump",
+      "name": "Breast pump (check insurance first)",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Insurance-covered Spectra S1/S2",
+        "mid": "Medela Pump in Style",
+        "premium": "Elvie / Willow (wearable)"
+      },
+      "note": "In the U.S., most insurance plans cover a pump. Call before you pay. Ask which models are covered and when you can order."
+    },
+    {
+      "id": "manual-pump",
+      "name": "Manual pump or silicone collector",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Haakaa",
+        "mid": "Medela Harmony"
+      },
+      "note": "Optional backup for breastfeeding or combo feeding. Not a must-have."
+    },
+    {
+      "id": "nursing-bras",
+      "name": "Nursing bras (2–3)",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Kindred Bravely",
+        "premium": "Bravado"
+      },
+      "note": "Two or three is enough to start."
+    },
+    {
+      "id": "nipple-cream",
+      "name": "Nipple cream",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Lansinoh lanolin",
+        "mid": "Earth Mama",
+        "premium": "Motherlove"
+      },
+      "note": "A common comfort item for breastfeeding. Ask a lactation consultant if feeding is painful."
+    },
+    {
+      "id": "breast-pads",
+      "name": "Breast pads",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Lansinoh disposable",
+        "mid": "Bamboobies reusable"
+      },
+      "note": "Disposable or reusable. You do not need both piles on day one."
+    },
+    {
+      "id": "milk-bags",
+      "name": "Milk storage bags",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Lansinoh",
+        "mid": "Medela",
+        "premium": "Kiinde system"
+      },
+      "note": "For milk you plan to store. Buy a modest box first."
+    },
+    {
+      "id": "nursing-pillow",
+      "name": "Nursing pillow",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Boppy",
+        "mid": "My Brest Friend"
+      },
+      "note": "Helpful for positioning. A class or a lactation visit will show you options too."
+    },
+    {
+      "id": "bottles",
+      "name": "Bottles",
+      "category": "feeding",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Dr. Brown's / Philips Avent",
+        "mid": "Comotomo",
+        "premium": "Hegen"
+      },
+      "note": "Start small. Breastfeeding plans usually need 2–4 small bottles later. Formula plans usually need 6–8. Combo plans usually need 4–6. Don't stock up on one brand until the baby has tried it."
+    },
+    {
+      "id": "bottle-brush",
+      "name": "Bottle brush + drying rack",
+      "category": "feeding",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "OXO Tot",
+        "mid": "Boon Grass"
+      },
+      "note": "You will use this with even a few bottles."
+    },
+    {
+      "id": "formula",
+      "name": "Formula (one small can first)",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand (same FDA standards)",
+        "mid": "Similac / Enfamil",
+        "premium": "Bobbie / Kendamil"
+      },
+      "note": "Buy one small can first. Talk with the baby's clinician about formula. Store-brand formulas sold in the U.S. have to meet the same FDA standards."
+    },
+    {
+      "id": "burp-cloths",
+      "name": "Burp cloths (6–10)",
+      "category": "feeding",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Gerber cloth diapers",
+        "mid": "Aden + Anais",
+        "premium": "Kyte"
+      },
+      "note": "Scatter them where you feed. Six to ten is the useful range."
+    },
+    {
+      "id": "sterilizer",
+      "name": "Bottle sterilizer or dryer",
+      "category": "feeding",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Microwave steam bags",
+        "mid": "Philips Avent",
+        "premium": "Baby Brezza"
+      },
+      "note": "Nice-to-have. Hot soapy water or the dishwasher is enough for many families."
+    },
+    {
+      "id": "formula-pitcher",
+      "name": "Formula dispenser or pitcher",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "Optional if you are formula feeding. A simple pitcher is enough. You do not need a formula-maker machine."
+    },
+    {
+      "id": "formula-maker",
+      "name": "Formula maker machine",
+      "category": "feeding",
+      "status": "skip",
+      "origin": "master",
+      "picks": {
+        "mid": "Baby Brezza"
+      },
+      "note": "Most families can skip the machine. A pitcher or a single bottle at a time is enough."
+    },
+    {
+      "id": "pump-bag",
+      "name": "Pump bag",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For daycare or work, if you are pumping away from home."
+    },
+    {
+      "id": "pump-parts",
+      "name": "Second set of pump parts",
+      "category": "feeding",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "Extra flanges and bottles so one set can be in the wash while the other is at daycare."
+    },
+    {
+      "id": "high-chair",
+      "name": "High chair (around 6 months)",
+      "category": "feeding",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "IKEA Antilop",
+        "mid": "Graco",
+        "premium": "Stokke Tripp Trapp"
+      },
+      "note": "Wait until you are closer to starting solids, around 6 months."
+    },
+    {
+      "id": "diapers",
+      "name": "Diapers (small newborn pack, then size 1)",
+      "category": "diapering",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Kirkland / Up&Up",
+        "mid": "Huggies / Pampers Swaddlers",
+        "premium": "Coterie"
+      },
+      "note": "One or two newborn packs, then size 1. Keep receipts so you can swap sizes."
+    },
+    {
+      "id": "wipes",
+      "name": "Wipes",
+      "category": "diapering",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Kirkland",
+        "mid": "WaterWipes",
+        "premium": "Coterie"
+      },
+      "note": "Sensitive wipes are the usual starting point."
+    },
+    {
+      "id": "diaper-cream",
+      "name": "Diaper cream",
+      "category": "diapering",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Desitin / A+D",
+        "mid": "Boudreaux's",
+        "premium": "Aquaphor"
+      },
+      "note": "One tube is enough to start."
+    },
+    {
+      "id": "diaper-pail",
+      "name": "Diaper pail or lidded trash can",
+      "category": "diapering",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Lidded trash can",
+        "mid": "Ubbi",
+        "premium": "Diaper Genie"
+      },
+      "note": "A lidded can you already own is a fair budget option."
+    },
+    {
+      "id": "diaper-bag",
+      "name": "Diaper bag",
+      "category": "diapering",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Any backpack",
+        "mid": "Skip Hop Forma",
+        "premium": "Freshly Picked / Dagne Dover"
+      },
+      "note": "A backpack you already like can be the bag."
+    },
+    {
+      "id": "changing-pad-portable",
+      "name": "Portable changing pad",
+      "category": "diapering",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Often comes with the bag",
+        "mid": "Skip Hop"
+      },
+      "note": "Often included with the diaper bag."
+    },
+    {
+      "id": "wipe-warmer",
+      "name": "Wipe warmer",
+      "category": "diapering",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Most parents say skip it."
+    },
+    {
+      "id": "second-station",
+      "name": "Second diaper station (caddy + pad)",
+      "category": "diapering",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For a multi-level home. Keep diapers, wipes, and cream within arm's reach on each floor you use."
+    },
+    {
+      "id": "labels",
+      "name": "Bottle labels",
+      "category": "diapering",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For daycare or a sitter. Label bottles and anything you send."
+    },
+    {
+      "id": "cooler-bag",
+      "name": "Cooler bag",
+      "category": "diapering",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For milk or formula bottles that travel to daycare."
+    },
+    {
+      "id": "tub",
+      "name": "Infant tub",
+      "category": "bath",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "The First Years Sure Comfort",
+        "mid": "Frida Baby 4-in-1",
+        "premium": "Angelcare"
+      },
+      "note": "Sponge baths come first, until the cord stump falls off."
+    },
+    {
+      "id": "wash",
+      "name": "Gentle wash",
+      "category": "bath",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Johnson's",
+        "mid": "Cetaphil Baby",
+        "premium": "Mustela"
+      },
+      "note": "One gentle wash is enough."
+    },
+    {
+      "id": "towels",
+      "name": "Hooded towels (2–3) + washcloths",
+      "category": "bath",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Burt's Bees",
+        "premium": "Kyte"
+      },
+      "note": "Two or three towels plus a few washcloths."
+    },
+    {
+      "id": "clippers",
+      "name": "Nail clippers or file",
+      "category": "bath",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Safety 1st",
+        "mid": "FridaBaby",
+        "premium": "Electric file"
+      },
+      "note": "A manual clipper or file is enough."
+    },
+    {
+      "id": "bath-thermometer",
+      "name": "Bath thermometer",
+      "category": "bath",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Rubber duck thermometer"
+      },
+      "note": "Nice-to-have. Test the water on your wrist either way."
+    },
+    {
+      "id": "bath-toys",
+      "name": "Bath toys (before 6 months)",
+      "category": "bath",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Skip toys for the early months. They are hard to dry and easy to add later."
+    },
+    {
+      "id": "car-seat",
+      "name": "Infant car seat (buy new)",
+      "category": "gear",
+      "status": "must",
+      "origin": "master",
+      "big": true,
+      "caution": true,
+      "picks": {
+        "budget": "Graco SnugRide",
+        "mid": "Chicco KeyFit 30",
+        "premium": "Nuna PIPA / UPPAbaby Mesa"
+      },
+      "note": "Buy this new unless you know its full history. Most hospitals expect a rear-facing seat for the ride home, including families who mostly walk or take transit. Have the install checked.",
+      "ownedNote": "Check the expiration date, recall list, and that no parts are missing. Replace it if you do not know its history, including whether it has been in a crash."
+    },
+    {
+      "id": "stroller",
+      "name": "Stroller",
+      "category": "gear",
+      "status": "must",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "Graco travel system",
+        "mid": "Baby Jogger City Mini / City Select",
+        "premium": "UPPAbaby Vista / Cruz"
+      },
+      "note": "A travel system that accepts your infant car seat covers most families. Check that it fits in your trunk and that you can fold it one-handed.",
+      "ownedNote": "Check recalls, the brake, the harness, and that the fold still locks."
+    },
+    {
+      "id": "carrier",
+      "name": "Carrier or wrap",
+      "category": "gear",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "Boba wrap / Moby",
+        "mid": "Ergobaby Omni / Baby Bjorn",
+        "premium": "Artipoppe / Solly wrap"
+      },
+      "note": "Must-have if you mostly walk, use transit, or mix walking and driving. Otherwise nice-to-have.",
+      "ownedNote": "Check recalls and that buckles, rings, and seams are intact."
+    },
+    {
+      "id": "bouncer",
+      "name": "Bouncer",
+      "category": "gear",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Fisher-Price",
+        "premium": "Baby Bjorn Bouncer"
+      },
+      "note": "A supervised awake spot only. Not a sleep space."
+    },
+    {
+      "id": "compact-stroller",
+      "name": "Compact travel stroller",
+      "category": "gear",
+      "status": "nice",
+      "origin": "master",
+      "big": true,
+      "picks": {
+        "budget": "Summer 3Dlite",
+        "mid": "gb Pockit",
+        "premium": "Babyzen YOYO"
+      },
+      "note": "Add one if you fly often. Many families wait and use their main stroller first.",
+      "ownedNote": "Check recalls, the brake, and the fold lock."
+    },
+    {
+      "id": "swing",
+      "name": "Electric swing",
+      "category": "gear",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Graco",
+        "premium": "4moms mamaRoo"
+      },
+      "note": "Nice-to-have. Use it awake and supervised. Not a sleep space."
+    },
+    {
+      "id": "car-mirror",
+      "name": "Car mirror",
+      "category": "gear",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Any shatterproof model",
+        "mid": "Any shatterproof model",
+        "premium": "Any shatterproof model"
+      },
+      "note": "Nice-to-have. It does not replace a correct install."
+    },
+    {
+      "id": "car-seat-cover",
+      "name": "Car-seat-safe cover",
+      "category": "gear",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For fall and winter. Use a cover that goes over the seat, not a bulky snowsuit under the harness. Bulky layers can keep the harness from fitting snugly."
+    },
+    {
+      "id": "sun-shade",
+      "name": "Stroller sun shade",
+      "category": "gear",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For spring and summer. Sunscreen isn't recommended before 6 months, so stick to shade and clothing."
+    },
+    {
+      "id": "fan",
+      "name": "Fan",
+      "category": "gear",
+      "status": "exclude",
+      "origin": "quiz",
+      "picks": {},
+      "note": "For spring and summer air circulation. Do not aim it directly at the baby, and do not add loose bedding."
+    },
+    {
+      "id": "thermometer",
+      "name": "Digital thermometer (rectal for newborns)",
+      "category": "health",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Vicks",
+        "mid": "FridaBaby",
+        "premium": "Exergen temporal"
+      },
+      "note": "Rectal readings are the usual reference for newborns. Ask your pediatrician to show you before you need it at 2 AM. This page does not give medical instructions."
+    },
+    {
+      "id": "aspirator",
+      "name": "Nasal aspirator",
+      "category": "health",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Bulb",
+        "mid": "FridaBaby NoseFrida",
+        "premium": "Electric"
+      },
+      "note": "A bulb syringe is the simple version."
+    },
+    {
+      "id": "saline",
+      "name": "Saline drops",
+      "category": "health",
+      "status": "must",
+      "origin": "timeline",
+      "link": false,
+      "picks": {},
+      "note": "Named in the week-8 health kit, with the thermometer and nasal aspirator. Ask your pediatrician which product to use."
+    },
+    {
+      "id": "acetaminophen",
+      "name": "Infant acetaminophen",
+      "category": "health",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Store brand",
+        "mid": "Tylenol Infants"
+      },
+      "note": "Ask your pediatrician about whether to use it and about dosing before you ever give it. This site does not list doses."
+    },
+    {
+      "id": "humidifier",
+      "name": "Cool-mist humidifier",
+      "category": "health",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Crane",
+        "mid": "Levoit"
+      },
+      "note": "Nice-to-have in warm months. Treat it as a must-have in fall and winter. Clean it on the schedule in its manual."
+    },
+    {
+      "id": "gates",
+      "name": "Baby gates (by about 6 months)",
+      "category": "health",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "Regalo",
+        "mid": "Summer",
+        "premium": "Qdos"
+      },
+      "note": "Wait until you are closer to crawling. A multi-level home should plan on a second set."
+    },
+    {
+      "id": "outlet-covers",
+      "name": "Outlet covers, cabinet locks",
+      "category": "health",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "Safety 1st"
+      },
+      "note": "Wait until crawling is close. Do it before the baby is mobile, not before the birth."
+    },
+    {
+      "id": "detectors",
+      "name": "Smoke and CO detectors checked",
+      "category": "health",
+      "status": "must",
+      "origin": "master",
+      "link": false,
+      "picks": {},
+      "note": "Test the detectors you already have. Replace any that are missing, expired, or silent. This is a task, not a branded product."
+    },
+    {
+      "id": "first-aid",
+      "name": "Baby first aid kit",
+      "category": "health",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Safety 1st",
+        "mid": "FridaBaby"
+      },
+      "note": "Nice-to-have. Your pediatrician's after-hours number matters more than the kit."
+    },
+    {
+      "id": "play-mat",
+      "name": "Play mat or gym",
+      "category": "toys",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Fisher-Price",
+        "mid": "Skip Hop",
+        "premium": "Lovevery Play Gym"
+      },
+      "note": "Useful once tummy time is part of the day. Not needed for the hospital bag."
+    },
+    {
+      "id": "books",
+      "name": "High-contrast cards or board books",
+      "category": "toys",
+      "status": "must",
+      "origin": "master",
+      "picks": {
+        "budget": "Printables / library",
+        "mid": "Wee Gallery"
+      },
+      "note": "A cheap must-have. The library and black-and-white printables count."
+    },
+    {
+      "id": "teethers",
+      "name": "Soft rattles and teethers (3+ months)",
+      "category": "toys",
+      "status": "nice",
+      "origin": "master",
+      "picks": {
+        "budget": "Nuby",
+        "mid": "Sophie la Girafe"
+      },
+      "note": "Wait until about 3 months. You do not need a basket of them."
+    },
+    {
+      "id": "activity-center",
+      "name": "Activity center (5+ months)",
+      "category": "toys",
+      "status": "wait",
+      "origin": "master",
+      "picks": {
+        "budget": "Used",
+        "mid": "Fisher-Price",
+        "premium": "Lovevery"
+      },
+      "note": "Wait. This is a mid-first-year item, not a newborn one."
+    },
+    {
+      "id": "toy-hauls",
+      "name": "Big toy hauls before 3 months",
+      "category": "toys",
+      "status": "skip",
+      "origin": "master",
+      "picks": {},
+      "note": "Skip the haul. A play mat and a few high-contrast books are plenty."
+    }
+  ]
+}
