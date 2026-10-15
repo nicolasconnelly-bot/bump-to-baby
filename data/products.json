@@ -1,6 +1,6 @@
 {
   "affiliatePlaceholder": null,
-  "howToSwapLinks": "Each item has its own link. A /dp/ URL is used only when that ASIN was checked against the named product. Other items use an Amazon search URL. Both include Associates tag bumptobaby0d-20. Set link to false when an item should never have a store link.",
+  "howToSwapLinks": "Each item has its own link. A /dp/ URL is used only when that ASIN was checked against the named product. image is set only when Amazon's public catalog thumbnail for that same ASIN loads a real photo (https://m.media-amazon.com/images/P/<ASIN>.01._SL160_.jpg). Other items use an Amazon search URL and have no photo. Both link types include Associates tag bumptobaby0d-20. Set link to false when an item should never have a store link.",
   "categories": [
     {
       "id": "nursery",
@@ -51,7 +51,8 @@
   "items": [
     {
       "id": "crib",
-      "link": "https://www.amazon.com/s?k=Crib+%28meets+current+safety+standards%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B071VV4CNZ?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B071VV4CNZ.01._SL160_.jpg",
       "name": "Crib (meets current safety standards)",
       "category": "nursery",
       "status": "must",
@@ -98,7 +99,8 @@
     },
     {
       "id": "sheets",
-      "link": "https://www.amazon.com/s?k=Fitted+crib+sheets+%282%E2%80%933%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B09CGM51D1?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg",
       "name": "Fitted crib sheets (2–3)",
       "category": "nursery",
       "status": "must",
@@ -156,7 +158,8 @@
     },
     {
       "id": "glider",
-      "link": "https://www.amazon.com/s?k=Glider+or+rocker&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0192SZGNQ?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B0192SZGNQ.01._SL160_.jpg",
       "name": "Glider or rocker",
       "category": "nursery",
       "status": "nice",
@@ -172,7 +175,7 @@
     },
     {
       "id": "blackout",
-      "link": "https://www.amazon.com/s?k=Blackout+curtains&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0719915WN?tag=bumptobaby0d-20",
       "name": "Blackout curtains",
       "category": "nursery",
       "status": "must",
@@ -187,6 +190,7 @@
     {
       "id": "white-noise",
       "link": "https://www.amazon.com/dp/B006Z8J9I0?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B006Z8J9I0.01._SL160_.jpg",
       "name": "White noise machine",
       "category": "nursery",
       "status": "must",
@@ -235,7 +239,7 @@
     },
     {
       "id": "bassinet",
-      "link": "https://www.amazon.com/s?k=Bassinet+%28first+months%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0GCBDDTNJ?tag=bumptobaby0d-20",
       "name": "Bassinet (first months)",
       "category": "sleep",
       "status": "nice",
@@ -251,7 +255,8 @@
     },
     {
       "id": "swaddles",
-      "link": "https://www.amazon.com/s?k=Swaddles+%283%E2%80%934%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B001D7E0YQ?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B001D7E0YQ.01._SL160_.jpg",
       "name": "Swaddles (3–4)",
       "category": "sleep",
       "status": "must",
@@ -265,7 +270,8 @@
     },
     {
       "id": "sleep-sacks",
-      "link": "https://www.amazon.com/s?k=Wearable+sleep+sacks+%282%E2%80%933%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B09H3D96F3?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B09H3D96F3.01._SL160_.jpg",
       "name": "Wearable sleep sacks (2–3)",
       "category": "sleep",
       "status": "must",
@@ -555,7 +561,7 @@
     },
     {
       "id": "pump",
-      "link": "https://www.amazon.com/s?k=Breast+pump+%28check+insurance+first%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B00016BPA2?tag=bumptobaby0d-20",
       "name": "Breast pump (check insurance first)",
       "category": "feeding",
       "status": "exclude",
@@ -582,7 +588,7 @@
     },
     {
       "id": "nursing-bras",
-      "link": "https://www.amazon.com/s?k=Nursing+bras+%282%E2%80%933%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0969K2JVD?tag=bumptobaby0d-20",
       "name": "Nursing bras (2–3)",
       "category": "feeding",
       "status": "exclude",
@@ -596,7 +602,8 @@
     },
     {
       "id": "nipple-cream",
-      "link": "https://www.amazon.com/s?k=Nipple+cream&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B000JVCBBG?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B000JVCBBG.01._SL160_.jpg",
       "name": "Nipple cream",
       "category": "feeding",
       "status": "exclude",
@@ -610,7 +617,8 @@
     },
     {
       "id": "breast-pads",
-      "link": "https://www.amazon.com/s?k=Breast+pads&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0043C5XYY?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B0043C5XYY.01._SL160_.jpg",
       "name": "Breast pads",
       "category": "feeding",
       "status": "exclude",
@@ -623,7 +631,8 @@
     },
     {
       "id": "milk-bags",
-      "link": "https://www.amazon.com/s?k=Milk+storage+bags&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0723GXKJT?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B0723GXKJT.01._SL160_.jpg",
       "name": "Milk storage bags",
       "category": "feeding",
       "status": "exclude",
@@ -638,6 +647,7 @@
     {
       "id": "nursing-pillow",
       "link": "https://www.amazon.com/dp/B075GLC4RK?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B075GLC4RK.01._SL160_.jpg",
       "name": "Nursing pillow",
       "category": "feeding",
       "status": "exclude",
@@ -650,7 +660,7 @@
     },
     {
       "id": "bottles",
-      "link": "https://www.amazon.com/s?k=Bottles&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B00A4Q9XZS?tag=bumptobaby0d-20",
       "name": "Bottles",
       "category": "feeding",
       "status": "must",
@@ -664,7 +674,8 @@
     },
     {
       "id": "bottle-brush",
-      "link": "https://www.amazon.com/s?k=Bottle+brush+%2B+drying+rack&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0032G9E0G?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B0032G9E0G.01._SL160_.jpg",
       "name": "Bottle brush + drying rack",
       "category": "feeding",
       "status": "must",
@@ -691,7 +702,8 @@
     },
     {
       "id": "burp-cloths",
-      "link": "https://www.amazon.com/s?k=Burp+cloths+%286%E2%80%9310%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B095T222P2?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B095T222P2.01._SL160_.jpg",
       "name": "Burp cloths (6–10)",
       "category": "feeding",
       "status": "must",
@@ -705,7 +717,8 @@
     },
     {
       "id": "sterilizer",
-      "link": "https://www.amazon.com/s?k=Bottle+sterilizer+or+dryer&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B08FD8BK9V?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B08FD8BK9V.01._SL160_.jpg",
       "name": "Bottle sterilizer or dryer",
       "category": "feeding",
       "status": "nice",
@@ -729,7 +742,8 @@
     },
     {
       "id": "formula-maker",
-      "link": "https://www.amazon.com/s?k=Formula+maker+machine&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B07MYW28QR?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B07MYW28QR.01._SL160_.jpg",
       "name": "Formula maker machine",
       "category": "feeding",
       "status": "skip",
@@ -775,7 +789,8 @@
     },
     {
       "id": "diapers",
-      "link": "https://www.amazon.com/s?k=Diapers+%28small+newborn+pack%2C+then+size+1%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B08V6RB6VJ?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B08V6RB6VJ.01._SL160_.jpg",
       "name": "Diapers (small newborn pack, then size 1)",
       "category": "diapering",
       "status": "must",
@@ -789,7 +804,7 @@
     },
     {
       "id": "wipes",
-      "link": "https://www.amazon.com/s?k=Wipes&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0C5S3MRHR?tag=bumptobaby0d-20",
       "name": "Wipes",
       "category": "diapering",
       "status": "must",
@@ -803,7 +818,8 @@
     },
     {
       "id": "diaper-cream",
-      "link": "https://www.amazon.com/s?k=Diaper+cream&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B001190D5Q?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B001190D5Q.01._SL160_.jpg",
       "name": "Diaper cream",
       "category": "diapering",
       "status": "must",
@@ -818,6 +834,7 @@
     {
       "id": "diaper-pail",
       "link": "https://www.amazon.com/dp/B00821FLT4?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B00821FLT4.01._SL160_.jpg",
       "name": "Diaper pail or lidded trash can",
       "category": "diapering",
       "status": "nice",
@@ -831,7 +848,7 @@
     },
     {
       "id": "diaper-bag",
-      "link": "https://www.amazon.com/s?k=Diaper+bag&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0B6P8T7J5?tag=bumptobaby0d-20",
       "name": "Diaper bag",
       "category": "diapering",
       "status": "must",
@@ -898,7 +915,8 @@
     },
     {
       "id": "tub",
-      "link": "https://www.amazon.com/s?k=Infant+tub&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B099FM4W4H?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B099FM4W4H.01._SL160_.jpg",
       "name": "Infant tub",
       "category": "bath",
       "status": "must",
@@ -912,7 +930,8 @@
     },
     {
       "id": "wash",
-      "link": "https://www.amazon.com/s?k=Gentle+wash&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B07VHR8NDF?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B07VHR8NDF.01._SL160_.jpg",
       "name": "Gentle wash",
       "category": "bath",
       "status": "must",
@@ -926,7 +945,7 @@
     },
     {
       "id": "towels",
-      "link": "https://www.amazon.com/s?k=Hooded+towels+%282%E2%80%933%29+%2B+washcloths&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B01MRNP53X?tag=bumptobaby0d-20",
       "name": "Hooded towels (2–3) + washcloths",
       "category": "bath",
       "status": "must",
@@ -993,7 +1012,8 @@
     },
     {
       "id": "stroller",
-      "link": "https://www.amazon.com/s?k=Stroller&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B07PS67WL1?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B07PS67WL1.01._SL160_.jpg",
       "name": "Stroller",
       "category": "gear",
       "status": "must",
@@ -1009,7 +1029,8 @@
     },
     {
       "id": "carrier",
-      "link": "https://www.amazon.com/s?k=Carrier+or+wrap&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B08KTDX5VQ?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B08KTDX5VQ.01._SL160_.jpg",
       "name": "Carrier or wrap",
       "category": "gear",
       "status": "nice",
@@ -1038,7 +1059,8 @@
     },
     {
       "id": "compact-stroller",
-      "link": "https://www.amazon.com/s?k=Compact+travel+stroller&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B01DWHV4N4?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B01DWHV4N4.01._SL160_.jpg",
       "name": "Compact travel stroller",
       "category": "gear",
       "status": "nice",
@@ -1162,7 +1184,8 @@
     },
     {
       "id": "humidifier",
-      "link": "https://www.amazon.com/s?k=Cool-mist+humidifier&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B0C2C9NHZW?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B0C2C9NHZW.01._SL160_.jpg",
       "name": "Cool-mist humidifier",
       "category": "health",
       "status": "nice",
@@ -1225,6 +1248,7 @@
     {
       "id": "play-mat",
       "link": "https://www.amazon.com/dp/B075R8BXXC?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B075R8BXXC.01._SL160_.jpg",
       "name": "Play mat or gym",
       "category": "toys",
       "status": "nice",
@@ -1251,7 +1275,8 @@
     },
     {
       "id": "teethers",
-      "link": "https://www.amazon.com/s?k=Soft+rattles+and+teethers+%283%2B+months%29&tag=bumptobaby0d-20",
+      "link": "https://www.amazon.com/dp/B000IDSLOG?tag=bumptobaby0d-20",
+      "image": "https://m.media-amazon.com/images/P/B000IDSLOG.01._SL160_.jpg",
       "name": "Soft rattles and teethers (3+ months)",
       "category": "toys",
       "status": "nice",

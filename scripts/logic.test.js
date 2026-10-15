@@ -30,9 +30,18 @@ const BumpTimeline = load("assets/js/timeline.js", "BumpTimeline");
 assert(products.affiliatePlaceholder == null, "shared affiliate placeholder is unused");
 assert(!JSON.stringify(products).includes("{{AFFILIATE_LINK}}"), "placeholder token is gone");
 products.items.forEach((item) => {
-  if (item.link === false) return;
+  if (item.link === false) {
+    assert(!item.image, "unlinked item has no product image: " + item.id);
+    return;
+  }
   assert(typeof item.link === "string" && item.link.indexOf("tag=bumptobaby0d-20") !== -1, "associates tag on " + item.id);
+  if (!item.image) return;
+  const asin = (String(item.link).match(/\/dp\/([A-Z0-9]{10})/) || [])[1];
+  assert(item.image === "https://m.media-amazon.com/images/P/" + asin + ".01._SL160_.jpg", "thumbnail matches ASIN for " + item.id);
 });
+const sheetsItem = products.items.find((item) => item.id === "sheets");
+assert(sheetsItem.link === "https://www.amazon.com/dp/B09CGM51D1?tag=bumptobaby0d-20", "fitted sheets use the verified Burt's Bees page");
+assert(sheetsItem.image === "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg", "fitted sheets have a catalog thumbnail");
 
 const ids = new Set();
 products.items.forEach((item) => {
@@ -85,6 +94,8 @@ assert(small.owned.length === 0, "first baby does not get the owned-gear list");
 assert(has(small.unsafe, "bumpers") && has(small.unsafe, "inclined-sleepers"), "unsafe sleep items stay visible as skips");
 assert(small.must.find((item) => item.id === "stroller").notes.indexOf(quiz.secondhandNote) !== -1, "budget note on big gear");
 assert(small.must.find((item) => item.id === "car-seat").linkLabel === "https://www.amazon.com/dp/B09Q9H828S?tag=bumptobaby0d-20", "verified car seat link");
+assert(small.must.find((item) => item.id === "sheets").image === "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg", "quiz keeps the sheets thumbnail");
+assert(!small.unsafe.find((item) => item.id === "bumpers").image, "unsafe items are not given a product photo");
 assert(small.must.find((item) => item.id === "detectors").linkLabel === null, "detectors have no product link");
 assert(small.unsafe.find((item) => item.id === "bumpers").linkLabel === null, "unsafe bumpers are not linked for sale");
 assert(small.title === "Your Must-Have List (Budget · Small space · Breastfeeding)", "results title");

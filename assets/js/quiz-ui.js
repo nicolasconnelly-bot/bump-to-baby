@@ -140,42 +140,75 @@
     legend.tabIndex = -1;
   }
 
+  function productMedia(item) {
+    if (item.unsafe || !item.link) return null;
+    if (item.image) {
+      var img = document.createElement("img");
+      img.className = "item-thumb";
+      img.src = item.image;
+      img.alt = "";
+      img.width = 72;
+      img.height = 72;
+      img.loading = "lazy";
+      return img;
+    }
+    var mark = el("span", "item-placeholder");
+    mark.setAttribute("data-category", item.category || "gear");
+    mark.setAttribute("aria-hidden", "true");
+    return mark;
+  }
+
+  function fillCard(card, item, fill) {
+    var media = productMedia(item);
+    var copy = media ? el("div", "item-copy") : card;
+    fill(copy);
+    if (media) {
+      card.classList.add("has-media");
+      var frame = el("div", "item-media");
+      frame.appendChild(media);
+      card.appendChild(frame);
+      card.appendChild(copy);
+    }
+  }
+
   function itemCard(item) {
     var card = el("article", "item-card");
     card.id = "result-" + item.id;
-    var header = el("div", "item-card-head");
-    var title = el("h3");
-    title.textContent = item.name;
-    header.appendChild(title);
-    if (item.badges.length) {
-      item.badges.forEach(function (badge) {
-        var pill = el("p", "badge badge-priority");
-        pill.textContent = badge;
-        header.appendChild(pill);
+    fillCard(card, item, function (copy) {
+      var header = el("div", "item-card-head");
+      var title = el("h3");
+      title.textContent = item.name;
+      header.appendChild(title);
+      if (item.badges.length) {
+        item.badges.forEach(function (badge) {
+          var pill = el("p", "badge badge-priority");
+          pill.textContent = badge;
+          header.appendChild(pill);
+        });
+      }
+      copy.appendChild(header);
+      if (item.planLine) {
+        var plan = el("p", "plan-line");
+        plan.textContent = "Your count: " + item.planLine;
+        copy.appendChild(plan);
+      }
+      if (item.quantityText) {
+        var qty = el("p", "plan-line");
+        qty.textContent = item.quantityText;
+        copy.appendChild(qty);
+      }
+      if (item.pick) {
+        var pick = el("p", "pick");
+        pick.textContent = "Example pick: " + item.pick;
+        copy.appendChild(pick);
+      }
+      item.notes.forEach(function (line) {
+        var note = el("p", "item-note");
+        note.textContent = line;
+        copy.appendChild(note);
       });
-    }
-    card.appendChild(header);
-    if (item.planLine) {
-      var plan = el("p", "plan-line");
-      plan.textContent = "Your count: " + item.planLine;
-      card.appendChild(plan);
-    }
-    if (item.quantityText) {
-      var qty = el("p", "plan-line");
-      qty.textContent = item.quantityText;
-      card.appendChild(qty);
-    }
-    if (item.pick) {
-      var pick = el("p", "pick");
-      pick.textContent = "Example pick: " + item.pick;
-      card.appendChild(pick);
-    }
-    item.notes.forEach(function (line) {
-      var note = el("p", "item-note");
-      note.textContent = line;
-      card.appendChild(note);
+      copy.appendChild(linkLine(item));
     });
-    card.appendChild(linkLine(item));
     return card;
   }
 
@@ -328,17 +361,19 @@
       owned.appendChild(ownedIntro);
       plan.owned.forEach(function (item) {
         var card = el("article", "item-card");
-        var title = el("h3");
-        title.textContent = item.name;
-        var note = el("p", "item-note");
-        note.textContent = item.ownedNote;
-        card.appendChild(title);
-        card.appendChild(note);
-        if (item.pick) {
-          var pick = el("p", "pick");
-          pick.textContent = "If you replace it, an example pick is " + item.pick + ".";
-          card.appendChild(pick);
-        }
+        fillCard(card, item, function (copy) {
+          var title = el("h3");
+          title.textContent = item.name;
+          var note = el("p", "item-note");
+          note.textContent = item.ownedNote;
+          copy.appendChild(title);
+          copy.appendChild(note);
+          if (item.pick) {
+            var pick = el("p", "pick");
+            pick.textContent = "If you replace it, an example pick is " + item.pick + ".";
+            copy.appendChild(pick);
+          }
+        });
         owned.appendChild(card);
       });
       app.appendChild(owned);
@@ -381,13 +416,15 @@
       var hiddenWrap = el("div", "card-stack");
       plan.hidden.forEach(function (item) {
         var card = el("article", "item-card");
-        var title = el("h3");
-        title.textContent = item.name;
-        card.appendChild(title);
-        item.notes.forEach(function (line) {
-          var note = el("p", "item-note");
-          note.textContent = line;
-          card.appendChild(note);
+        fillCard(card, item, function (copy) {
+          var title = el("h3");
+          title.textContent = item.name;
+          copy.appendChild(title);
+          item.notes.forEach(function (line) {
+            var note = el("p", "item-note");
+            note.textContent = line;
+            copy.appendChild(note);
+          });
         });
         hiddenWrap.appendChild(card);
       });

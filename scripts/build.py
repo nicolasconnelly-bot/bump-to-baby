@@ -96,6 +96,20 @@ def link_token(item: dict) -> str | None:
     return PLACEHOLDER
 
 
+def thumb_html(item: dict) -> str:
+    image = item.get("image")
+    if isinstance(image, str) and image:
+        return (
+            f'<img class="item-thumb" src="{esc(image)}" alt="" width="72" height="72" loading="lazy">'
+        )
+    link = item.get("link")
+    if item.get("unsafe") or not isinstance(link, str) or not link:
+        return ""
+    return (
+        f'<span class="item-placeholder" data-category="{esc(item["category"])}" aria-hidden="true"></span>'
+    )
+
+
 def affiliate_html(item: dict) -> str:
     token = link_token(item)
     if token is None:
@@ -469,12 +483,16 @@ def gear_page() -> None:
                 continue
             label, tone = badge_for(item)
             note = f'<p class="item-note">{esc(item["note"])}</p>' if item.get("note") else ""
-            cards.append(
-                f'<article class="item-card" id="{esc(item["id"])}">'
+            media = thumb_html(item)
+            card_class = "item-card has-media" if media else "item-card"
+            body = (
                 f'<div class="item-card-head"><h3>{esc(item["name"])}</h3>'
                 f'<p class="badge {tone}">{esc(label)}</p></div>'
-                f"{quantity_html(item)}{picks_html(item)}{note}{affiliate_html(item)}</article>"
+                f"{quantity_html(item)}{picks_html(item)}{note}{affiliate_html(item)}"
             )
+            if media:
+                body = f'<div class="item-media">{media}</div><div class="item-copy">{body}</div>'
+            cards.append(f'<article class="{card_class}" id="{esc(item["id"])}">{body}</article>')
             description = label
             if item.get("note"):
                 description += ". " + item["note"]
@@ -915,6 +933,8 @@ def validate() -> None:
     for item in PRODUCTS["items"]:
         link = item.get("link", None)
         if link is False:
+            if item.get("image"):
+                raise SystemExit(f"{item['id']} should not have a product image")
             continue
         if not isinstance(link, str) or not link.startswith("https://www.amazon.com/"):
             raise SystemExit(f"{item['id']} needs an Amazon link or link:false")
@@ -925,6 +945,14 @@ def validate() -> None:
                 raise SystemExit(f"{item['id']} has a malformed product-page link")
         elif not link.startswith("https://www.amazon.com/s?k="):
             raise SystemExit(f"{item['id']} link is neither a product page nor a search")
+        image = item.get("image")
+        if image:
+            if "/dp/" not in link:
+                raise SystemExit(f"{item['id']} has an image without a verified product page")
+            asin = link.split("/dp/")[1].split("?")[0]
+            expected = f"https://m.media-amazon.com/images/P/{asin}.01._SL160_.jpg"
+            if image != expected:
+                raise SystemExit(f"{item['id']} image does not match its verified ASIN")
     ids = {item["id"] for item in PRODUCTS["items"]}
     if len(ids) != len(PRODUCTS["items"]):
         raise SystemExit("duplicate product ids")
