@@ -273,6 +273,7 @@ def page(title: str, description: str, path: str, body: str, structured: dict | 
   <meta name="twitter:description" content="{esc(description)}">
   <meta name="twitter:image" content="{esc(OG_IMAGE)}">
   <link rel="icon" href="{site_path("/favicon.svg")}" type="image/svg+xml">
+  <link rel="alternate" type="text/plain" title="llms.txt" href="{site_path("/llms.txt")}">
   <link rel="stylesheet" href="{site_path("/assets/css/style.css")}">
   <script>document.documentElement.classList.add("js")</script>{ld}{MAILERLITE_HEAD if 'class="ml-embedded"' in body else ""}
 </head>
@@ -420,7 +421,7 @@ def quiz_page() -> None:
 <div class="quiz-intro">
 {crumbs([("/quiz/", "Quiz")])}
 <p class="eyebrow">Registry quiz</p>
-<h1>What do we actually need?</h1>
+<h1>What do you actually need?</h1>
 <p class="lede">Eight questions. Your answers stay in this browser and build a must-have list from the gear guide. We don't receive them.</p>
 <ol class="check-list">{topics}</ol>
 </div>
