@@ -6,20 +6,20 @@
   <meta name="btb-base" content="/bump-to-baby">
   <meta name="theme-color" content="#23483d">
   <title>Privacy · Bump to Baby</title>
-  <meta name="description" content="How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics.">
+  <meta name="description" content="How the Bump to Baby site handles quiz answers, the local due date, and the MailerLite newsletter signup.">
   <link rel="canonical" href="https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Bump to Baby">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Privacy · Bump to Baby">
-  <meta property="og:description" content="How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics.">
+  <meta property="og:description" content="How the Bump to Baby site handles quiz answers, the local due date, and the MailerLite newsletter signup.">
   <meta property="og:url" content="https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/">
   <meta property="og:image" content="https://nicolasconnelly-bot.github.io/bump-to-baby/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Privacy · Bump to Baby">
-  <meta name="twitter:description" content="How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics.">
+  <meta name="twitter:description" content="How the Bump to Baby site handles quiz answers, the local due date, and the MailerLite newsletter signup.">
   <meta name="twitter:image" content="https://nicolasconnelly-bot.github.io/bump-to-baby/assets/og.png">
   <link rel="icon" href="/bump-to-baby/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/bump-to-baby/assets/css/style.css">
@@ -57,7 +57,7 @@
       "@type": "WebPage",
       "name": "Privacy",
       "url": "https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/",
-      "description": "How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics."
+      "description": "How the Bump to Baby site handles quiz answers, the local due date, and the MailerLite newsletter signup."
     }
   ]
 }
@@ -77,13 +77,14 @@
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/bump-to-baby/">Home</a> / <span>Privacy</span></nav>
 <p class="eyebrow">Privacy</p>
 <h1>Privacy</h1>
-<p class="lede">Updated 2026-10-14. Bump to Baby is a static website. It has no accounts and no analytics.</p>
+<p class="lede">Updated 2026-10-14. Bump to Baby is a static website. It has no accounts.</p>
 <div class="prose">
   <h2>What stays in your browser</h2>
   <p>The registry quiz runs on your device. Answers are put in the page address when you see results, so you can refresh that list. They are not sent to us.</p>
   <p>If you enter a due date, the page saves it in this browser under the local storage key <code>btb-due</code>. That lets the timeline highlight your week when you come back. You can clear it by deleting site data for this address in your browser.</p>
   <h2>Email</h2>
-  <p>The newsletter form is a placeholder. It does not submit your email to a server. The email field has no name, so even without JavaScript it is not added to the address bar. If the site owner later pastes a MailerLite embed, that company's privacy policy will apply. MailerLite is not connected in this repository.</p>
+  <p>The newsletter signup is a MailerLite embedded form named Bump to Baby Signup. It asks for an email address and a due date. Submitting it sends those two fields to MailerLite, which runs the mailing list. MailerLite's privacy policy applies to that submission. Pages that show the form also load MailerLite's script from <code>assets.mailerlite.com</code>.</p>
+  <p>A due date entered on the timeline stays in this browser. That saved date is not sent to MailerLite unless you also submit the newsletter form.</p>
   <h2>Affiliate links</h2>
   <p>Some gear links go to Amazon and include an Associates tag. Amazon handles those visits under its own privacy policy. This site does not receive your Amazon account details. See the <a href="/bump-to-baby/affiliate-disclosure/">affiliate disclosure</a>.</p>
   <h2>Hosting</h2>

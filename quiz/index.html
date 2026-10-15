@@ -62,6 +62,15 @@
   ]
 }
   </script>
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2715249');
+  </script>
+  <!-- End MailerLite Universal -->
 </head>
 <body>
 
@@ -88,26 +97,10 @@
   </noscript>
 </div>
 
-<section class="newsletter" id="newsletter" aria-label="Newsletter signup">
+<section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
   <div class="newsletter-copy"><h2 id="newsletter-heading">Want the weekly version?</h2>
-        <p>Enter a due date and email. This preview form does not send anything until a MailerLite embed replaces it.</p></div>
-  <!-- MAILERLITE EMBED START
-       Replace this form with your MailerLite embed snippet
-       (MailerLite: Forms, then your form, then Embed code).
-       The static site does not collect email addresses.
-       MAILERLITE EMBED END -->
-  <form class="newsletter-form" data-newsletter-placeholder="mailerlite" method="get" action="/bump-to-baby/timeline/">
-    <div class="field">
-      <label for="newsletter-email">Email</label>
-      <input id="newsletter-email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-describedby="newsletter-status">
-    </div>
-    <div class="field">
-      <label for="newsletter-due">Due date <span class="optional">(optional)</span></label>
-      <input id="newsletter-due" name="due" type="date">
-    </div>
-    <button class="button" type="submit">Get the weekly plan</button>
-    <p id="newsletter-status" class="form-note" role="status" data-newsletter-status>Placeholder only. Paste a MailerLite embed over this form when you are ready. Nothing is stored on a server.</p>
-  </form>
+        <p>One note a week with what to buy now, keyed to your due date. Add your email and due date below.</p></div>
+  <div class="ml-embedded" data-form="nv7GCt"></div>
 </section>
 
 </main>

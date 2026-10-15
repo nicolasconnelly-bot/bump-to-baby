@@ -6,20 +6,20 @@
   <meta name="btb-base" content="/bump-to-baby">
   <meta name="theme-color" content="#23483d">
   <title>Newsletter · Bump to Baby</title>
-  <meta name="description" content="Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet.">
+  <meta name="description" content="One email a week of buy-now and can-wait notes, keyed to your due date. Signup asks for your email and due date.">
   <link rel="canonical" href="https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Bump to Baby">
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Newsletter · Bump to Baby">
-  <meta property="og:description" content="Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet.">
+  <meta property="og:description" content="One email a week of buy-now and can-wait notes, keyed to your due date. Signup asks for your email and due date.">
   <meta property="og:url" content="https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/">
   <meta property="og:image" content="https://nicolasconnelly-bot.github.io/bump-to-baby/assets/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Newsletter · Bump to Baby">
-  <meta name="twitter:description" content="Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet.">
+  <meta name="twitter:description" content="One email a week of buy-now and can-wait notes, keyed to your due date. Signup asks for your email and due date.">
   <meta name="twitter:image" content="https://nicolasconnelly-bot.github.io/bump-to-baby/assets/og.png">
   <link rel="icon" href="/bump-to-baby/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/bump-to-baby/assets/css/style.css">
@@ -57,11 +57,20 @@
       "@type": "WebPage",
       "name": "Newsletter",
       "url": "https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/",
-      "description": "Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet."
+      "description": "One email a week of buy-now and can-wait notes, keyed to your due date. Signup asks for your email and due date."
     }
   ]
 }
   </script>
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2715249');
+  </script>
+  <!-- End MailerLite Universal -->
 </head>
 <body>
 
@@ -77,38 +86,13 @@
 <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/bump-to-baby/">Home</a> / <span>Newsletter</span></nav>
 <p class="eyebrow">Email</p>
 <h1>Weekly notes for your due date</h1>
-<p class="lede">The timeline is already published as web pages, one per week. The email version is the same set of notes. The form below is ready for a MailerLite embed and does not collect addresses yet.</p>
+<p class="lede">One email a week, matched to your due date. Each note says what to buy now and what can wait, from 28 weeks before the due date through the first month home.</p>
 
 <section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
   <div class="newsletter-copy"><p class="eyebrow">Newsletter</p>
         <h2 id="newsletter-heading">One week at a time, by email</h2>
-        <p>The same 32 notes as the timeline, from 28 weeks before your due date through the first month home. Submitting this preview does not send your email anywhere.</p></div>
-  <!-- MAILERLITE EMBED START
-       Replace this form with your MailerLite embed snippet
-       (MailerLite: Forms, then your form, then Embed code).
-       The static site does not collect email addresses.
-       MAILERLITE EMBED END -->
-  <form class="newsletter-form" data-newsletter-placeholder="mailerlite" method="get" action="/bump-to-baby/timeline/">
-    <div class="field">
-      <label for="newsletter-email">Email</label>
-      <input id="newsletter-email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-describedby="newsletter-status">
-    </div>
-    <div class="field">
-      <label for="newsletter-due">Due date <span class="optional">(optional)</span></label>
-      <input id="newsletter-due" name="due" type="date">
-    </div>
-    <button class="button" type="submit">Get the weekly plan</button>
-    <p id="newsletter-status" class="form-note" role="status" data-newsletter-status>Placeholder only. Paste a MailerLite embed over this form when you are ready. Nothing is stored on a server.</p>
-  </form>
-</section>
-<section class="section prose">
-  <h2>How to connect MailerLite</h2>
-  <ol>
-    <li>In MailerLite, create a form and copy its embed code.</li>
-    <li>In each generated page, replace the form inside the comment marked MAILERLITE EMBED.</li>
-    <li>Rebuild, or paste the embed into <code>scripts/build.py</code> if you want every page to share it.</li>
-  </ol>
-  <p>No paid service is wired up in this repository. GitHub Pages will keep serving the placeholder until you replace it.</p>
+        <p>Each week you get the buy-now note for where you are, from 28 weeks before your due date through the first month home. The form asks for your email and due date so those notes can follow that date.</p></div>
+  <div class="ml-embedded" data-form="nv7GCt"></div>
 </section>
 
 </main>

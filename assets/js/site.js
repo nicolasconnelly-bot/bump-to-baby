@@ -39,25 +39,10 @@
     if (!input.value && saved) input.value = saved;
   });
 
-  document.querySelectorAll("[data-due-redirect], [data-newsletter-placeholder]").forEach(function (form) {
+  document.querySelectorAll("[data-due-redirect]").forEach(function (form) {
     form.addEventListener("submit", function () {
       var due = form.querySelector('input[type="date"][name="due"]');
       if (due && due.value) storeDue(due.value);
-    });
-  });
-
-  document.querySelectorAll("[data-newsletter-placeholder]").forEach(function (form) {
-    form.addEventListener("submit", function (event) {
-      var email = form.querySelector('input[type="email"]');
-      if (email && !email.checkValidity()) return;
-      event.preventDefault();
-      var due = form.querySelector('input[type="date"][name="due"]');
-      var status = form.querySelector("[data-newsletter-status]");
-      if (!status) return;
-      var extra = due && due.value
-        ? " Your due date was saved in this browser so the timeline can highlight your week."
-        : "";
-      status.textContent = "Nothing was sent. This form is a placeholder for a MailerLite embed, so the email stayed on this page." + extra;
     });
   });
 })();

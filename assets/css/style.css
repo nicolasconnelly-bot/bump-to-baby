@@ -300,6 +300,7 @@ input[type="text"] {
   padding: 1.15rem;
   margin-top: 2rem;
 }
+.ml-embedded { min-height: 8rem; }
 
 .callout {
   background: var(--blush);
