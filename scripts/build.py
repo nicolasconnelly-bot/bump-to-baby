@@ -99,6 +99,8 @@ def link_token(item: dict) -> str | None:
 def affiliate_html(item: dict) -> str:
     token = link_token(item)
     if token is None:
+        if item.get("unsafe"):
+            return '<p class="affiliate">No product link. This item is unsafe for sleep, so it is not for sale here.</p>'
         return '<p class="affiliate">No product link. This is a task, not a store listing.</p>'
     if token.startswith("http://") or token.startswith("https://"):
         return (
@@ -177,6 +179,7 @@ def footer() -> str:
       <h2>About this site</h2>
       <p class="fine-print">Bump to Baby is a free planning guide for expecting parents. It runs as a static site: the quiz stays in your browser, and the week-by-week notes are ordinary web pages.</p>
       <p class="fine-print">General information only. Safe-sleep, car-seat, and medicine notes are not personal medical advice. <a href="{site_path("/disclaimer/")}">Read the disclaimer</a>.</p>
+      <p class="fine-print">As an Amazon Associate I earn from qualifying purchases.</p>
     </div>
     <div>
       <h2>Explore</h2>
@@ -755,7 +758,7 @@ def privacy_page() -> None:
   <h2>Email</h2>
   <p>The newsletter form is a placeholder. It does not submit your email to a server. The email field has no name, so even without JavaScript it is not added to the address bar. If the site owner later pastes a MailerLite embed, that company's privacy policy will apply. MailerLite is not connected in this repository.</p>
   <h2>Affiliate links</h2>
-  <p>Product links are the placeholder <code translate="no">{esc(PLACEHOLDER)}</code> until someone replaces them. A placeholder does not contact a store. A real link, once substituted, would be handled by that store. See the <a href="{site_path("/affiliate-disclosure/")}">affiliate disclosure</a>.</p>
+  <p>Some gear links go to Amazon and include an Associates tag. Amazon handles those visits under its own privacy policy. This site does not receive your Amazon account details. See the <a href="{site_path("/affiliate-disclosure/")}">affiliate disclosure</a>.</p>
   <h2>Hosting</h2>
   <p>GitHub Pages hosts the files and may keep ordinary server logs. This site does not add tracking pixels or advertising cookies of its own.</p>
   <h2>Children</h2>
@@ -778,19 +781,20 @@ def affiliate_page() -> None:
 <h1>Affiliate disclosure</h1>
 <p class="lede">Updated {esc(PUBLISHED)}. This site is an editorial gear list. It does not show prices, star ratings, or customer reviews.</p>
 <div class="prose">
-  <h2>The link placeholder</h2>
-  <p>Every commercial item uses the token <code translate="no">{esc(PLACEHOLDER)}</code>. That token lives in <code>data/products.json</code>. Replace it with a full https URL, then rebuild, and the pages and quiz will use the new link. Until then, the token is shown as text and is not a live link.</p>
-  <h2>If those links become affiliate links</h2>
-  <p>The site owner may earn a commission when someone buys through a future affiliate link. That commission would not add a fee on this site. Recommendations come from the editorial list, not from who might pay a commission later.</p>
+  <p>As an Amazon Associate I earn from qualifying purchases.</p>
+  <h2>Amazon links</h2>
+  <p>Commercial items link to Amazon with Associates tag <code>bumptobaby0d-20</code>. A product-page link is used only when that ASIN was checked against the named product. Other items open an Amazon search for the product name. Links open in a new tab.</p>
+  <p>The site owner may earn a commission when someone buys through these links. That commission does not add a fee on this site. Recommendations come from the editorial list, not from who pays a commission.</p>
+  <h2>Items with no store link</h2>
+  <p>Smoke and carbon monoxide detectors, and saline drops, are tasks rather than a single product, so they have no store link. Crib bumpers and inclined sleepers are unsafe for sleep, so this site does not link to them for sale.</p>
   <h2>Example picks</h2>
-  <p>Named products are widely sold examples so a list is easier to picture. They are not paid placements, and they are not a promise that a model is current. Check the latest version, the manual, and any recall before you buy.</p>
-  <p>Some items have no brand on purpose: smoke and carbon monoxide detectors, saline drops, a mini crib, a sun shade, and a few daycare extras. Inventing a model name would not help.</p>
+  <p>Named products are widely sold examples so a list is easier to picture. They are not a promise that a model is current. Check the latest version, the manual, and any recall before you buy.</p>
 </div>
 """
     simple_page(
         "/affiliate-disclosure/",
         "Affiliate disclosure",
-        "How affiliate link placeholders work on Bump to Baby. Example product picks are editorial, and this site shows no prices or reviews.",
+        "Bump to Baby uses Amazon Associates links with tag bumptobaby0d-20. Example picks are editorial, and this site shows no prices or reviews.",
         body,
     )
 
@@ -877,8 +881,10 @@ def llms() -> None:
         "",
         "> Free static guide for expecting parents: an 8-question registry quiz, a 32-week buying timeline, and a master gear list. Not medical advice. No prices, ratings, or reviews.",
         "",
-        "The quiz runs in the browser. Product links are the placeholder "
-        f"`{PLACEHOLDER}` in `data/products.json` until a real URL replaces them. "
+        "The quiz runs in the browser. Product links in `data/products.json` go to Amazon "
+        "with Associates tag `bumptobaby0d-20`. A product page is used only when that ASIN "
+        "was checked against the named product; other items use an Amazon search. "
+        "As an Amazon Associate I earn from qualifying purchases. "
         "Safe sleep, car seats, and medicine notes are general. Parents should talk with their clinicians and a certified car seat technician.",
         "",
         "## Start here",
@@ -890,7 +896,7 @@ def llms() -> None:
         f"- [Newsletter]({canonical('/newsletter/')}): Placeholder form for a future MailerLite embed. It does not collect email.",
         f"- [Disclaimer]({canonical('/disclaimer/')}): Medical, safe-sleep, car-seat, and medicine limits.",
         f"- [Privacy]({canonical('/privacy/')}): No accounts, no analytics, local due date only.",
-        f"- [Affiliate disclosure]({canonical('/affiliate-disclosure/')}): How the link placeholder works.",
+        f"- [Affiliate disclosure]({canonical('/affiliate-disclosure/')}): Amazon Associates links and the commission disclosure.",
         "",
         "## Week-by-week timeline",
         "",
@@ -918,8 +924,23 @@ def llms() -> None:
 
 
 def validate() -> None:
-    if PLACEHOLDER != "{{AFFILIATE_LINK}}":
-        raise SystemExit("affiliate placeholder must stay {{AFFILIATE_LINK}} until an editor changes it")
+    blob = json.dumps(PRODUCTS)
+    if "{{AFFILIATE_LINK}}" in blob or PLACEHOLDER:
+        raise SystemExit("affiliate placeholder should be empty; each item needs its own link")
+    tag = "tag=bumptobaby0d-20"
+    for item in PRODUCTS["items"]:
+        link = item.get("link", None)
+        if link is False:
+            continue
+        if not isinstance(link, str) or not link.startswith("https://www.amazon.com/"):
+            raise SystemExit(f"{item['id']} needs an Amazon link or link:false")
+        if tag not in link:
+            raise SystemExit(f"{item['id']} is missing the Associates tag")
+        if "/dp/" in link:
+            if not re.fullmatch(r"https://www\.amazon\.com/dp/[A-Z0-9]{10}\?tag=bumptobaby0d-20", link):
+                raise SystemExit(f"{item['id']} has a malformed product-page link")
+        elif not link.startswith("https://www.amazon.com/s?k="):
+            raise SystemExit(f"{item['id']} link is neither a product page nor a search")
     ids = {item["id"] for item in PRODUCTS["items"]}
     if len(ids) != len(PRODUCTS["items"]):
         raise SystemExit("duplicate product ids")

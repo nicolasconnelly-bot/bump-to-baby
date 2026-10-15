@@ -101,7 +101,7 @@ class Parser(HTMLParser):
             href = attr.get("href", "")
             if href == "#content":
                 self.has_skip = True
-            self.links.append(("a", href))
+            self.links.append(("a", href, attr.get("rel", ""), attr.get("target", "")))
         if tag in {"img", "script", "link"} and (attr.get("src") or attr.get("href")):
             ref = attr.get("src") or attr.get("href") or ""
             rel = attr.get("rel", "")
@@ -180,9 +180,29 @@ def check_files() -> None:
     for rel in REQUIRED_PAGES:
         if not (ROOT / rel).exists():
             fail("missing " + rel)
-    products = (ROOT / "data" / "products.json").read_text(encoding="utf-8")
-    if products.count("{{AFFILIATE_LINK}}") < 1:
-        fail("products.json lost the affiliate placeholder")
+    products_text = (ROOT / "data" / "products.json").read_text(encoding="utf-8")
+    if "{{AFFILIATE_LINK}}" in products_text:
+        fail("products.json still contains {{AFFILIATE_LINK}}")
+    products = json.loads(products_text)
+    tag = "tag=bumptobaby0d-20"
+    dp_count = search_count = unlinked = 0
+    for item in products["items"]:
+        link = item.get("link")
+        if link is False:
+            unlinked += 1
+            continue
+        if not isinstance(link, str) or tag not in link or not link.startswith("https://www.amazon.com/"):
+            fail(f"{item['id']} is missing an Amazon affiliate link")
+            continue
+        if "/dp/" in link:
+            dp_count += 1
+        elif link.startswith("https://www.amazon.com/s?k="):
+            search_count += 1
+        else:
+            fail(f"{item['id']} link is neither a product page nor a search")
+    print(f"affiliate links: {dp_count} verified /dp/, {search_count} search, {unlinked} unlinked")
+    if dp_count < 1 or search_count < 1:
+        fail("expected both verified product pages and search links")
     weeks = json.loads((ROOT / "data" / "weeks.json").read_text(encoding="utf-8"))["weeks"]
     if len(weeks) != 32:
         fail("weeks.json does not have 32 weeks")
@@ -191,7 +211,7 @@ def check_files() -> None:
         if not page.exists():
             fail("missing week page " + week["id"])
     if not (ROOT / ".nojekyll").exists():
-        fail("missing .nojekyll — GitHub Pages would strip {{AFFILIATE_LINK}}")
+        fail("missing .nojekyll")
     robots = (ROOT / "robots.txt").read_text(encoding="utf-8")
     if f"Sitemap: {ORIGIN}/sitemap.xml" not in robots:
         fail("robots.txt sitemap URL")
@@ -203,9 +223,17 @@ def check_files() -> None:
             fail("sitemap missing " + loc)
         if loc not in llms:
             fail("llms.txt missing " + loc)
+    disclosure = "As an Amazon Associate I earn from qualifying purchases."
     gear = (ROOT / "gear" / "index.html").read_text(encoding="utf-8")
-    if gear.count("{{AFFILIATE_LINK}}") < 40:
-        fail("gear page should show the affiliate placeholder on commercial items")
+    if gear.count("tag=bumptobaby0d-20") < 40:
+        fail("gear page should show Amazon affiliate links on commercial items")
+    if 'rel="sponsored nofollow noopener"' not in gear or 'target="_blank"' not in gear:
+        fail("gear affiliate links need rel and target")
+    if disclosure not in gear:
+        fail("footer missing the Amazon Associates disclosure")
+    affiliate = (ROOT / "affiliate-disclosure" / "index.html").read_text(encoding="utf-8")
+    if disclosure not in affiliate:
+        fail("affiliate disclosure page missing the Amazon Associates sentence")
     if "MailerLite" not in (ROOT / "newsletter" / "index.html").read_text(encoding="utf-8"):
         fail("newsletter page missing MailerLite placeholder")
     disclaimer = (ROOT / "disclaimer" / "index.html").read_text(encoding="utf-8")
@@ -229,12 +257,12 @@ def check_html() -> None:
         seen.add(path)
         text = path.read_text(encoding="utf-8")
         tokens = set(re.findall(r"\{\{[^}]+\}\}", text))
-        extra = tokens - {"{{AFFILIATE_LINK}}"}
-        if extra:
-            fail(f"{path.relative_to(ROOT)} has unexpected placeholders {extra}")
+        if tokens:
+            fail(f"{path.relative_to(ROOT)} has unexpected placeholders {tokens}")
         if re.search(r"\$\s?\d", text):
             fail(f"{path.relative_to(ROOT)} contains a price")
-        for percent in re.findall(r"\d+\s*[–-]\s*\d+\s*%|\d+\s*%", text):
+        copy = re.sub(r'href="[^"]*"', "", text)
+        for percent in re.findall(r"\d+\s*[–-]\s*\d+\s*%|\d+\s*%", copy):
             compact = percent.replace(" ", "")
             if compact not in {"10–15%", "10-15%"}:
                 fail(f"{path.relative_to(ROOT)} has unexpected percent {percent}")
@@ -273,7 +301,10 @@ def check_html() -> None:
             input_id = attr.get("id", "")
             if input_id not in parser.labels and not attr.get("aria-label"):
                 fail(f"{path.relative_to(ROOT)} input {input_id or attr.get('type')} has no label")
-        for kind, href in parser.links:
+        for entry in parser.links:
+            kind, href = entry[0], entry[1]
+            rel = entry[2] if len(entry) > 2 else ""
+            target = entry[3] if len(entry) > 3 else ""
             if not href or href.startswith("#") or href.startswith("mailto:") or href.startswith("data:"):
                 if href.startswith("#") and href != "#content":
                     anchor = href[1:]
@@ -286,6 +317,12 @@ def check_html() -> None:
             parsed = urlparse(href)
             if parsed.scheme in {"http", "https"} and not href.startswith(ORIGIN) and not href.startswith(HOST + BASE):
                 bare = href.split("#", 1)[0]
+                if parsed.netloc == "www.amazon.com":
+                    if "tag=bumptobaby0d-20" not in href:
+                        fail(f"{path.relative_to(ROOT)} Amazon link missing the Associates tag: {href}")
+                    if kind == "a" and (rel != "sponsored nofollow noopener" or target != "_blank"):
+                        fail(f"{path.relative_to(ROOT)} Amazon link missing rel or target: {href}")
+                    continue
                 if bare not in EXTERNAL_OK and not bare.startswith(ORIGIN):
                     fail(f"{path.relative_to(ROOT)} unexpected external link {href}")
                 continue
@@ -324,7 +361,7 @@ def browser_check() -> None:
     quiz = base + "/quiz/?tier=mid&space=nursery&feed=combo&season=fall&move=mix&first=yes&care=home&laundry=normal"
     checks = {
         base + "/": ["What do you actually need?", "Start the quiz"],
-        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "{{AFFILIATE_LINK}}", "Video monitor", "4–6 bottles"],
+        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles"],
         base + "/timeline/w-12/": ["Buy and Install the Car Seat", "Buy now", "Car seat"],
     }
     profiles: list[Path] = []
