@@ -2,7 +2,7 @@
 
 > Free static guide for expecting parents: an 8-question registry quiz, a 32-week buying timeline, and a master gear list. Not medical advice. No prices, ratings, or reviews.
 
-The quiz runs in the browser. Product links are the placeholder `{{AFFILIATE_LINK}}` in `data/products.json` until a real URL replaces them. Safe sleep, car seats, and medicine notes are general. Parents should talk with their clinicians and a certified car seat technician.
+The quiz runs in the browser. Product links in `data/products.json` go to Amazon with Associates tag `bumptobaby0d-20`. A product page is used only when that ASIN was checked against the named product; other items use an Amazon search. As an Amazon Associate I earn from qualifying purchases. Safe sleep, car seats, and medicine notes are general. Parents should talk with their clinicians and a certified car seat technician.
 
 ## Start here
 
@@ -13,7 +13,7 @@ The quiz runs in the browser. Product links are the placeholder `{{AFFILIATE_LIN
 - [Newsletter](https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/): Placeholder form for a future MailerLite embed. It does not collect email.
 - [Disclaimer](https://nicolasconnelly-bot.github.io/bump-to-baby/disclaimer/): Medical, safe-sleep, car-seat, and medicine limits.
 - [Privacy](https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/): No accounts, no analytics, local due date only.
-- [Affiliate disclosure](https://nicolasconnelly-bot.github.io/bump-to-baby/affiliate-disclosure/): How the link placeholder works.
+- [Affiliate disclosure](https://nicolasconnelly-bot.github.io/bump-to-baby/affiliate-disclosure/): Amazon Associates links and the commission disclosure.
 
 ## Week-by-week timeline
 

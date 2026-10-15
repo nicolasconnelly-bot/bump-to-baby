@@ -182,7 +182,9 @@
   function linkLine(item) {
     var line = el("p", "affiliate");
     if (!item.linkLabel) {
-      line.textContent = "No product link. This is a task, not a store listing.";
+      line.textContent = item.unsafe
+        ? "No product link. This item is unsafe for sleep, so it is not for sale here."
+        : "No product link. This is a task, not a store listing.";
       return line;
     }
     if (item.linkLabel.indexOf("{{") !== -1) {

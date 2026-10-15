@@ -2,7 +2,7 @@
 
 A free static site for expecting parents: an 8-question registry quiz, a 32-week buying timeline, and a master gear list. It is plain HTML, CSS, and JavaScript. GitHub Pages can serve it from `main` with no build runner and no paid services.
 
-Quiz answers stay in the browser. There is no backend, no account, and no analytics. Product links are the placeholder `{{AFFILIATE_LINK}}` until you swap them.
+Quiz answers stay in the browser. There is no backend, no account, and no analytics. Product links go to Amazon with Associates tag `bumptobaby0d-20`.
 
 ## Pages
 
@@ -29,13 +29,11 @@ After any edit, rebuild:
 python3 scripts/build.py
 ```
 
-Generated HTML is committed so GitHub Pages does not need a build step. `.nojekyll` is required: without it, Jekyll/Liquid would erase `{{AFFILIATE_LINK}}`.
+Generated HTML is committed so GitHub Pages does not need a build step. `.nojekyll` keeps GitHub Pages from running Jekyll on these files.
 
-## Swap affiliate links
+## Affiliate links
 
-In `data/products.json`, replace `{{AFFILIATE_LINK}}` with a full `https://` URL. You can replace the shared placeholder or set a `link` on one item. Use `"link": false` for tasks that should never have a store link (smoke detectors, saline drops).
-
-Items that still use the placeholder show the token as text. They do not link out. Rebuild after you change the file.
+Each item in `data/products.json` has its own `link`. A `https://www.amazon.com/dp/<ASIN>?tag=bumptobaby0d-20` URL is used only when that ASIN was checked against the named product. Other items use `https://www.amazon.com/s?k=<product name>&tag=bumptobaby0d-20`. Use `"link": false` for tasks and for unsafe sleep items that should not be offered for sale. Rebuild after you change a link.
 
 ## Newsletter
 
@@ -47,7 +45,7 @@ The form is a MailerLite placeholder. Submitting it does not send email. To conn
 python3 scripts/smoke_test.py
 ```
 
-That rebuilds, checks internal links, titles, meta descriptions, Open Graph tags, JSON-LD, the sitemap, `llms.txt`, and the affiliate placeholder, and opens the quiz in headless Chrome.
+That rebuilds, checks internal links, titles, meta descriptions, Open Graph tags, JSON-LD, the sitemap, `llms.txt`, and the Amazon affiliate links, and opens the quiz in headless Chrome.
 
 Preview locally with the GitHub Pages base path:
 

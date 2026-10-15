@@ -1,6 +1,6 @@
 {
-  "affiliatePlaceholder": "{{AFFILIATE_LINK}}",
-  "howToSwapLinks": "Replace {{AFFILIATE_LINK}} with a full https URL on any item, or replace every copy at once. Items still set to the placeholder show the token as text and do not link out. Set link to false when an item should never have a product link.",
+  "affiliatePlaceholder": null,
+  "howToSwapLinks": "Each item has its own link. A /dp/ URL is used only when that ASIN was checked against the named product. Other items use an Amazon search URL. Both include Associates tag bumptobaby0d-20. Set link to false when an item should never have a store link.",
   "categories": [
     {
       "id": "nursery",
@@ -51,6 +51,7 @@
   "items": [
     {
       "id": "crib",
+      "link": "https://www.amazon.com/s?k=Crib+%28meets+current+safety+standards%29&tag=bumptobaby0d-20",
       "name": "Crib (meets current safety standards)",
       "category": "nursery",
       "status": "must",
@@ -67,6 +68,7 @@
     },
     {
       "id": "mini-crib",
+      "link": "https://www.amazon.com/s?k=Mini+or+compact+crib&tag=bumptobaby0d-20",
       "name": "Mini or compact crib",
       "category": "nursery",
       "status": "exclude",
@@ -79,6 +81,7 @@
     },
     {
       "id": "mattress",
+      "link": "https://www.amazon.com/s?k=Firm+crib+mattress&tag=bumptobaby0d-20",
       "name": "Firm crib mattress",
       "category": "nursery",
       "status": "must",
@@ -95,6 +98,7 @@
     },
     {
       "id": "sheets",
+      "link": "https://www.amazon.com/s?k=Fitted+crib+sheets+%282%E2%80%933%29&tag=bumptobaby0d-20",
       "name": "Fitted crib sheets (2–3)",
       "category": "nursery",
       "status": "must",
@@ -108,6 +112,7 @@
     },
     {
       "id": "protector",
+      "link": "https://www.amazon.com/s?k=Waterproof+mattress+protector+%282%29&tag=bumptobaby0d-20",
       "name": "Waterproof mattress protector (2)",
       "category": "nursery",
       "status": "must",
@@ -121,6 +126,7 @@
     },
     {
       "id": "dresser",
+      "link": "https://www.amazon.com/s?k=Dresser+%2B+changing+topper&tag=bumptobaby0d-20",
       "name": "Dresser + changing topper",
       "category": "nursery",
       "status": "nice",
@@ -136,6 +142,7 @@
     },
     {
       "id": "changing-pad",
+      "link": "https://www.amazon.com/dp/B01BM2CPM0?tag=bumptobaby0d-20",
       "name": "Changing pad + 2 covers",
       "category": "nursery",
       "status": "must",
@@ -149,6 +156,7 @@
     },
     {
       "id": "glider",
+      "link": "https://www.amazon.com/s?k=Glider+or+rocker&tag=bumptobaby0d-20",
       "name": "Glider or rocker",
       "category": "nursery",
       "status": "nice",
@@ -164,6 +172,7 @@
     },
     {
       "id": "blackout",
+      "link": "https://www.amazon.com/s?k=Blackout+curtains&tag=bumptobaby0d-20",
       "name": "Blackout curtains",
       "category": "nursery",
       "status": "must",
@@ -177,6 +186,7 @@
     },
     {
       "id": "white-noise",
+      "link": "https://www.amazon.com/dp/B006Z8J9I0?tag=bumptobaby0d-20",
       "name": "White noise machine",
       "category": "nursery",
       "status": "must",
@@ -190,6 +200,7 @@
     },
     {
       "id": "anchors",
+      "link": "https://www.amazon.com/s?k=Furniture+anchors&tag=bumptobaby0d-20",
       "name": "Furniture anchors",
       "category": "nursery",
       "status": "must",
@@ -203,6 +214,7 @@
     },
     {
       "id": "changing-table",
+      "link": "https://www.amazon.com/s?k=Changing+table+%28standalone%29&tag=bumptobaby0d-20",
       "name": "Changing table (standalone)",
       "category": "nursery",
       "status": "skip",
@@ -212,6 +224,7 @@
     },
     {
       "id": "bumpers",
+      "link": false,
       "name": "Crib bumpers, pillows, quilts",
       "category": "nursery",
       "status": "skip",
@@ -222,6 +235,7 @@
     },
     {
       "id": "bassinet",
+      "link": "https://www.amazon.com/s?k=Bassinet+%28first+months%29&tag=bumptobaby0d-20",
       "name": "Bassinet (first months)",
       "category": "sleep",
       "status": "nice",
@@ -237,6 +251,7 @@
     },
     {
       "id": "swaddles",
+      "link": "https://www.amazon.com/s?k=Swaddles+%283%E2%80%934%29&tag=bumptobaby0d-20",
       "name": "Swaddles (3–4)",
       "category": "sleep",
       "status": "must",
@@ -250,6 +265,7 @@
     },
     {
       "id": "sleep-sacks",
+      "link": "https://www.amazon.com/s?k=Wearable+sleep+sacks+%282%E2%80%933%29&tag=bumptobaby0d-20",
       "name": "Wearable sleep sacks (2–3)",
       "category": "sleep",
       "status": "must",
@@ -263,6 +279,7 @@
     },
     {
       "id": "monitor",
+      "link": "https://www.amazon.com/dp/B00MH7VQUC?tag=bumptobaby0d-20",
       "name": "Video monitor",
       "category": "sleep",
       "status": "nice",
@@ -276,6 +293,7 @@
     },
     {
       "id": "play-yard",
+      "link": "https://www.amazon.com/dp/B00ZSQWWQG?tag=bumptobaby0d-20",
       "name": "Play yard",
       "category": "sleep",
       "status": "nice",
@@ -291,6 +309,7 @@
     },
     {
       "id": "inclined-sleepers",
+      "link": false,
       "name": "Inclined sleepers, sleep positioners",
       "category": "sleep",
       "status": "skip",
@@ -301,6 +320,7 @@
     },
     {
       "id": "clothing-newborn",
+      "link": "https://www.amazon.com/s?k=Newborn+clothing&tag=bumptobaby0d-20",
       "name": "Newborn clothing",
       "category": "clothing",
       "status": "nice",
@@ -311,16 +331,37 @@
         "premium": "Kyte Baby, Hanna Andersson"
       },
       "quantities": [
-        {"item": "bodysuits", "low": 5, "high": 7},
-        {"item": "sleepers or footies", "low": 4, "high": 6},
-        {"item": "pants", "low": 2, "high": 3},
-        {"item": "socks", "low": 4, "high": 6},
-        {"item": "hats", "low": 2, "high": 2}
+        {
+          "item": "bodysuits",
+          "low": 5,
+          "high": 7
+        },
+        {
+          "item": "sleepers or footies",
+          "low": 4,
+          "high": 6
+        },
+        {
+          "item": "pants",
+          "low": 2,
+          "high": 3
+        },
+        {
+          "item": "socks",
+          "low": 4,
+          "high": 6
+        },
+        {
+          "item": "hats",
+          "low": 2,
+          "high": 2
+        }
       ],
       "note": "Some babies skip this size. Keep the tags on. Gifts often cover it."
     },
     {
       "id": "clothing-0-3",
+      "link": "https://www.amazon.com/s?k=0%E2%80%933+month+clothing&tag=bumptobaby0d-20",
       "name": "0–3 month clothing",
       "category": "clothing",
       "status": "must",
@@ -331,16 +372,37 @@
         "premium": "Kyte Baby, Hanna Andersson"
       },
       "quantities": [
-        {"item": "bodysuits", "low": 7, "high": 10},
-        {"item": "sleepers or footies", "low": 6, "high": 8},
-        {"item": "pants", "low": 3, "high": 5},
-        {"item": "socks", "low": 6, "high": 6},
-        {"item": "hats", "low": 2, "high": 2}
+        {
+          "item": "bodysuits",
+          "low": 7,
+          "high": 10
+        },
+        {
+          "item": "sleepers or footies",
+          "low": 6,
+          "high": 8
+        },
+        {
+          "item": "pants",
+          "low": 3,
+          "high": 5
+        },
+        {
+          "item": "socks",
+          "low": 6,
+          "high": 6
+        },
+        {
+          "item": "hats",
+          "low": 2,
+          "high": 2
+        }
       ],
       "note": "The size they'll wear most at first. Prefer zip-up sleepers with two-way zippers."
     },
     {
       "id": "clothing-3-6",
+      "link": "https://www.amazon.com/s?k=3%E2%80%936+month+clothing&tag=bumptobaby0d-20",
       "name": "3–6 month clothing",
       "category": "clothing",
       "status": "nice",
@@ -351,16 +413,37 @@
         "premium": "Kyte Baby, Hanna Andersson"
       },
       "quantities": [
-        {"item": "bodysuits", "low": 7, "high": 10},
-        {"item": "sleepers or footies", "low": 6, "high": 8},
-        {"item": "pants", "low": 4, "high": 5},
-        {"item": "socks", "low": 6, "high": 6},
-        {"item": "hats", "low": 1, "high": 2}
+        {
+          "item": "bodysuits",
+          "low": 7,
+          "high": 10
+        },
+        {
+          "item": "sleepers or footies",
+          "low": 6,
+          "high": 8
+        },
+        {
+          "item": "pants",
+          "low": 4,
+          "high": 5
+        },
+        {
+          "item": "socks",
+          "low": 6,
+          "high": 6
+        },
+        {
+          "item": "hats",
+          "low": 1,
+          "high": 2
+        }
       ],
       "note": "Buy for the season these months will fall in. Fine to wait for gifts and your shower."
     },
     {
       "id": "clothing-6-9",
+      "link": "https://www.amazon.com/s?k=6%E2%80%939+month+clothing&tag=bumptobaby0d-20",
       "name": "6–9 month clothing",
       "category": "clothing",
       "status": "wait",
@@ -371,16 +454,37 @@
         "premium": "Kyte Baby, Hanna Andersson"
       },
       "quantities": [
-        {"item": "bodysuits", "low": 6, "high": 8},
-        {"item": "sleepers or footies", "low": 5, "high": 7},
-        {"item": "pants", "low": 4, "high": 5},
-        {"item": "socks", "low": 6, "high": 6},
-        {"item": "hats", "low": 1, "high": 1}
+        {
+          "item": "bodysuits",
+          "low": 6,
+          "high": 8
+        },
+        {
+          "item": "sleepers or footies",
+          "low": 5,
+          "high": 7
+        },
+        {
+          "item": "pants",
+          "low": 4,
+          "high": 5
+        },
+        {
+          "item": "socks",
+          "low": 6,
+          "high": 6
+        },
+        {
+          "item": "hats",
+          "low": 1,
+          "high": 1
+        }
       ],
       "note": "Wait. Gifts tend to cover these sizes."
     },
     {
       "id": "clothing-9-12",
+      "link": "https://www.amazon.com/s?k=9%E2%80%9312+month+clothing&tag=bumptobaby0d-20",
       "name": "9–12 month clothing",
       "category": "clothing",
       "status": "wait",
@@ -391,16 +495,37 @@
         "premium": "Kyte Baby, Hanna Andersson"
       },
       "quantities": [
-        {"item": "bodysuits", "low": 6, "high": 8},
-        {"item": "sleepers or footies", "low": 5, "high": 7},
-        {"item": "pants", "low": 4, "high": 5},
-        {"item": "socks", "low": 6, "high": 6},
-        {"item": "hats", "low": 1, "high": 1}
+        {
+          "item": "bodysuits",
+          "low": 6,
+          "high": 8
+        },
+        {
+          "item": "sleepers or footies",
+          "low": 5,
+          "high": 7
+        },
+        {
+          "item": "pants",
+          "low": 4,
+          "high": 5
+        },
+        {
+          "item": "socks",
+          "low": 6,
+          "high": 6
+        },
+        {
+          "item": "hats",
+          "low": 1,
+          "high": 1
+        }
       ],
       "note": "Wait. Buy for the season when you get there."
     },
     {
       "id": "baby-shoes",
+      "link": "https://www.amazon.com/s?k=Baby+shoes+before+walking&tag=bumptobaby0d-20",
       "name": "Baby shoes before walking",
       "category": "clothing",
       "status": "skip",
@@ -410,6 +535,7 @@
     },
     {
       "id": "fancy-outfits",
+      "link": "https://www.amazon.com/s?k=Fancy+outfits&tag=bumptobaby0d-20",
       "name": "Fancy outfits",
       "category": "clothing",
       "status": "skip",
@@ -419,6 +545,7 @@
     },
     {
       "id": "newborn-jeans",
+      "link": "https://www.amazon.com/s?k=Newborn-size+jeans&tag=bumptobaby0d-20",
       "name": "Newborn-size jeans",
       "category": "clothing",
       "status": "skip",
@@ -428,6 +555,7 @@
     },
     {
       "id": "pump",
+      "link": "https://www.amazon.com/s?k=Breast+pump+%28check+insurance+first%29&tag=bumptobaby0d-20",
       "name": "Breast pump (check insurance first)",
       "category": "feeding",
       "status": "exclude",
@@ -441,6 +569,7 @@
     },
     {
       "id": "manual-pump",
+      "link": "https://www.amazon.com/dp/B083WDM4CN?tag=bumptobaby0d-20",
       "name": "Manual pump or silicone collector",
       "category": "feeding",
       "status": "exclude",
@@ -453,6 +582,7 @@
     },
     {
       "id": "nursing-bras",
+      "link": "https://www.amazon.com/s?k=Nursing+bras+%282%E2%80%933%29&tag=bumptobaby0d-20",
       "name": "Nursing bras (2–3)",
       "category": "feeding",
       "status": "exclude",
@@ -466,6 +596,7 @@
     },
     {
       "id": "nipple-cream",
+      "link": "https://www.amazon.com/s?k=Nipple+cream&tag=bumptobaby0d-20",
       "name": "Nipple cream",
       "category": "feeding",
       "status": "exclude",
@@ -479,6 +610,7 @@
     },
     {
       "id": "breast-pads",
+      "link": "https://www.amazon.com/s?k=Breast+pads&tag=bumptobaby0d-20",
       "name": "Breast pads",
       "category": "feeding",
       "status": "exclude",
@@ -491,6 +623,7 @@
     },
     {
       "id": "milk-bags",
+      "link": "https://www.amazon.com/s?k=Milk+storage+bags&tag=bumptobaby0d-20",
       "name": "Milk storage bags",
       "category": "feeding",
       "status": "exclude",
@@ -504,6 +637,7 @@
     },
     {
       "id": "nursing-pillow",
+      "link": "https://www.amazon.com/dp/B075GLC4RK?tag=bumptobaby0d-20",
       "name": "Nursing pillow",
       "category": "feeding",
       "status": "exclude",
@@ -516,6 +650,7 @@
     },
     {
       "id": "bottles",
+      "link": "https://www.amazon.com/s?k=Bottles&tag=bumptobaby0d-20",
       "name": "Bottles",
       "category": "feeding",
       "status": "must",
@@ -529,6 +664,7 @@
     },
     {
       "id": "bottle-brush",
+      "link": "https://www.amazon.com/s?k=Bottle+brush+%2B+drying+rack&tag=bumptobaby0d-20",
       "name": "Bottle brush + drying rack",
       "category": "feeding",
       "status": "must",
@@ -541,6 +677,7 @@
     },
     {
       "id": "formula",
+      "link": "https://www.amazon.com/s?k=Formula+%28one+small+can+first%29&tag=bumptobaby0d-20",
       "name": "Formula (one small can first)",
       "category": "feeding",
       "status": "exclude",
@@ -554,6 +691,7 @@
     },
     {
       "id": "burp-cloths",
+      "link": "https://www.amazon.com/s?k=Burp+cloths+%286%E2%80%9310%29&tag=bumptobaby0d-20",
       "name": "Burp cloths (6–10)",
       "category": "feeding",
       "status": "must",
@@ -567,6 +705,7 @@
     },
     {
       "id": "sterilizer",
+      "link": "https://www.amazon.com/s?k=Bottle+sterilizer+or+dryer&tag=bumptobaby0d-20",
       "name": "Bottle sterilizer or dryer",
       "category": "feeding",
       "status": "nice",
@@ -580,6 +719,7 @@
     },
     {
       "id": "formula-pitcher",
+      "link": "https://www.amazon.com/s?k=Formula+dispenser+or+pitcher&tag=bumptobaby0d-20",
       "name": "Formula dispenser or pitcher",
       "category": "feeding",
       "status": "exclude",
@@ -589,6 +729,7 @@
     },
     {
       "id": "formula-maker",
+      "link": "https://www.amazon.com/s?k=Formula+maker+machine&tag=bumptobaby0d-20",
       "name": "Formula maker machine",
       "category": "feeding",
       "status": "skip",
@@ -600,6 +741,7 @@
     },
     {
       "id": "pump-bag",
+      "link": "https://www.amazon.com/s?k=Pump+bag&tag=bumptobaby0d-20",
       "name": "Pump bag",
       "category": "feeding",
       "status": "exclude",
@@ -609,6 +751,7 @@
     },
     {
       "id": "pump-parts",
+      "link": "https://www.amazon.com/s?k=Second+set+of+pump+parts&tag=bumptobaby0d-20",
       "name": "Second set of pump parts",
       "category": "feeding",
       "status": "exclude",
@@ -618,6 +761,7 @@
     },
     {
       "id": "high-chair",
+      "link": "https://www.amazon.com/dp/B086NZP58C?tag=bumptobaby0d-20",
       "name": "High chair (around 6 months)",
       "category": "feeding",
       "status": "wait",
@@ -631,6 +775,7 @@
     },
     {
       "id": "diapers",
+      "link": "https://www.amazon.com/s?k=Diapers+%28small+newborn+pack%2C+then+size+1%29&tag=bumptobaby0d-20",
       "name": "Diapers (small newborn pack, then size 1)",
       "category": "diapering",
       "status": "must",
@@ -644,6 +789,7 @@
     },
     {
       "id": "wipes",
+      "link": "https://www.amazon.com/s?k=Wipes&tag=bumptobaby0d-20",
       "name": "Wipes",
       "category": "diapering",
       "status": "must",
@@ -657,6 +803,7 @@
     },
     {
       "id": "diaper-cream",
+      "link": "https://www.amazon.com/s?k=Diaper+cream&tag=bumptobaby0d-20",
       "name": "Diaper cream",
       "category": "diapering",
       "status": "must",
@@ -670,6 +817,7 @@
     },
     {
       "id": "diaper-pail",
+      "link": "https://www.amazon.com/dp/B00821FLT4?tag=bumptobaby0d-20",
       "name": "Diaper pail or lidded trash can",
       "category": "diapering",
       "status": "nice",
@@ -683,6 +831,7 @@
     },
     {
       "id": "diaper-bag",
+      "link": "https://www.amazon.com/s?k=Diaper+bag&tag=bumptobaby0d-20",
       "name": "Diaper bag",
       "category": "diapering",
       "status": "must",
@@ -696,6 +845,7 @@
     },
     {
       "id": "changing-pad-portable",
+      "link": "https://www.amazon.com/s?k=Portable+changing+pad&tag=bumptobaby0d-20",
       "name": "Portable changing pad",
       "category": "diapering",
       "status": "must",
@@ -708,6 +858,7 @@
     },
     {
       "id": "wipe-warmer",
+      "link": "https://www.amazon.com/s?k=Wipe+warmer&tag=bumptobaby0d-20",
       "name": "Wipe warmer",
       "category": "diapering",
       "status": "skip",
@@ -717,6 +868,7 @@
     },
     {
       "id": "second-station",
+      "link": "https://www.amazon.com/s?k=Second+diaper+station+%28caddy+%2B+pad%29&tag=bumptobaby0d-20",
       "name": "Second diaper station (caddy + pad)",
       "category": "diapering",
       "status": "exclude",
@@ -726,6 +878,7 @@
     },
     {
       "id": "labels",
+      "link": "https://www.amazon.com/s?k=Bottle+labels&tag=bumptobaby0d-20",
       "name": "Bottle labels",
       "category": "diapering",
       "status": "exclude",
@@ -735,6 +888,7 @@
     },
     {
       "id": "cooler-bag",
+      "link": "https://www.amazon.com/s?k=Cooler+bag&tag=bumptobaby0d-20",
       "name": "Cooler bag",
       "category": "diapering",
       "status": "exclude",
@@ -744,6 +898,7 @@
     },
     {
       "id": "tub",
+      "link": "https://www.amazon.com/s?k=Infant+tub&tag=bumptobaby0d-20",
       "name": "Infant tub",
       "category": "bath",
       "status": "must",
@@ -757,6 +912,7 @@
     },
     {
       "id": "wash",
+      "link": "https://www.amazon.com/s?k=Gentle+wash&tag=bumptobaby0d-20",
       "name": "Gentle wash",
       "category": "bath",
       "status": "must",
@@ -770,6 +926,7 @@
     },
     {
       "id": "towels",
+      "link": "https://www.amazon.com/s?k=Hooded+towels+%282%E2%80%933%29+%2B+washcloths&tag=bumptobaby0d-20",
       "name": "Hooded towels (2–3) + washcloths",
       "category": "bath",
       "status": "must",
@@ -783,6 +940,7 @@
     },
     {
       "id": "clippers",
+      "link": "https://www.amazon.com/s?k=Nail+clippers+or+file&tag=bumptobaby0d-20",
       "name": "Nail clippers or file",
       "category": "bath",
       "status": "must",
@@ -796,6 +954,7 @@
     },
     {
       "id": "bath-thermometer",
+      "link": "https://www.amazon.com/s?k=Bath+thermometer&tag=bumptobaby0d-20",
       "name": "Bath thermometer",
       "category": "bath",
       "status": "nice",
@@ -807,6 +966,7 @@
     },
     {
       "id": "bath-toys",
+      "link": "https://www.amazon.com/s?k=Bath+toys+%28before+6+months%29&tag=bumptobaby0d-20",
       "name": "Bath toys (before 6 months)",
       "category": "bath",
       "status": "skip",
@@ -816,6 +976,7 @@
     },
     {
       "id": "car-seat",
+      "link": "https://www.amazon.com/dp/B09Q9H828S?tag=bumptobaby0d-20",
       "name": "Infant car seat (buy new)",
       "category": "gear",
       "status": "must",
@@ -832,6 +993,7 @@
     },
     {
       "id": "stroller",
+      "link": "https://www.amazon.com/s?k=Stroller&tag=bumptobaby0d-20",
       "name": "Stroller",
       "category": "gear",
       "status": "must",
@@ -847,6 +1009,7 @@
     },
     {
       "id": "carrier",
+      "link": "https://www.amazon.com/s?k=Carrier+or+wrap&tag=bumptobaby0d-20",
       "name": "Carrier or wrap",
       "category": "gear",
       "status": "nice",
@@ -862,6 +1025,7 @@
     },
     {
       "id": "bouncer",
+      "link": "https://www.amazon.com/s?k=Bouncer&tag=bumptobaby0d-20",
       "name": "Bouncer",
       "category": "gear",
       "status": "nice",
@@ -874,6 +1038,7 @@
     },
     {
       "id": "compact-stroller",
+      "link": "https://www.amazon.com/s?k=Compact+travel+stroller&tag=bumptobaby0d-20",
       "name": "Compact travel stroller",
       "category": "gear",
       "status": "nice",
@@ -889,6 +1054,7 @@
     },
     {
       "id": "swing",
+      "link": "https://www.amazon.com/s?k=Electric+swing&tag=bumptobaby0d-20",
       "name": "Electric swing",
       "category": "gear",
       "status": "nice",
@@ -901,6 +1067,7 @@
     },
     {
       "id": "car-mirror",
+      "link": "https://www.amazon.com/s?k=Car+mirror&tag=bumptobaby0d-20",
       "name": "Car mirror",
       "category": "gear",
       "status": "nice",
@@ -914,6 +1081,7 @@
     },
     {
       "id": "car-seat-cover",
+      "link": "https://www.amazon.com/s?k=Car-seat-safe+cover&tag=bumptobaby0d-20",
       "name": "Car-seat-safe cover",
       "category": "gear",
       "status": "exclude",
@@ -923,6 +1091,7 @@
     },
     {
       "id": "sun-shade",
+      "link": "https://www.amazon.com/s?k=Stroller+sun+shade&tag=bumptobaby0d-20",
       "name": "Stroller sun shade",
       "category": "gear",
       "status": "exclude",
@@ -932,6 +1101,7 @@
     },
     {
       "id": "fan",
+      "link": "https://www.amazon.com/s?k=Fan&tag=bumptobaby0d-20",
       "name": "Fan",
       "category": "gear",
       "status": "exclude",
@@ -941,6 +1111,7 @@
     },
     {
       "id": "thermometer",
+      "link": "https://www.amazon.com/s?k=Digital+thermometer+%28rectal+for+newborns%29&tag=bumptobaby0d-20",
       "name": "Digital thermometer (rectal for newborns)",
       "category": "health",
       "status": "must",
@@ -954,6 +1125,7 @@
     },
     {
       "id": "aspirator",
+      "link": "https://www.amazon.com/dp/B01C775L0W?tag=bumptobaby0d-20",
       "name": "Nasal aspirator",
       "category": "health",
       "status": "must",
@@ -967,16 +1139,17 @@
     },
     {
       "id": "saline",
+      "link": false,
       "name": "Saline drops",
       "category": "health",
       "status": "must",
       "origin": "timeline",
-      "link": false,
       "picks": {},
       "note": "Named in the week-8 health kit, with the thermometer and nasal aspirator. Ask your pediatrician which product to use."
     },
     {
       "id": "acetaminophen",
+      "link": "https://www.amazon.com/dp/B0793C7JHM?tag=bumptobaby0d-20",
       "name": "Infant acetaminophen",
       "category": "health",
       "status": "must",
@@ -989,6 +1162,7 @@
     },
     {
       "id": "humidifier",
+      "link": "https://www.amazon.com/s?k=Cool-mist+humidifier&tag=bumptobaby0d-20",
       "name": "Cool-mist humidifier",
       "category": "health",
       "status": "nice",
@@ -1001,6 +1175,7 @@
     },
     {
       "id": "gates",
+      "link": "https://www.amazon.com/s?k=Baby+gates+%28by+about+6+months%29&tag=bumptobaby0d-20",
       "name": "Baby gates (by about 6 months)",
       "category": "health",
       "status": "wait",
@@ -1014,6 +1189,7 @@
     },
     {
       "id": "outlet-covers",
+      "link": "https://www.amazon.com/s?k=Outlet+covers%2C+cabinet+locks&tag=bumptobaby0d-20",
       "name": "Outlet covers, cabinet locks",
       "category": "health",
       "status": "wait",
@@ -1025,16 +1201,17 @@
     },
     {
       "id": "detectors",
+      "link": false,
       "name": "Smoke and CO detectors checked",
       "category": "health",
       "status": "must",
       "origin": "master",
-      "link": false,
       "picks": {},
       "note": "Test the detectors you already have. Replace any that are missing, expired, or silent. This is a task, not a branded product."
     },
     {
       "id": "first-aid",
+      "link": "https://www.amazon.com/s?k=Baby+first+aid+kit&tag=bumptobaby0d-20",
       "name": "Baby first aid kit",
       "category": "health",
       "status": "nice",
@@ -1047,6 +1224,7 @@
     },
     {
       "id": "play-mat",
+      "link": "https://www.amazon.com/dp/B075R8BXXC?tag=bumptobaby0d-20",
       "name": "Play mat or gym",
       "category": "toys",
       "status": "nice",
@@ -1060,6 +1238,7 @@
     },
     {
       "id": "books",
+      "link": "https://www.amazon.com/s?k=High-contrast+cards+or+board+books&tag=bumptobaby0d-20",
       "name": "High-contrast cards or board books",
       "category": "toys",
       "status": "must",
@@ -1072,6 +1251,7 @@
     },
     {
       "id": "teethers",
+      "link": "https://www.amazon.com/s?k=Soft+rattles+and+teethers+%283%2B+months%29&tag=bumptobaby0d-20",
       "name": "Soft rattles and teethers (3+ months)",
       "category": "toys",
       "status": "nice",
@@ -1084,6 +1264,7 @@
     },
     {
       "id": "activity-center",
+      "link": "https://www.amazon.com/s?k=Activity+center+%285%2B+months%29&tag=bumptobaby0d-20",
       "name": "Activity center (5+ months)",
       "category": "toys",
       "status": "wait",
@@ -1097,6 +1278,7 @@
     },
     {
       "id": "toy-hauls",
+      "link": "https://www.amazon.com/s?k=Big+toy+hauls+before+3+months&tag=bumptobaby0d-20",
       "name": "Big toy hauls before 3 months",
       "category": "toys",
       "status": "skip",

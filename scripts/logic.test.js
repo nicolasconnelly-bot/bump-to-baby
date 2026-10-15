@@ -27,7 +27,12 @@ const weeks = JSON.parse(fs.readFileSync(path.join(root, "data/weeks.json"), "ut
 const BumpQuiz = load("assets/js/quiz-engine.js", "BumpQuiz");
 const BumpTimeline = load("assets/js/timeline.js", "BumpTimeline");
 
-assert(products.affiliatePlaceholder === "{{AFFILIATE_LINK}}", "affiliate placeholder token");
+assert(products.affiliatePlaceholder == null, "shared affiliate placeholder is unused");
+assert(!JSON.stringify(products).includes("{{AFFILIATE_LINK}}"), "placeholder token is gone");
+products.items.forEach((item) => {
+  if (item.link === false) return;
+  assert(typeof item.link === "string" && item.link.indexOf("tag=bumptobaby0d-20") !== -1, "associates tag on " + item.id);
+});
 
 const ids = new Set();
 products.items.forEach((item) => {
@@ -79,8 +84,9 @@ assert(small.first48 && small.first48.length === 6, "first baby gets the 48-hour
 assert(small.owned.length === 0, "first baby does not get the owned-gear list");
 assert(has(small.unsafe, "bumpers") && has(small.unsafe, "inclined-sleepers"), "unsafe sleep items stay visible as skips");
 assert(small.must.find((item) => item.id === "stroller").notes.indexOf(quiz.secondhandNote) !== -1, "budget note on big gear");
-assert(small.must.find((item) => item.id === "car-seat").linkLabel === "{{AFFILIATE_LINK}}", "placeholder link");
+assert(small.must.find((item) => item.id === "car-seat").linkLabel === "https://www.amazon.com/dp/B09Q9H828S?tag=bumptobaby0d-20", "verified car seat link");
 assert(small.must.find((item) => item.id === "detectors").linkLabel === null, "detectors have no product link");
+assert(small.unsafe.find((item) => item.id === "bumpers").linkLabel === null, "unsafe bumpers are not linked for sale");
 assert(small.title === "Your Must-Have List (Budget · Small space · Breastfeeding)", "results title");
 assert(small.mustCount === small.must.length && small.skipCount === small.skip.length, "counts match lists");
 
