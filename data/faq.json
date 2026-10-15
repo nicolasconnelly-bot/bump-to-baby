@@ -26,7 +26,7 @@
     },
     {
       "question": "Will the newsletter form sign me up?",
-      "answer": "Not yet. The form is a placeholder for a MailerLite embed. Submitting it on this static site does not send your email anywhere. If you enter a due date, the page can save that date in this browser so the timeline highlights your week. When a MailerLite snippet replaces the placeholder form, signup will follow MailerLite's own process and privacy policy."
+      "answer": "Yes. The signup form is a MailerLite embed. It asks for your email and due date and sends them to MailerLite so the weekly buy-now notes can follow that date. MailerLite's privacy policy applies to the submission. A due date you enter on the timeline is saved only in this browser and is separate from the newsletter."
     },
     {
       "question": "Is this medical advice?",

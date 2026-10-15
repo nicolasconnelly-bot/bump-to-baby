@@ -203,39 +203,30 @@ def footer() -> str:
 </footer>"""
 
 
+MAILERLITE_HEAD = """
+  <!-- MailerLite Universal -->
+  <script>
+    (function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[])
+    .push(arguments);},l=d.createElement(e),l.async=1,l.src=u,
+    n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})
+    (window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+    ml('account', '2715249');
+  </script>
+  <!-- End MailerLite Universal -->"""
+
+
 def newsletter(compact: bool = False) -> str:
-    copy = (
-        "<p>One short note a week, matching the timeline.</p>"
-        if compact
-        else """<p class="eyebrow">Newsletter</p>
-        <h2 id="newsletter-heading">One week at a time, by email</h2>
-        <p>The same 32 notes as the timeline, from 28 weeks before your due date through the first month home. Submitting this preview does not send your email anywhere.</p>"""
-    )
-    heading = "" if compact else ""
-    labelled = 'aria-labelledby="newsletter-heading"' if not compact else 'aria-label="Newsletter signup"'
     if compact:
         copy = """<h2 id="newsletter-heading">Want the weekly version?</h2>
-        <p>Enter a due date and email. This preview form does not send anything until a MailerLite embed replaces it.</p>"""
+        <p>One note a week with what to buy now, keyed to your due date. Add your email and due date below.</p>"""
+    else:
+        copy = """<p class="eyebrow">Newsletter</p>
+        <h2 id="newsletter-heading">One week at a time, by email</h2>
+        <p>Each week you get the buy-now note for where you are, from 28 weeks before your due date through the first month home. The form asks for your email and due date so those notes can follow that date.</p>"""
     return f"""
-<section class="newsletter" id="newsletter" {labelled}>
+<section class="newsletter" id="newsletter" aria-labelledby="newsletter-heading">
   <div class="newsletter-copy">{copy}</div>
-  <!-- MAILERLITE EMBED START
-       Replace this form with your MailerLite embed snippet
-       (MailerLite: Forms, then your form, then Embed code).
-       The static site does not collect email addresses.
-       MAILERLITE EMBED END -->
-  <form class="newsletter-form" data-newsletter-placeholder="mailerlite" method="get" action="{site_path("/timeline/")}">
-    <div class="field">
-      <label for="newsletter-email">Email</label>
-      <input id="newsletter-email" type="email" autocomplete="email" inputmode="email" required placeholder="you@example.com" aria-describedby="newsletter-status">
-    </div>
-    <div class="field">
-      <label for="newsletter-due">Due date <span class="optional">(optional)</span></label>
-      <input id="newsletter-due" name="due" type="date">
-    </div>
-    <button class="button" type="submit">Get the weekly plan</button>
-    <p id="newsletter-status" class="form-note" role="status" data-newsletter-status>Placeholder only. Paste a MailerLite embed over this form when you are ready. Nothing is stored on a server.</p>
-  </form>
+  <div class="ml-embedded" data-form="nv7GCt"></div>
 </section>"""
 
 
@@ -283,7 +274,7 @@ def page(title: str, description: str, path: str, body: str, structured: dict | 
   <meta name="twitter:image" content="{esc(OG_IMAGE)}">
   <link rel="icon" href="{site_path("/favicon.svg")}" type="image/svg+xml">
   <link rel="stylesheet" href="{site_path("/assets/css/style.css")}">
-  <script>document.documentElement.classList.add("js")</script>{ld}
+  <script>document.documentElement.classList.add("js")</script>{ld}{MAILERLITE_HEAD if 'class="ml-embedded"' in body else ""}
 </head>
 <body>
 {nav(current)}
@@ -725,22 +716,13 @@ def newsletter_page() -> None:
     body = f"""
 <p class="eyebrow">Email</p>
 <h1>Weekly notes for your due date</h1>
-<p class="lede">The timeline is already published as web pages, one per week. The email version is the same set of notes. The form below is ready for a MailerLite embed and does not collect addresses yet.</p>
+<p class="lede">One email a week, matched to your due date. Each note says what to buy now and what can wait, from 28 weeks before the due date through the first month home.</p>
 {newsletter()}
-<section class="section prose">
-  <h2>How to connect MailerLite</h2>
-  <ol>
-    <li>In MailerLite, create a form and copy its embed code.</li>
-    <li>In each generated page, replace the form inside the comment marked MAILERLITE EMBED.</li>
-    <li>Rebuild, or paste the embed into <code>scripts/build.py</code> if you want every page to share it.</li>
-  </ol>
-  <p>No paid service is wired up in this repository. GitHub Pages will keep serving the placeholder until you replace it.</p>
-</section>
 """
     simple_page(
         "/newsletter/",
         "Newsletter",
-        "Get the Bump to Baby week-by-week plan by email. The signup form is ready for a MailerLite embed and does not collect addresses yet.",
+        "One email a week of buy-now and can-wait notes, keyed to your due date. Signup asks for your email and due date.",
         body,
         current="/newsletter/",
     )
@@ -750,13 +732,14 @@ def privacy_page() -> None:
     body = f"""
 <p class="eyebrow">Privacy</p>
 <h1>Privacy</h1>
-<p class="lede">Updated {esc(PUBLISHED)}. Bump to Baby is a static website. It has no accounts and no analytics.</p>
+<p class="lede">Updated {esc(PUBLISHED)}. Bump to Baby is a static website. It has no accounts.</p>
 <div class="prose">
   <h2>What stays in your browser</h2>
   <p>The registry quiz runs on your device. Answers are put in the page address when you see results, so you can refresh that list. They are not sent to us.</p>
   <p>If you enter a due date, the page saves it in this browser under the local storage key <code>btb-due</code>. That lets the timeline highlight your week when you come back. You can clear it by deleting site data for this address in your browser.</p>
   <h2>Email</h2>
-  <p>The newsletter form is a placeholder. It does not submit your email to a server. The email field has no name, so even without JavaScript it is not added to the address bar. If the site owner later pastes a MailerLite embed, that company's privacy policy will apply. MailerLite is not connected in this repository.</p>
+  <p>The newsletter signup is a MailerLite embedded form named Bump to Baby Signup. It asks for an email address and a due date. Submitting it sends those two fields to MailerLite, which runs the mailing list. MailerLite's privacy policy applies to that submission. Pages that show the form also load MailerLite's script from <code>assets.mailerlite.com</code>.</p>
+  <p>A due date entered on the timeline stays in this browser. That saved date is not sent to MailerLite unless you also submit the newsletter form.</p>
   <h2>Affiliate links</h2>
   <p>Some gear links go to Amazon and include an Associates tag. Amazon handles those visits under its own privacy policy. This site does not receive your Amazon account details. See the <a href="{site_path("/affiliate-disclosure/")}">affiliate disclosure</a>.</p>
   <h2>Hosting</h2>
@@ -770,7 +753,7 @@ def privacy_page() -> None:
     simple_page(
         "/privacy/",
         "Privacy",
-        "How the Bump to Baby static site handles quiz answers, due dates, and the newsletter placeholder. No accounts and no analytics.",
+        "How the Bump to Baby site handles quiz answers, the local due date, and the MailerLite newsletter signup.",
         body,
     )
 
@@ -893,9 +876,9 @@ def llms() -> None:
         f"- [Registry quiz]({canonical('/quiz/')}): Eight questions that add or remove gear. Results stay on the device.",
         f"- [Gear list]({canonical('/gear/')}): Must-have, nice-to-have, wait, skip, and unsafe items, with example picks.",
         f"- [Timeline]({canonical('/timeline/')}): All 32 weeks. A due date highlights the current 7-day block.",
-        f"- [Newsletter]({canonical('/newsletter/')}): Placeholder form for a future MailerLite embed. It does not collect email.",
+        f"- [Newsletter]({canonical('/newsletter/')}): MailerLite signup for week-by-week buy-now notes keyed to a due date. Email and due date go to MailerLite.",
         f"- [Disclaimer]({canonical('/disclaimer/')}): Medical, safe-sleep, car-seat, and medicine limits.",
-        f"- [Privacy]({canonical('/privacy/')}): No accounts, no analytics, local due date only.",
+        f"- [Privacy]({canonical('/privacy/')}): No site accounts. Quiz stays on the device. Newsletter signup goes to MailerLite.",
         f"- [Affiliate disclosure]({canonical('/affiliate-disclosure/')}): Amazon Associates links and the commission disclosure.",
         "",
         "## Week-by-week timeline",

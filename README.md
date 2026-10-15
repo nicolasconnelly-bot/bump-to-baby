@@ -10,7 +10,7 @@ Quiz answers stay in the browser. There is no backend, no account, and no analyt
 - `/quiz/` — personalized must-have list
 - `/gear/` — the full list behind the quiz
 - `/timeline/` and `/timeline/w-28/` through `/timeline/w-plus-4/` — one indexable page per week
-- `/newsletter/` — signup form ready for a MailerLite embed
+- `/newsletter/` — MailerLite signup for the weekly notes
 - `/disclaimer/`, `/privacy/`, `/affiliate-disclosure/`
 
 ## Edit content
@@ -37,7 +37,7 @@ Each item in `data/products.json` has its own `link`. A `https://www.amazon.com/
 
 ## Newsletter
 
-The form is a MailerLite placeholder. Submitting it does not send email. To connect a list, paste your MailerLite embed over the form marked `MAILERLITE EMBED` in `scripts/build.py`, then rebuild. See `/newsletter/` for the same steps.
+The signup is the MailerLite embedded form `nv7GCt` (account `2715249`). Pages that include it load the MailerLite universal script in the document head. The form asks for an email and a due date and submits them to MailerLite.
 
 ## Check the site
 

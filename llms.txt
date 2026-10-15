@@ -10,9 +10,9 @@ The quiz runs in the browser. Product links in `data/products.json` go to Amazon
 - [Registry quiz](https://nicolasconnelly-bot.github.io/bump-to-baby/quiz/): Eight questions that add or remove gear. Results stay on the device.
 - [Gear list](https://nicolasconnelly-bot.github.io/bump-to-baby/gear/): Must-have, nice-to-have, wait, skip, and unsafe items, with example picks.
 - [Timeline](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/): All 32 weeks. A due date highlights the current 7-day block.
-- [Newsletter](https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/): Placeholder form for a future MailerLite embed. It does not collect email.
+- [Newsletter](https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/): MailerLite signup for week-by-week buy-now notes keyed to a due date. Email and due date go to MailerLite.
 - [Disclaimer](https://nicolasconnelly-bot.github.io/bump-to-baby/disclaimer/): Medical, safe-sleep, car-seat, and medicine limits.
-- [Privacy](https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/): No accounts, no analytics, local due date only.
+- [Privacy](https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/): No site accounts. Quiz stays on the device. Newsletter signup goes to MailerLite.
 - [Affiliate disclosure](https://nicolasconnelly-bot.github.io/bump-to-baby/affiliate-disclosure/): Amazon Associates links and the commission disclosure.
 
 ## Week-by-week timeline
@@ -78,7 +78,7 @@ There are 32 weeks of guidance, from 28 weeks before your due date (about 12 wee
 
 ### Will the newsletter form sign me up?
 
-Not yet. The form is a placeholder for a MailerLite embed. Submitting it on this static site does not send your email anywhere. If you enter a due date, the page can save that date in this browser so the timeline highlights your week. When a MailerLite snippet replaces the placeholder form, signup will follow MailerLite's own process and privacy policy.
+Yes. The signup form is a MailerLite embed. It asks for your email and due date and sends them to MailerLite so the weekly buy-now notes can follow that date. MailerLite's privacy policy applies to the submission. A due date you enter on the timeline is saved only in this browser and is separate from the newsletter.
 
 ### Is this medical advice?
 

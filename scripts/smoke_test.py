@@ -234,8 +234,30 @@ def check_files() -> None:
     affiliate = (ROOT / "affiliate-disclosure" / "index.html").read_text(encoding="utf-8")
     if disclosure not in affiliate:
         fail("affiliate disclosure page missing the Amazon Associates sentence")
-    if "MailerLite" not in (ROOT / "newsletter" / "index.html").read_text(encoding="utf-8"):
-        fail("newsletter page missing MailerLite placeholder")
+    embed = '<div class="ml-embedded" data-form="nv7GCt"></div>'
+    script = "https://assets.mailerlite.com/js/universal.js"
+    account = "ml('account', '2715249');"
+    form_pages = [
+        "index.html",
+        "quiz/index.html",
+        "gear/index.html",
+        "timeline/index.html",
+        "newsletter/index.html",
+    ]
+    form_pages.extend(f"timeline/{week['id']}/index.html" for week in weeks)
+    for rel in form_pages:
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        head = text.split("</head>", 1)[0]
+        if embed not in text:
+            fail(rel + " is missing the MailerLite embed")
+        if script not in head or account not in head:
+            fail(rel + " is missing the MailerLite universal script in the head")
+        if "data-newsletter-placeholder" in text or "newsletter-form" in text:
+            fail(rel + " still has the placeholder newsletter form")
+    for rel in ("privacy/index.html", "affiliate-disclosure/index.html", "disclaimer/index.html", "404.html"):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        if "ml-embedded" in text or "data-newsletter-placeholder" in text:
+            fail(rel + " should not include the newsletter form")
     disclaimer = (ROOT / "disclaimer" / "index.html").read_text(encoding="utf-8")
     for phrase in ("not medical", "does not give doses", "certified"):
         if phrase not in disclaimer.lower() and phrase not in disclaimer:
@@ -361,7 +383,8 @@ def browser_check() -> None:
     quiz = base + "/quiz/?tier=mid&space=nursery&feed=combo&season=fall&move=mix&first=yes&care=home&laundry=normal"
     checks = {
         base + "/": ["What do you actually need?", "Start the quiz"],
-        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles"],
+        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"'],
+        base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
         base + "/timeline/w-12/": ["Buy and Install the Car Seat", "Buy now", "Car seat"],
     }
     profiles: list[Path] = []
