@@ -231,6 +231,18 @@ def check_files() -> None:
         fail("gear affiliate links need rel and target")
     if disclosure not in gear:
         fail("footer missing the Amazon Associates disclosure")
+    sheets_image = "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg"
+    if sheets_image not in gear or 'id="sheets"' not in gear:
+        fail("gear list is missing the verified fitted-sheet thumbnail")
+    image_count = gear.count('class="item-thumb"')
+    if image_count != 25:
+        fail(f"expected 25 verified thumbnails on the gear list, found {image_count}")
+    if 'class="item-placeholder"' not in gear:
+        fail("search-link items should use a category placeholder")
+    if 'id="bumpers"' in gear:
+        bumper = gear.split('id="bumpers"', 1)[1].split("</article>", 1)[0]
+        if "item-thumb" in bumper or "item-placeholder" in bumper or "amazon.com" in bumper:
+            fail("crib bumpers should stay unlinked and without a product image")
     affiliate = (ROOT / "affiliate-disclosure" / "index.html").read_text(encoding="utf-8")
     if disclosure not in affiliate:
         fail("affiliate disclosure page missing the Amazon Associates sentence")
@@ -345,6 +357,10 @@ def check_html() -> None:
                     if kind == "a" and (rel != "sponsored nofollow noopener" or target != "_blank"):
                         fail(f"{path.relative_to(ROOT)} Amazon link missing rel or target: {href}")
                     continue
+                if parsed.netloc == "m.media-amazon.com" and kind == "img":
+                    if not re.fullmatch(r"/images/P/[A-Z0-9]{10}\.01\._SL160_\.jpg", parsed.path):
+                        fail(f"{path.relative_to(ROOT)} unexpected Amazon image {href}")
+                    continue
                 if bare not in EXTERNAL_OK and not bare.startswith(ORIGIN):
                     fail(f"{path.relative_to(ROOT)} unexpected external link {href}")
                 continue
@@ -383,7 +399,7 @@ def browser_check() -> None:
     quiz = base + "/quiz/?tier=mid&space=nursery&feed=combo&season=fall&move=mix&first=yes&care=home&laundry=normal"
     checks = {
         base + "/": ["What do you actually need?", "Start the quiz"],
-        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"'],
+        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg", "item-placeholder"],
         base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
         base + "/timeline/w-12/": ["Buy and Install the Car Seat", "Buy now", "Car seat"],
     }

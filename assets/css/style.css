@@ -409,6 +409,37 @@ input[type="text"] {
 .gear-block { margin-top: 1.8rem; }
 .gear-list { display: grid; gap: 0.8rem; }
 .item-card { padding: 0.95rem 1rem 0.5rem; }
+.item-card.has-media {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  column-gap: 0.85rem;
+  align-items: start;
+}
+.item-thumb, .item-placeholder {
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background-color: #fff;
+}
+.item-thumb { display: block; object-fit: contain; }
+.item-placeholder {
+  display: block;
+  background-color: var(--mist);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 1.7rem 1.7rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2323483d' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='4' width='16' height='16' rx='3'/%3E%3Cpath d='M8 12h8M12 8v8'/%3E%3C/svg%3E");
+}
+.item-placeholder[data-category="nursery"] { background-color: #e6f1eb; }
+.item-placeholder[data-category="sleep"] { background-color: #ece8f4; }
+.item-placeholder[data-category="clothing"] { background-color: #f6ddd0; }
+.item-placeholder[data-category="feeding"] { background-color: #f3ead7; }
+.item-placeholder[data-category="diapering"] { background-color: #f8ebe6; }
+.item-placeholder[data-category="bath"] { background-color: #e5f0f4; }
+.item-placeholder[data-category="gear"] { background-color: #e7efe6; }
+.item-placeholder[data-category="health"] { background-color: #f6e8e4; }
+.item-placeholder[data-category="toys"] { background-color: #f8f0dc; }
 .item-card-head { display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem; align-items: center; margin-bottom: 0.45rem; }
 .badge-must { background: var(--sage); color: #fffaf4; }
 .badge-nice { background: var(--blush); color: var(--clay); }

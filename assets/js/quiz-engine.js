@@ -19,6 +19,7 @@
       caution: !!item.caution,
       unsafe: !!item.unsafe,
       link: item.link,
+      image: item.image || "",
       picks: item.picks || {},
       quantities: item.quantities || null,
       notes: item.note ? [item.note] : [],
