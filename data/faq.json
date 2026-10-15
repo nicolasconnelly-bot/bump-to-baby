@@ -1,0 +1,36 @@
+{
+  "questions": [
+    {
+      "question": "What does the registry quiz do?",
+      "answer": "The quiz asks eight questions about budget, space, feeding, season, how you get around, whether this is your first baby, childcare before six months, and laundry. It starts from the must-have gear list and adds or removes items from your answers. It runs in your browser. Your answers are not sent to a server. You can also read the full gear list without taking the quiz."
+    },
+    {
+      "question": "When should I buy the car seat?",
+      "answer": "Research the car seat in the middle of pregnancy, then buy and install it about 12 weeks before your due date. Most hospitals expect a rear-facing car seat for the ride home. Have the install checked by a certified child passenger safety technician or a free check at a fire station or hospital. Register the seat with the manufacturer so you hear about recalls."
+    },
+    {
+      "question": "What is a safe sleep setup?",
+      "answer": "General safe-sleep guidance is: alone, on the back, on a firm flat mattress in a crib, bassinet, or play yard made for sleep. Keep that space empty. No bumpers, pillows, quilts, stuffed animals, or sleep positioners. A swaddle or wearable sleep sack is the cover. Many families room-share for the first months, with the baby in their own sleep space. This is general information, not a plan for your baby. Ask your pediatrician."
+    },
+    {
+      "question": "Can I buy a used crib, mattress, or car seat?",
+      "answer": "Gently used clothes, toys, and strollers are often fine if you check recalls and the condition. Car seats, cribs, and mattresses should be new, or come from someone whose history you trust. A used car seat can be expired, missing parts, or have been in a crash you were not told about. A crib should meet current safety standards and have fixed sides, not drop sides."
+    },
+    {
+      "question": "Do I need a changing table?",
+      "answer": "No. A dresser with a changing pad on top does the same job and stays useful for years. Anchor the dresser to the wall. Skip a standalone changing table. Keep diapers, wipes, and cream within one arm's reach so you never step away from the baby on the pad."
+    },
+    {
+      "question": "How does the week-by-week timeline work?",
+      "answer": "There are 32 weeks of guidance, from 28 weeks before your due date (about 12 weeks pregnant) through the fourth week after your due date. Enter your due date and the site highlights the 7-day block you are in. W-1 is the week ending on your due date. W+1 starts the day after. Each week has its own page with a buy-now line and a can-wait line. Those pages are the same notes as the planned emails."
+    },
+    {
+      "question": "Will the newsletter form sign me up?",
+      "answer": "Not yet. The form is a placeholder for a MailerLite embed. Submitting it on this static site does not send your email anywhere. If you enter a due date, the page can save that date in this browser so the timeline highlights your week. When a MailerLite snippet replaces the placeholder form, signup will follow MailerLite's own process and privacy policy."
+    },
+    {
+      "question": "Is this medical advice?",
+      "answer": "No. Bump to Baby is a general shopping and planning guide. It does not diagnose, treat, or tell you how to dose medicine. Safe-sleep, car-seat, and medicine notes are general. Talk with your prenatal clinician, your baby's pediatrician, and a certified car seat technician about your family."
+    }
+  ]
+}

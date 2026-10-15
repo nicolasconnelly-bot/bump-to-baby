@@ -1,0 +1,426 @@
+{
+  "weeks": [
+    {
+      "id": "w-28",
+      "offset": -28,
+      "title": "Welcome to the Countdown",
+      "subject": "Six months to go. Here's the plan (spoiler: don't buy anything yet)",
+      "paragraphs": [
+        "Congratulations! Here's how this works: every week we'll send one short email telling you what's worth doing now and what can wait. This week the best buy is free.",
+        "Take the registry quiz if you haven't yet, and start a shared note with your partner called \"Baby Stuff.\" Every time someone says \"you HAVE to get…\", write it down and leave it there. Most of those suggestions won't survive the next few months, and that's fine."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "Everything. You're ahead.",
+      "items": [],
+      "links": [{"label": "Take the registry quiz", "path": "/quiz/"}]
+    },
+    {
+      "id": "w-27",
+      "offset": -27,
+      "title": "Talk Budget Before You Shop",
+      "subject": "The 15-minute money talk that saves hundreds",
+      "paragraphs": [
+        "Sit down with your partner this week and agree on three numbers: total baby budget, what you'd spend on big gear (car seat, stroller, crib), and what you're hoping friends and family cover.",
+        "Decide your secondhand rules too. Gently used clothes, toys and strollers are fine. Car seats, cribs and mattresses should be new, or come from someone whose history you trust. You'll shop calmer with these numbers settled."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "Big gear.",
+      "items": []
+    },
+    {
+      "id": "w-26",
+      "offset": -26,
+      "title": "Check Your Insurance for a Free Pump",
+      "subject": "Your health plan may already cover a breast pump",
+      "paragraphs": [
+        "In the US, most insurance plans cover a breast pump. Call the number on your card or look up a durable medical equipment supplier your plan works with. Ask which models are covered, when you can order (often in the third trimester), and whether upgrades cost extra.",
+        "If you're going with formula, use this week to read up on formula types and talk it over with your doctor."
+      ],
+      "buyNow": "Nothing. Just make the call.",
+      "canWait": "The pump itself.",
+      "items": ["pump"]
+    },
+    {
+      "id": "w-25",
+      "offset": -25,
+      "title": "Pick Your Pediatrician",
+      "subject": "The one appointment to book before baby's born",
+      "paragraphs": [
+        "Baby's first checkup usually happens within days of coming home, so choose a pediatrician now. Ask friends, check your insurance network, and see whether offices offer free \"meet the pediatrician\" visits.",
+        "Good questions to ask: after-hours phone line? Same-day sick visits? How far is the office from home? Write the number on the fridge once you've chosen."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "Thermometers and the medicine kit.",
+      "items": ["thermometer", "acetaminophen"]
+    },
+    {
+      "id": "w-24",
+      "offset": -24,
+      "title": "Build the Registry",
+      "subject": "Registry time: here's your short list",
+      "paragraphs": [
+        "Your quiz results are your registry starter kit. Add the must-haves first, then a few nice-to-haves at different prices so every guest has options.",
+        "Most stores give completion discounts, often around 10–15%, on whatever's left near your due date, so it's fine to register for big items you plan to buy yourself. Skip anything with \"warmer,\" \"organizer\" or \"system\" in the name until you know you need it."
+      ],
+      "buyNow": "Nothing. Register instead.",
+      "canWait": "Nice-to-haves.",
+      "items": [],
+      "links": [{"label": "Open the registry quiz", "path": "/quiz/"}]
+    },
+    {
+      "id": "w-23",
+      "offset": -23,
+      "title": "Research the Car Seat",
+      "subject": "The one item you can't leave the hospital without",
+      "paragraphs": [
+        "Most hospitals expect you to drive baby home in a rear-facing car seat. Decide between an infant seat (clicks into a base and stroller) and a convertible seat (stays in the car, lasts for years).",
+        "City or transit families often love infant seats; drive-only families sometimes skip straight to convertible. Make sure it fits your car. Many stores let you test-fit."
+      ],
+      "buyNow": "Nothing yet.",
+      "canWait": "Car seat (buy around W-12).",
+      "items": ["car-seat"],
+      "links": [{"label": "Jump to the install week (W-12)", "path": "/timeline/w-12/"}]
+    },
+    {
+      "id": "w-22",
+      "offset": -22,
+      "title": "Stroller Shopping Without the Overwhelm",
+      "subject": "Stroller shopping: three questions you need to answer",
+      "paragraphs": [
+        "Forget the spec sheets. Answer three things: Will it fit in your trunk? Can you fold it with one hand while holding a (pretend) baby? Does it work with your car seat?",
+        "A travel system covers most families. Walkers in cities should care about suspension and basket size. Frequent flyers often add a compact second stroller later. Go push a few in a store this weekend."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "The stroller. Watch for sales.",
+      "items": ["stroller", "car-seat", "compact-stroller"]
+    },
+    {
+      "id": "w-21",
+      "offset": -21,
+      "title": "Plan the Room (or the Corner)",
+      "subject": "Nursery planning: start with a tape measure",
+      "paragraphs": [
+        "Measure the space where baby will sleep. Safe sleep guidance recommends room-sharing for the first months, so many babies start in a bassinet next to your bed even when there's a nursery ready.",
+        "Sketch where the crib, dresser and chair go, keeping the crib away from windows, cords and shelves. Skip bumpers, pillows and quilts in the crib. They look nice but aren't safe."
+      ],
+      "buyNow": "Paint, if you're painting (let it air out for weeks).",
+      "canWait": "Furniture.",
+      "items": ["crib", "bassinet", "dresser", "bumpers"]
+    },
+    {
+      "id": "w-20",
+      "offset": -20,
+      "title": "Halfway There",
+      "subject": "Halfway! Here's your checklist so far",
+      "paragraphs": [
+        "Quick check-in: budget agreed, insurance called, pediatrician shortlisted, registry started, car seat and stroller on your radar. If you've done half of that, you're doing great.",
+        "This is a good weekend for a date night or a short trip, because the third trimester gets busy. Seriously, put it on the calendar."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "All of it.",
+      "items": []
+    },
+    {
+      "id": "w-19",
+      "offset": -19,
+      "title": "Order the Crib",
+      "subject": "Order the crib now, since delivery times vary",
+      "paragraphs": [
+        "Furniture often takes weeks to ship, and the crib needs to be assembled. Order it this month. Check that it meets current safety standards and has fixed sides (no drop-sides).",
+        "Pair it with a firm, tight-fitting mattress: you shouldn't be able to fit more than two fingers between the mattress and the frame. Get it delivered early so the box isn't waiting in your hallway at 38 weeks."
+      ],
+      "buyNow": "Crib + mattress.",
+      "canWait": "Sheets, mobile, decor.",
+      "items": ["crib", "mattress", "mini-crib"]
+    },
+    {
+      "id": "w-18",
+      "offset": -18,
+      "title": "Dresser and Changing Station",
+      "subject": "Skip the changing table (here's what to get instead)",
+      "paragraphs": [
+        "A dresser with a changing topper does the same job as a changing table and you'll use it for years. Whatever you choose, anchor it to the wall. Tip-overs are a real danger once kids start climbing.",
+        "Keep wipes, diapers and cream within one arm's reach so you never step away from baby on the pad."
+      ],
+      "buyNow": "Dresser + anchors + changing pad.",
+      "canWait": "Baskets and organizers.",
+      "items": ["dresser", "anchors", "changing-pad", "changing-table"]
+    },
+    {
+      "id": "w-17",
+      "offset": -17,
+      "title": "Learn Before You Buy",
+      "subject": "Sign up for a class this week (dads included)",
+      "paragraphs": [
+        "Hospital classes on childbirth, breastfeeding, infant CPR and newborn care fill up fast. Book them now for the coming months.",
+        "The breastfeeding class is just as useful for partners: you'll learn how to help with latch, positioning and those long night feeds. Infant CPR is the most useful two hours you'll spend this year."
+      ],
+      "buyNow": "Class seats.",
+      "canWait": "Feeding gear (you'll know more after class).",
+      "items": []
+    },
+    {
+      "id": "w-16",
+      "offset": -16,
+      "title": "Clothing, Round One",
+      "subject": "Don't buy baby clothes yet (seriously)",
+      "paragraphs": [
+        "Baby clothes are the most-gifted category by far. Hold off until after your shower. The one exception is a few 0–3 month zip-up sleepers in your favorite style, because zippers beat snaps at 3 AM.",
+        "Check your quiz list for the quantities for your season. Leave newborn-size clothes to gifts, since some babies skip that size entirely."
+      ],
+      "buyNow": "2–3 zip sleepers (0–3 mo).",
+      "canWait": "Everything else.",
+      "items": ["clothing-0-3", "clothing-newborn"],
+      "links": [{"label": "See clothing quantities on the gear list", "path": "/gear/#clothing"}]
+    },
+    {
+      "id": "w-15",
+      "offset": -15,
+      "title": "The Sleep Setup",
+      "subject": "Safe sleep, simplified",
+      "paragraphs": [
+        "The safe sleep basics: alone, on their back, in a crib or bassinet with a firm flat mattress and nothing else in it. That's why swaddles and wearable sleep sacks are the \"blanket\" for babies.",
+        "Grab 3–4 swaddles (try a couple of styles, because babies have opinions) and a white noise machine or app."
+      ],
+      "buyNow": "Bassinet, swaddles, white noise.",
+      "canWait": "Sleep sacks for 3+ months, the monitor.",
+      "items": ["bassinet", "swaddles", "white-noise", "sleep-sacks", "monitor"]
+    },
+    {
+      "id": "w-14",
+      "offset": -14,
+      "title": "Baby Shower Season",
+      "subject": "Shower coming up? Here's how to make your registry work",
+      "paragraphs": [
+        "Send out your registry link, thank people as gifts arrive (keep a list on your phone), and don't open everything yet. Keep receipts and tags so you can make exchanges.",
+        "After the shower, compare what you got with your quiz list. The gaps are your shopping list."
+      ],
+      "buyNow": "Nothing. Let the shower happen first.",
+      "canWait": "Gaps until after the shower.",
+      "items": [],
+      "links": [{"label": "Open your quiz list", "path": "/quiz/"}]
+    },
+    {
+      "id": "w-13",
+      "offset": -13,
+      "title": "Fill the Gaps",
+      "subject": "Post-shower: what's still missing?",
+      "paragraphs": [
+        "Open your quiz list and check off what you received. Use any registry completion discount on what's left, especially big items.",
+        "Return duplicates and anything from the \"skip\" list, like wipe warmers and newborn shoes. Store credit can turn into diapers later."
+      ],
+      "buyNow": "Remaining must-haves.",
+      "canWait": "Nice-to-haves.",
+      "items": ["wipe-warmer", "baby-shoes", "diapers"],
+      "links": [{"label": "Review the quiz list", "path": "/quiz/"}]
+    },
+    {
+      "id": "w-12",
+      "offset": -12,
+      "title": "Buy and Install the Car Seat",
+      "subject": "Car seat install weekend",
+      "paragraphs": [
+        "Buy the car seat now and install it, then have it checked. Many fire stations, hospitals and certified child passenger safety technicians (CPSTs) do free checks.",
+        "Learn the \"inch test\" (it shouldn't move more than an inch at the belt path) and check the harness height. Register the seat with the manufacturer so you get recall notices."
+      ],
+      "buyNow": "Car seat (+ stroller if it's a travel system).",
+      "canWait": "Car mirror and seat organizers.",
+      "items": ["car-seat", "stroller", "car-mirror"]
+    },
+    {
+      "id": "w-11",
+      "offset": -11,
+      "title": "Feeding Gear",
+      "subject": "Feeding gear: start small",
+      "paragraphs": [
+        "Breastfeeding? Order your insurance pump now, plus nipple cream, breast pads, a couple of nursing bras and milk storage bags. Formula? Buy one small can and a few bottles. Babies can be picky about both. Combo? A few of each.",
+        "Grab a bottle brush and drying rack either way. Don't stock up on one brand of bottle until baby has tried it."
+      ],
+      "buyNow": "Pump and essentials, or 2–4 bottles.",
+      "canWait": "Sterilizers and formula makers.",
+      "items": ["pump", "nipple-cream", "breast-pads", "nursing-bras", "milk-bags", "formula", "bottles", "bottle-brush", "sterilizer", "formula-maker"]
+    },
+    {
+      "id": "w-10",
+      "offset": -10,
+      "title": "Diapers and Wipes",
+      "subject": "Diaper math (don't buy a mountain of newborn size)",
+      "paragraphs": [
+        "Newborns go through a lot of diapers, but they also outgrow newborn size fast. Buy one or two packs of newborn size and a box of size 1. Keep receipts in case you need to swap.",
+        "Add wipes (the sensitive kind), diaper cream, and a lidded trash can or pail. Set up a second diaper caddy if you live on more than one floor."
+      ],
+      "buyNow": "Diapers (newborn + size 1), wipes, cream.",
+      "canWait": "Bulk stockpiles.",
+      "items": ["diapers", "wipes", "diaper-cream", "diaper-pail", "second-station"]
+    },
+    {
+      "id": "w-9",
+      "offset": -9,
+      "title": "Bath and Grooming",
+      "subject": "Bath basics for a slippery little person",
+      "paragraphs": [
+        "Newborns only need a few baths a week, and sponge baths until the umbilical cord stump falls off.",
+        "You need an infant tub, gentle wash, 2–3 hooded towels, washcloths and baby nail clippers or a file. That's it. Bath toys can wait months."
+      ],
+      "buyNow": "Tub, wash, towels, clippers.",
+      "canWait": "Bath toys, robes.",
+      "items": ["tub", "wash", "towels", "clippers", "bath-toys"]
+    },
+    {
+      "id": "w-8",
+      "offset": -8,
+      "title": "Health Kit",
+      "subject": "Build the 2 AM medicine cabinet",
+      "paragraphs": [
+        "Put together a small kit: a digital thermometer (rectal readings are most accurate for newborns), a nasal aspirator, saline drops, and infant acetaminophen (ask your pediatrician about dosing before you ever use it).",
+        "Write down the pediatrician's after-hours number. Check your smoke and CO detectors while you're at it."
+      ],
+      "buyNow": "Thermometer, aspirator, saline.",
+      "canWait": "Fancy humidifiers (unless it's winter).",
+      "items": ["thermometer", "aspirator", "saline", "acetaminophen", "humidifier", "detectors"]
+    },
+    {
+      "id": "w-7",
+      "offset": -7,
+      "title": "Wash Everything",
+      "subject": "Laundry day (the cutest one you'll ever have)",
+      "paragraphs": [
+        "Wash baby clothes, sheets, swaddles and burp cloths in a gentle, fragrance-free detergent. Then fold everything by size. A bin per size (NB, 0–3, 3–6) makes life easier later.",
+        "Make up the bassinet and crib with fitted sheets and mattress protectors. Stock 6–10 burp cloths around the house."
+      ],
+      "buyNow": "Gentle detergent, extra burp cloths.",
+      "canWait": "Bigger sizes.",
+      "items": ["sheets", "protector", "swaddles", "burp-cloths", "clothing-0-3"]
+    },
+    {
+      "id": "w-6",
+      "offset": -6,
+      "title": "Pack the Hospital Bag",
+      "subject": "Hospital bag checklist (including the dad bag)",
+      "paragraphs": [
+        "Pack for baby: a going-home outfit (plus a backup), a hat, socks and a swaddle. For mom: comfy clothes, nursing bra, toiletries, a long phone cable.",
+        "For you: snacks, a change of clothes, a pillow, chargers, and a list of who to text. Put the bag by the door and the car seat base in the car."
+      ],
+      "buyNow": "Snacks and a long charging cable.",
+      "canWait": "Nothing on this list. Pack it now.",
+      "items": ["swaddles", "car-seat", "nursing-bras"]
+    },
+    {
+      "id": "w-5",
+      "offset": -5,
+      "title": "Stock the Freezer and the Pantry",
+      "subject": "The best baby prep isn't baby gear",
+      "paragraphs": [
+        "Cook and freeze 5–10 easy meals, stock up on one-handed snacks and water bottles, and order household basics like toilet paper, soap and dish pods.",
+        "Future you, three days in and running on four hours of sleep, will thank you. Set up grocery delivery if it's available near you."
+      ],
+      "buyNow": "Food and household staples.",
+      "canWait": "Baby gear. You're set.",
+      "items": []
+    },
+    {
+      "id": "w-4",
+      "offset": -4,
+      "title": "Set Up Stations",
+      "subject": "Feeding station + changing station = calmer nights",
+      "paragraphs": [
+        "Set up a nighttime feeding spot: a chair, water bottle, snacks, burp cloth, phone charger, and a dim light. Do the same for each changing station.",
+        "These small setups save a lot of trips back and forth. Practice swaddling a stuffed animal. It sounds silly, but it works."
+      ],
+      "buyNow": "A dim night light.",
+      "canWait": "Gliders and recliners, if you have a comfy chair.",
+      "items": ["burp-cloths", "glider", "swaddles", "changing-pad"]
+    },
+    {
+      "id": "w-3",
+      "offset": -3,
+      "title": "Final Checks",
+      "subject": "Final walkthrough: car seat, bag, phone numbers",
+      "paragraphs": [
+        "Run through the list: car seat installed and checked, hospital bag by the door, route to the hospital planned, pediatrician chosen, pets and older kids covered.",
+        "Download a feeding and diaper tracker app. Then sit on the couch. You've earned it."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "Everything not done yet. It's fine.",
+      "items": ["car-seat"]
+    },
+    {
+      "id": "w-2",
+      "offset": -2,
+      "title": "Rest and Wait",
+      "subject": "You're ready. Really.",
+      "paragraphs": [
+        "Babies come when they come. Use these weeks to rest, watch a movie, and take a few walks. Charge your phone and camera.",
+        "If anything's still missing, it can be delivered later. That's what the internet is for. Hold off on \"just in case\" buying."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "Everything.",
+      "items": []
+    },
+    {
+      "id": "w-1",
+      "offset": -1,
+      "title": "Due Week",
+      "subject": "Due week checklist (short, we promise)",
+      "paragraphs": [
+        "Gas in the car. Bag in the car. Phone charged. Car seat in. Know when to call the doctor or head to the hospital. Your care team will tell you what signs to watch for.",
+        "When it's go time, stay calm and drive carefully. We'll be here when you're home."
+      ],
+      "buyNow": "Nothing.",
+      "canWait": "All of it.",
+      "items": ["car-seat"]
+    },
+    {
+      "id": "w-plus-1",
+      "offset": 1,
+      "title": "Welcome Home",
+      "subject": "Welcome home! Here's the first-week survival guide",
+      "paragraphs": [
+        "Congratulations! This week is all about feeds, diapers and sleep, for everyone. Track wet and dirty diapers (your pediatrician will ask). Accept every offer of help, especially food.",
+        "Dads: take night diaper duty, refill water bottles, and manage the visitors. If something's missing, order it now rather than stocking up \"just in case.\""
+      ],
+      "buyNow": "Whatever you're actually running out of.",
+      "canWait": "Toys, bigger sizes.",
+      "items": ["diapers", "books"]
+    },
+    {
+      "id": "w-plus-2",
+      "offset": 2,
+      "title": "Feeding Check-In",
+      "subject": "Feeding going well? (If not, there's help)",
+      "paragraphs": [
+        "Feeding can be hard at first. If you're breastfeeding, a lactation consultant (often covered by insurance) can help a lot. If bottles aren't working, try a different nipple flow or shape before buying a new bottle system.",
+        "Formula families: once you find a formula that works, now's the time to buy it in bulk."
+      ],
+      "buyNow": "Your proven bottle or formula, in larger amounts.",
+      "canWait": "Gadgets.",
+      "items": ["bottles", "formula", "pump"]
+    },
+    {
+      "id": "w-plus-3",
+      "offset": 3,
+      "title": "Sizing Up",
+      "subject": "Newborn clothes already snug? Here's what to do",
+      "paragraphs": [
+        "Some babies outgrow newborn size within weeks. Check the snaps and the diaper fit. Red marks on the legs mean it's time to size up.",
+        "Move to size 1 diapers and 0–3 month clothes, and pack away the outgrown stuff to hand down or resell. Now's a good time to look at a carrier for hands-free walks."
+      ],
+      "buyNow": "Next diaper size, a carrier if you need one.",
+      "canWait": "6+ month clothes.",
+      "items": ["diapers", "clothing-0-3", "carrier", "clothing-6-9"]
+    },
+    {
+      "id": "w-plus-4",
+      "offset": 4,
+      "title": "One Month In",
+      "subject": "One month! What to buy next (and what can still wait)",
+      "paragraphs": [
+        "You made it through month one. Coming up: tummy time (a play mat helps), a sleep sack once baby's out of the swaddle (usually when they start trying to roll), and baby-proofing before crawling, which is still months away.",
+        "High chairs, gates and activity centers can wait. Reply and tell us what worked for you. We read every reply."
+      ],
+      "buyNow": "Play mat, high-contrast books.",
+      "canWait": "High chair, gates, activity center.",
+      "items": ["play-mat", "books", "sleep-sacks", "high-chair", "gates", "activity-center"]
+    }
+  ]
+}

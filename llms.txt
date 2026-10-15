@@ -1,0 +1,89 @@
+# Bump to Baby
+
+> Free static guide for expecting parents: an 8-question registry quiz, a 32-week buying timeline, and a master gear list. Not medical advice. No prices, ratings, or reviews.
+
+The quiz runs in the browser. Product links are the placeholder `{{AFFILIATE_LINK}}` in `data/products.json` until a real URL replaces them. Safe sleep, car seats, and medicine notes are general. Parents should talk with their clinicians and a certified car seat technician.
+
+## Start here
+
+- [Home](https://nicolasconnelly-bot.github.io/bump-to-baby/): What the site is, a due-date form, and the FAQ.
+- [Registry quiz](https://nicolasconnelly-bot.github.io/bump-to-baby/quiz/): Eight questions that add or remove gear. Results stay on the device.
+- [Gear list](https://nicolasconnelly-bot.github.io/bump-to-baby/gear/): Must-have, nice-to-have, wait, skip, and unsafe items, with example picks.
+- [Timeline](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/): All 32 weeks. A due date highlights the current 7-day block.
+- [Newsletter](https://nicolasconnelly-bot.github.io/bump-to-baby/newsletter/): Placeholder form for a future MailerLite embed. It does not collect email.
+- [Disclaimer](https://nicolasconnelly-bot.github.io/bump-to-baby/disclaimer/): Medical, safe-sleep, car-seat, and medicine limits.
+- [Privacy](https://nicolasconnelly-bot.github.io/bump-to-baby/privacy/): No accounts, no analytics, local due date only.
+- [Affiliate disclosure](https://nicolasconnelly-bot.github.io/bump-to-baby/affiliate-disclosure/): How the link placeholder works.
+
+## Week-by-week timeline
+
+- [W-28: Welcome to the Countdown](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-28/): Six months to go. Here's the plan (spoiler: don't buy anything yet) Buy now: Nothing. Can wait: Everything. You're ahead.
+- [W-27: Talk Budget Before You Shop](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-27/): The 15-minute money talk that saves hundreds Buy now: Nothing. Can wait: Big gear.
+- [W-26: Check Your Insurance for a Free Pump](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-26/): Your health plan may already cover a breast pump Buy now: Nothing. Just make the call. Can wait: The pump itself.
+- [W-25: Pick Your Pediatrician](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-25/): The one appointment to book before baby's born Buy now: Nothing. Can wait: Thermometers and the medicine kit.
+- [W-24: Build the Registry](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-24/): Registry time: here's your short list Buy now: Nothing. Register instead. Can wait: Nice-to-haves.
+- [W-23: Research the Car Seat](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-23/): The one item you can't leave the hospital without Buy now: Nothing yet. Can wait: Car seat (buy around W-12).
+- [W-22: Stroller Shopping Without the Overwhelm](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-22/): Stroller shopping: three questions you need to answer Buy now: Nothing. Can wait: The stroller. Watch for sales.
+- [W-21: Plan the Room (or the Corner)](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-21/): Nursery planning: start with a tape measure Buy now: Paint, if you're painting (let it air out for weeks). Can wait: Furniture.
+- [W-20: Halfway There](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-20/): Halfway! Here's your checklist so far Buy now: Nothing. Can wait: All of it.
+- [W-19: Order the Crib](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-19/): Order the crib now, since delivery times vary Buy now: Crib + mattress. Can wait: Sheets, mobile, decor.
+- [W-18: Dresser and Changing Station](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-18/): Skip the changing table (here's what to get instead) Buy now: Dresser + anchors + changing pad. Can wait: Baskets and organizers.
+- [W-17: Learn Before You Buy](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-17/): Sign up for a class this week (dads included) Buy now: Class seats. Can wait: Feeding gear (you'll know more after class).
+- [W-16: Clothing, Round One](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-16/): Don't buy baby clothes yet (seriously) Buy now: 2–3 zip sleepers (0–3 mo). Can wait: Everything else.
+- [W-15: The Sleep Setup](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-15/): Safe sleep, simplified Buy now: Bassinet, swaddles, white noise. Can wait: Sleep sacks for 3+ months, the monitor.
+- [W-14: Baby Shower Season](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-14/): Shower coming up? Here's how to make your registry work Buy now: Nothing. Let the shower happen first. Can wait: Gaps until after the shower.
+- [W-13: Fill the Gaps](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-13/): Post-shower: what's still missing? Buy now: Remaining must-haves. Can wait: Nice-to-haves.
+- [W-12: Buy and Install the Car Seat](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-12/): Car seat install weekend Buy now: Car seat (+ stroller if it's a travel system). Can wait: Car mirror and seat organizers.
+- [W-11: Feeding Gear](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-11/): Feeding gear: start small Buy now: Pump and essentials, or 2–4 bottles. Can wait: Sterilizers and formula makers.
+- [W-10: Diapers and Wipes](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-10/): Diaper math (don't buy a mountain of newborn size) Buy now: Diapers (newborn + size 1), wipes, cream. Can wait: Bulk stockpiles.
+- [W-9: Bath and Grooming](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-9/): Bath basics for a slippery little person Buy now: Tub, wash, towels, clippers. Can wait: Bath toys, robes.
+- [W-8: Health Kit](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-8/): Build the 2 AM medicine cabinet Buy now: Thermometer, aspirator, saline. Can wait: Fancy humidifiers (unless it's winter).
+- [W-7: Wash Everything](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-7/): Laundry day (the cutest one you'll ever have) Buy now: Gentle detergent, extra burp cloths. Can wait: Bigger sizes.
+- [W-6: Pack the Hospital Bag](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-6/): Hospital bag checklist (including the dad bag) Buy now: Snacks and a long charging cable. Can wait: Nothing on this list. Pack it now.
+- [W-5: Stock the Freezer and the Pantry](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-5/): The best baby prep isn't baby gear Buy now: Food and household staples. Can wait: Baby gear. You're set.
+- [W-4: Set Up Stations](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-4/): Feeding station + changing station = calmer nights Buy now: A dim night light. Can wait: Gliders and recliners, if you have a comfy chair.
+- [W-3: Final Checks](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-3/): Final walkthrough: car seat, bag, phone numbers Buy now: Nothing. Can wait: Everything not done yet. It's fine.
+- [W-2: Rest and Wait](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-2/): You're ready. Really. Buy now: Nothing. Can wait: Everything.
+- [W-1: Due Week](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-1/): Due week checklist (short, we promise) Buy now: Nothing. Can wait: All of it.
+- [W+1: Welcome Home](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-plus-1/): Welcome home! Here's the first-week survival guide Buy now: Whatever you're actually running out of. Can wait: Toys, bigger sizes.
+- [W+2: Feeding Check-In](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-plus-2/): Feeding going well? (If not, there's help) Buy now: Your proven bottle or formula, in larger amounts. Can wait: Gadgets.
+- [W+3: Sizing Up](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-plus-3/): Newborn clothes already snug? Here's what to do Buy now: Next diaper size, a carrier if you need one. Can wait: 6+ month clothes.
+- [W+4: One Month In](https://nicolasconnelly-bot.github.io/bump-to-baby/timeline/w-plus-4/): One month! What to buy next (and what can still wait) Buy now: Play mat, high-contrast books. Can wait: High chair, gates, activity center.
+
+## FAQ
+
+### What does the registry quiz do?
+
+The quiz asks eight questions about budget, space, feeding, season, how you get around, whether this is your first baby, childcare before six months, and laundry. It starts from the must-have gear list and adds or removes items from your answers. It runs in your browser. Your answers are not sent to a server. You can also read the full gear list without taking the quiz.
+
+### When should I buy the car seat?
+
+Research the car seat in the middle of pregnancy, then buy and install it about 12 weeks before your due date. Most hospitals expect a rear-facing car seat for the ride home. Have the install checked by a certified child passenger safety technician or a free check at a fire station or hospital. Register the seat with the manufacturer so you hear about recalls.
+
+### What is a safe sleep setup?
+
+General safe-sleep guidance is: alone, on the back, on a firm flat mattress in a crib, bassinet, or play yard made for sleep. Keep that space empty. No bumpers, pillows, quilts, stuffed animals, or sleep positioners. A swaddle or wearable sleep sack is the cover. Many families room-share for the first months, with the baby in their own sleep space. This is general information, not a plan for your baby. Ask your pediatrician.
+
+### Can I buy a used crib, mattress, or car seat?
+
+Gently used clothes, toys, and strollers are often fine if you check recalls and the condition. Car seats, cribs, and mattresses should be new, or come from someone whose history you trust. A used car seat can be expired, missing parts, or have been in a crash you were not told about. A crib should meet current safety standards and have fixed sides, not drop sides.
+
+### Do I need a changing table?
+
+No. A dresser with a changing pad on top does the same job and stays useful for years. Anchor the dresser to the wall. Skip a standalone changing table. Keep diapers, wipes, and cream within one arm's reach so you never step away from the baby on the pad.
+
+### How does the week-by-week timeline work?
+
+There are 32 weeks of guidance, from 28 weeks before your due date (about 12 weeks pregnant) through the fourth week after your due date. Enter your due date and the site highlights the 7-day block you are in. W-1 is the week ending on your due date. W+1 starts the day after. Each week has its own page with a buy-now line and a can-wait line. Those pages are the same notes as the planned emails.
+
+### Will the newsletter form sign me up?
+
+Not yet. The form is a placeholder for a MailerLite embed. Submitting it on this static site does not send your email anywhere. If you enter a due date, the page can save that date in this browser so the timeline highlights your week. When a MailerLite snippet replaces the placeholder form, signup will follow MailerLite's own process and privacy policy.
+
+### Is this medical advice?
+
+No. Bump to Baby is a general shopping and planning guide. It does not diagnose, treat, or tell you how to dose medicine. Safe-sleep, car-seat, and medicine notes are general. Talk with your prenatal clinician, your baby's pediatrician, and a certified car seat technician about your family.
+
+## Optional
+
+- [Machine-readable guide](https://nicolasconnelly-bot.github.io/bump-to-baby/llms.txt): this file.
