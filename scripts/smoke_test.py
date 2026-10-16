@@ -315,9 +315,11 @@ def check_html() -> None:
         parser = Parser()
         parser.feed(text)
         title = "".join(parser.title).strip()
+        is_week = path.parent.parent.name == "timeline" and path.parent.name.startswith("w-")
+        title_limit = 90 if is_week else 80
         if not title:
             fail(f"{path} missing title")
-        elif len(title) > 80:
+        elif len(title) > title_limit:
             fail(f"{path} title is {len(title)} characters: {title}")
         description = dict(parser.metas).get("description", "")
         if path.name != "404.html" and not (50 <= len(description) <= 170):
@@ -383,6 +385,59 @@ def check_html() -> None:
                     fail(f"{path.relative_to(ROOT)} broken anchor {href}")
 
 
+def expected_search_title(week: dict) -> str:
+    offset = week["offset"]
+    count = -offset if offset < 0 else offset
+    unit = "Week" if count == 1 else "Weeks"
+    when = "Before Your Due Date" if offset < 0 else "After Birth"
+    return f"{count} {unit} {when}: {week['title']}"
+
+
+def check_week_seo() -> None:
+    weeks = json.loads((ROOT / "data" / "weeks.json").read_text(encoding="utf-8"))["weeks"]
+    for week in weeks:
+        path = ROOT / "timeline" / week["id"] / "index.html"
+        text = path.read_text(encoding="utf-8")
+        parser = Parser()
+        parser.feed(text)
+        title = "".join(parser.title).strip()
+        search = expected_search_title(week)
+        branded = f"{search} | Bump to Baby"
+        if title != branded:
+            fail(f"{week['id']} title is {title!r}")
+        meta = dict(parser.metas)
+        description = meta.get("description", "")
+        if not 120 <= len(description) <= 160:
+            fail(f"{week['id']} description length {len(description)}: {description}")
+        if "Buy now:" in description:
+            fail(f"{week['id']} description still includes 'Buy now:'")
+        if meta.get("og:title") != title or meta.get("twitter:title") != title:
+            fail(f"{week['id']} social title does not match the document title")
+        if meta.get("og:description") != description or meta.get("twitter:description") != description:
+            fail(f"{week['id']} social description does not match the meta description")
+        if not parser.jsonld:
+            fail(f"{week['id']} missing JSON-LD")
+            continue
+        graph = json.loads(parser.jsonld[0]).get("@graph", [])
+        article = next((node for node in graph if node.get("@type") == "Article"), None)
+        if article is None:
+            fail(f"{week['id']} missing Article JSON-LD")
+            continue
+        if article.get("headline") != search:
+            fail(f"{week['id']} JSON-LD headline is {article.get('headline')!r}")
+        if article.get("description") != description:
+            fail(f"{week['id']} JSON-LD description does not match the meta description")
+        code = f"W{week['offset']}" if week["offset"] < 0 else f"W+{week['offset']}"
+        if f"<h1>{week['title']}</h1>" not in text:
+            fail(f"{week['id']} changed the on-page heading")
+        if f"<span>{code}: {week['title']}</span>" not in text:
+            fail(f"{week['id']} changed the breadcrumb label")
+        if '<h2 class="buy-now">Buy now</h2>' not in text:
+            fail(f"{week['id']} changed the buy-now heading")
+        if f"/timeline/{week['id']}/" not in text:
+            fail(f"{week['id']} changed its own URL")
+
+
 def browser_check() -> None:
     chrome = shutil.which("google-chrome") or shutil.which("google-chrome-stable")
     if not chrome:
@@ -410,7 +465,22 @@ def browser_check() -> None:
         base + "/": ["What do you actually need?", "Start the quiz"],
         quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', f"{BASE}/assets/img/products/sheets.webp", "Burt's Bees Baby fitted crib sheet"],
         base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
-        base + "/timeline/w-12/": ["Buy and Install the Car Seat", "Buy now", "Car seat"],
+        base + "/timeline/w-12/": [
+            "12 Weeks Before Your Due Date: Buy and Install the Car Seat | Bump to Baby",
+            "Buy and Install the Car Seat",
+            "Buy now",
+            "Car seat",
+        ],
+        base + "/timeline/w-20/": [
+            "20 Weeks Before Your Due Date: Halfway There | Bump to Baby",
+            "Halfway There",
+            "Buy now",
+        ],
+        base + "/timeline/w-plus-1/": [
+            "1 Week After Birth: Welcome Home | Bump to Baby",
+            "Welcome Home",
+            "Buy now",
+        ],
     }
     profiles: list[Path] = []
     try:
@@ -455,6 +525,7 @@ def main() -> None:
     run_logic()
     check_files()
     check_html()
+    check_week_seo()
     browser_check()
     if failures:
         print(f"\n{failures} smoke check(s) failed")

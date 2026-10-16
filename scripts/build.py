@@ -73,15 +73,67 @@ def timing_line(offset: int) -> str:
     return f"About {offset} {unit} after your due date."
 
 
+def week_search_label(offset: int) -> str:
+    """Plain week phrase for titles and snippets, such as '20 Weeks Before Your Due Date'."""
+    if offset < 0:
+        count = -offset
+        when = "Before Your Due Date"
+    elif offset > 0:
+        count = offset
+        when = "After Birth"
+    else:
+        raise ValueError(f"week offset must be non-zero, got {offset}")
+    unit = "Week" if count == 1 else "Weeks"
+    return f"{count} {unit} {when}"
+
+
+# Search snippets for each week page. On-page copy stays in data/weeks.json.
+WEEK_DESCRIPTIONS = {
+    "w-28": "Six months out, skip the shopping. Take the registry quiz, start a shared baby list, and let suggested gear wait until you know what you actually need.",
+    "w-27": "Agree on a total baby budget, a cap for big gear, and what you hope gifts will cover. Decide your secondhand rules now so the later shopping weeks stay calm.",
+    "w-26": "Call your insurer and ask which breast pumps are covered, when you can order, and if upgrades cost extra. Buy the pump only after you have that answer.",
+    "w-25": "Choose a pediatrician now. Ask about the after-hours line, same-day sick visits, and how far the office is, then save the number where you will actually see it.",
+    "w-24": "Turn your quiz results into a short registry: must-haves first, then a few nice-to-haves at different prices. This week is for registering, not for buying.",
+    "w-23": "Compare an infant car seat with a convertible one and check that it fits your car. Hospitals expect a rear-facing seat for the ride home; buying can wait a bit.",
+    "w-22": "Judge strollers by trunk fit, a one-hand fold, and car-seat compatibility. Push a few in a store this weekend, and leave the purchase for a later week.",
+    "w-21": "Measure the sleep space and sketch the crib, dresser, and chair away from windows and cords. Paint now if you need to, and leave the furniture order for later.",
+    "w-20": "Halfway there: review budget, insurance, pediatrician, registry, car seat, and stroller. If half of that is underway, you are on track and can skip shopping.",
+    "w-19": "Order a fixed-side crib and a firm, tight-fitting mattress now so delivery and assembly finish before the last weeks. Sheets and nursery decor can wait.",
+    "w-18": "Get a dresser with a changing topper instead of a changing table, and anchor it to the wall. Keep diapers, wipes, and cream within arm's reach of the pad.",
+    "w-17": "Book childbirth, breastfeeding, infant CPR, and newborn classes before they fill, and bring a partner along. Wait to buy feeding gear until after class.",
+    "w-16": "Wait on most baby clothes until after the shower. Buy only a few 0–3 month zip-up sleepers for now, and leave newborn sizes for gifts.",
+    "w-15": "Set up safe sleep: a firm flat mattress in a crib or bassinet, with nothing else in it. Add swaddles and white noise this week, and let the monitor wait.",
+    "w-14": "Send the registry, thank people as gifts arrive, and keep receipts for easy exchanges. Shop the gaps only after the shower, not before.",
+    "w-13": "Check shower gifts against your quiz list, return duplicates and skip items, and use a completion discount on leftover must-haves. Nice-to-haves can wait.",
+    "w-12": "Buy the car seat, install it, and get a certified or free fire-station check, then register the seat for recalls. Mirrors and seat organizers can wait.",
+    "w-11": "Gather a small feeding kit: pump supplies, one can of formula, or a few bottles, plus a brush and drying rack. Sterilizers and formula makers can wait.",
+    "w-10": "Buy a small newborn diaper pack, a box of size 1, wipes, and cream, and keep the receipts. Skip a huge newborn stash; that size goes fast.",
+    "w-9": "Get an infant tub, gentle wash, hooded towels, washcloths, and nail clippers. A few baths a week is enough for a newborn, so bath toys can wait.",
+    "w-8": "Build a small night kit: thermometer, nasal aspirator, and saline, and save the pediatrician's after-hours number. Ask before using infant medicine.",
+    "w-7": "Wash clothes, sheets, swaddles, and burp cloths in fragrance-free detergent, then dress the bassinet and crib. Fold by size so the next size is easy to find.",
+    "w-6": "Pack bags for the baby and both adults: going-home clothes, toiletries, chargers, and snacks. Set the bag by the door and put the car seat base in the car.",
+    "w-5": "Freeze easy meals, stock one-handed snacks, and order staples like soap and toilet paper. A full freezer will help more than another piece of baby gear.",
+    "w-4": "Set up a night feeding spot and each changing station with water, a burp cloth, and a dim light. A new glider can wait if you already have a comfortable chair.",
+    "w-3": "Check the car seat, hospital bag, driving route, pediatrician, and care for pets or older kids, then rest. Nothing new needs buying this week.",
+    "w-2": "Rest, walk, and charge your phone. Anything still missing can be delivered after the baby arrives, so skip one last round of just-in-case shopping.",
+    "w-1": "Due week stays short: gas in the car, bag packed, phone charged, car seat ready, and a plan for when to call. There is nothing new to buy.",
+    "w-plus-1": "Week one at home is feeds, diapers, and sleep. Track diapers for the pediatrician, accept meal help, and reorder only what you are actually running out of.",
+    "w-plus-2": "If feeding is hard, book a lactation visit, try another bottle nipple, or buy more of a formula that works. Skip new gadgets until one of those actually helps.",
+    "w-plus-3": "Red marks from snaps or diapers mean it is time for size 1 and 0–3 month clothes. Pack away the outgrown pieces, and add a carrier if walks would help.",
+    "w-plus-4": "At one month, add a play mat and high-contrast books, and plan a sleep sack for when rolling starts. High chairs, gates, and activity centers can still wait.",
+}
+
+
 def meta_description(week: dict) -> str:
-    text = f"{week['subject'].rstrip('.')}. Buy now: {week['buyNow']}"
+    text = WEEK_DESCRIPTIONS.get(week["id"])
+    if not text:
+        raise SystemExit(f"{week['id']} is missing a search description")
     text = re.sub(r"\s+", " ", text).strip()
-    if len(text) < 70:
-        text = text.rstrip(".") + ". A Bump to Baby weekly planning note."
-    if len(text) <= 160:
-        return text
-    trimmed = text[:157].rsplit(" ", 1)[0]
-    return trimmed.rstrip(".,;:") + "..."
+    if "Buy now:" in text:
+        raise SystemExit(f"{week['id']} search description still includes 'Buy now:'")
+    if not 120 <= len(text) <= 160:
+        raise SystemExit(f"{week['id']} search description is {len(text)} characters")
+    return text
 
 
 def item_map() -> dict:
@@ -256,8 +308,8 @@ def crumbs(parts: list[tuple[str, str]]) -> str:
 
 def page(title: str, description: str, path: str, body: str, structured: dict | None = None,
          og_type: str = "website", robots: str | None = None, scripts: list[str] | None = None,
-         current: str = "") -> str:
-    full_title = title if title == NAME or title.startswith(NAME) else f"{title} · {NAME}"
+         current: str = "", brand_sep: str = " · ") -> str:
+    full_title = title if title == NAME or title.startswith(NAME) else f"{title}{brand_sep}{NAME}"
     robots_tag = f'\n  <meta name="robots" content="{esc(robots)}">' if robots else ""
     ld = ""
     if structured:
@@ -664,6 +716,7 @@ def week_pages() -> None:
         else:
             next_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
         description = meta_description(week)
+        search_title = f"{week_search_label(week['offset'])}: {week['title']}"
         body = f"""
 {crumbs([("/timeline/", "Timeline"), (path, code + ": " + week["title"])])}
 <article data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}">
@@ -698,7 +751,7 @@ def week_pages() -> None:
                 breadcrumb_ld([("/timeline/", "Timeline"), (path, f"{code}: {week['title']}")]),
                 {
                     "@type": "Article",
-                    "headline": week["title"],
+                    "headline": search_title,
                     "description": description,
                     "datePublished": PUBLISHED,
                     "dateModified": PUBLISHED,
@@ -710,7 +763,7 @@ def week_pages() -> None:
             ],
         }
         write(ROOT / "timeline" / week["id"] / "index.html", page(
-            f"{code}: {week['title']}",
+            search_title,
             description,
             path,
             body,
@@ -718,6 +771,7 @@ def week_pages() -> None:
             og_type="article",
             current="/timeline/",
             scripts=["/assets/js/timeline.js", "/assets/js/site.js"],
+            brand_sep=" | ",
         ))
 
 
@@ -976,6 +1030,10 @@ def validate() -> None:
         for item_id in week.get("items") or []:
             if item_id not in ids:
                 raise SystemExit(f"{week['id']} references unknown item {item_id}")
+        meta_description(week)
+        week_search_label(week["offset"])
+    if set(WEEK_DESCRIPTIONS) != seen:
+        raise SystemExit("search descriptions do not match the week ids")
     grouped = [week_id for _, ids in WEEK_GROUPS for week_id in ids]
     if grouped != [week["id"] for week in WEEKS]:
         raise SystemExit("timeline groups do not match week order")
