@@ -201,8 +201,8 @@ def check_files() -> None:
         else:
             fail(f"{item['id']} link is neither a product page nor a search")
     print(f"affiliate links: {dp_count} verified /dp/, {search_count} search, {unlinked} unlinked")
-    if dp_count < 1 or search_count < 1:
-        fail("expected both verified product pages and search links")
+    if dp_count < 80 or unlinked != 4:
+        fail(f"expected at least 80 verified product pages and 4 unlinked items, found {dp_count} and {unlinked}")
     weeks = json.loads((ROOT / "data" / "weeks.json").read_text(encoding="utf-8"))["weeks"]
     if len(weeks) != 32:
         fail("weeks.json does not have 32 weeks")
@@ -231,14 +231,24 @@ def check_files() -> None:
         fail("gear affiliate links need rel and target")
     if disclosure not in gear:
         fail("footer missing the Amazon Associates disclosure")
-    sheets_image = "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg"
+    sheets_image = f"{BASE}/assets/img/products/sheets.webp"
     if sheets_image not in gear or 'id="sheets"' not in gear:
-        fail("gear list is missing the verified fitted-sheet thumbnail")
-    image_count = gear.count('class="item-thumb"')
-    if image_count != 25:
-        fail(f"expected 25 verified thumbnails on the gear list, found {image_count}")
-    if 'class="item-placeholder"' not in gear:
-        fail("search-link items should use a category placeholder")
+        fail("gear list is missing the fitted-sheet photo")
+    if "Burt&#x27;s Bees Baby fitted crib sheet" not in gear:
+        fail("fitted-sheet photo is missing alt text")
+    thumbs = re.findall(r'<img class="item-thumb"[^>]*>', gear)
+    linked = sum(1 for item in products["items"] if item.get("link") is not False)
+    if len(thumbs) != linked:
+        fail(f"expected {linked} product photos on the gear list, found {len(thumbs)}")
+    for thumb in thumbs:
+        alt = re.search(r'alt="([^"]*)"', thumb)
+        src = re.search(r'src="([^"]+)"', thumb)
+        if not alt or not alt.group(1).strip():
+            fail("product photo missing alt text")
+        if not src or "/assets/img/products/" not in src.group(1) or not src.group(1).endswith(".webp"):
+            fail(f"product photo is not a local file: {thumb[:120]}")
+    if 'class="item-placeholder"' in gear:
+        fail("linked gear cards should use a photo, not a placeholder")
     if 'id="bumpers"' in gear:
         bumper = gear.split('id="bumpers"', 1)[1].split("</article>", 1)[0]
         if "item-thumb" in bumper or "item-placeholder" in bumper or "amazon.com" in bumper:
@@ -358,8 +368,7 @@ def check_html() -> None:
                         fail(f"{path.relative_to(ROOT)} Amazon link missing rel or target: {href}")
                     continue
                 if parsed.netloc == "m.media-amazon.com" and kind == "img":
-                    if not re.fullmatch(r"/images/P/[A-Z0-9]{10}\.01\._SL160_\.jpg", parsed.path):
-                        fail(f"{path.relative_to(ROOT)} unexpected Amazon image {href}")
+                    fail(f"{path.relative_to(ROOT)} hotlinked Amazon image {href}")
                     continue
                 if bare not in EXTERNAL_OK and not bare.startswith(ORIGIN):
                     fail(f"{path.relative_to(ROOT)} unexpected external link {href}")
@@ -399,7 +408,7 @@ def browser_check() -> None:
     quiz = base + "/quiz/?tier=mid&space=nursery&feed=combo&season=fall&move=mix&first=yes&care=home&laundry=normal"
     checks = {
         base + "/": ["What do you actually need?", "Start the quiz"],
-        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', "https://m.media-amazon.com/images/P/B09CGM51D1.01._SL160_.jpg", "item-placeholder"],
+        quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', f"{BASE}/assets/img/products/sheets.webp", "Burt's Bees Baby fitted crib sheet"],
         base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
         base + "/timeline/w-12/": ["Buy and Install the Car Seat", "Buy now", "Car seat"],
     }

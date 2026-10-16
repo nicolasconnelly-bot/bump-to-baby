@@ -145,8 +145,8 @@
     if (item.image) {
       var img = document.createElement("img");
       img.className = "item-thumb";
-      img.src = item.image;
-      img.alt = "";
+      img.src = item.image.charAt(0) === "/" ? base + item.image : item.image;
+      img.alt = item.imageAlt || item.name || "Product photo";
       img.width = 72;
       img.height = 72;
       img.loading = "lazy";

@@ -99,8 +99,10 @@ def link_token(item: dict) -> str | None:
 def thumb_html(item: dict) -> str:
     image = item.get("image")
     if isinstance(image, str) and image:
+        src = site_path(image) if image.startswith("/") else image
+        alt = item.get("imageAlt") or item["name"]
         return (
-            f'<img class="item-thumb" src="{esc(image)}" alt="" width="72" height="72" loading="lazy">'
+            f'<img class="item-thumb" src="{esc(src)}" alt="{esc(alt)}" width="72" height="72" loading="lazy">'
         )
     link = item.get("link")
     if item.get("unsafe") or not isinstance(link, str) or not link:
@@ -946,13 +948,15 @@ def validate() -> None:
         elif not link.startswith("https://www.amazon.com/s?k="):
             raise SystemExit(f"{item['id']} link is neither a product page nor a search")
         image = item.get("image")
-        if image:
-            if "/dp/" not in link:
-                raise SystemExit(f"{item['id']} has an image without a verified product page")
-            asin = link.split("/dp/")[1].split("?")[0]
-            expected = f"https://m.media-amazon.com/images/P/{asin}.01._SL160_.jpg"
-            if image != expected:
-                raise SystemExit(f"{item['id']} image does not match its verified ASIN")
+        if not image:
+            raise SystemExit(f"{item['id']} is linked but has no product image")
+        if not re.fullmatch(r"/assets/img/products/[a-z0-9-]+\.webp", image):
+            raise SystemExit(f"{item['id']} image is not a local product photo")
+        if not (ROOT / image.lstrip("/")).is_file():
+            raise SystemExit(f"{item['id']} image file is missing")
+        alt = item.get("imageAlt")
+        if not isinstance(alt, str) or not alt.strip():
+            raise SystemExit(f"{item['id']} image is missing alt text")
     ids = {item["id"] for item in PRODUCTS["items"]}
     if len(ids) != len(PRODUCTS["items"]):
         raise SystemExit("duplicate product ids")

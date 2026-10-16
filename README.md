@@ -33,7 +33,7 @@ Generated HTML is committed so GitHub Pages does not need a build step. `.nojeky
 
 ## Affiliate links
 
-Each item in `data/products.json` has its own `link`. A `https://www.amazon.com/dp/<ASIN>?tag=bumptobaby0d-20` URL is used only when that ASIN was checked against the named product. Other items use `https://www.amazon.com/s?k=<product name>&tag=bumptobaby0d-20`. Use `"link": false` for tasks and for unsafe sleep items that should not be offered for sale. Rebuild after you change a link.
+Each item in `data/products.json` has its own `link`. A `https://www.amazon.com/dp/<ASIN>?tag=bumptobaby0d-20` URL is used when that ASIN was checked against the named product. A search URL is only for an item that does not have a checked product page. Use `"link": false` for tasks and for unsafe sleep items that should not be offered for sale. Product photos are local WebP files in `assets/img/products/`, about 400 pixels wide, with `imageAlt` set. Do not hotlink images. Rebuild after you change a link or a photo.
 
 ## Newsletter
 
