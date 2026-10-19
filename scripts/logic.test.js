@@ -188,11 +188,15 @@ expectWeek("2026-10-14", "2026-11-11", "w-plus-4", { current: true });
 expectWeek("2026-10-14", "2026-11-12", "w-plus-4", { past: true });
 
 const dueRange = BumpTimeline.rangeForOffset("2026-10-14", -1);
-assert(dueRange.start === "2026-10-08" && dueRange.end === "2026-10-14", "W-1 date range");
+assert(dueRange.start === "2026-10-08" && dueRange.end === "2026-10-14", "last week before due date range");
 const earlyRange = BumpTimeline.rangeForOffset("2026-10-14", -28);
-assert(earlyRange.start === "2026-04-02" && earlyRange.end === "2026-04-08", "W-28 date range");
+assert(earlyRange.start === "2026-04-02" && earlyRange.end === "2026-04-08", "28 weeks before due date range");
 const homeRange = BumpTimeline.rangeForOffset("2026-10-14", 1);
-assert(homeRange.start === "2026-10-15" && homeRange.end === "2026-10-21", "W+1 date range");
+assert(homeRange.start === "2026-10-15" && homeRange.end === "2026-10-21", "1 week after birth range");
+assert(BumpTimeline.plainLabelFromId("w-8") === "8 weeks before due date", "plain label 8 weeks before");
+assert(BumpTimeline.plainLabelFromId("w-1") === "1 week before due date", "plain label 1 week before");
+assert(BumpTimeline.plainLabelFromId("w-plus-1") === "1 week after birth", "plain label 1 week after");
+assert(BumpTimeline.plainLabelFromId("w-plus-4") === "4 weeks after birth", "plain label 4 weeks after");
 
 assert(BumpTimeline.weekForDueDate("nope", "2026-10-14") === null, "invalid due date");
 

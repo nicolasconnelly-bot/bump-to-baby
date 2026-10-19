@@ -11,6 +11,7 @@ import subprocess
 import sys
 import tempfile
 import threading
+from datetime import date, timedelta
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -385,6 +386,26 @@ def check_html() -> None:
                     fail(f"{path.relative_to(ROOT)} broken anchor {href}")
 
 
+SHORTHAND = re.compile(r"\bW[+-]\d+\b")
+NEUTRAL_PRODUCT = "This is a real product, and this list does not point to one store page."
+TASK_PRODUCT = "This is a task, not a store listing."
+
+
+def plain_week_label(offset: int) -> str:
+    count = -offset if offset < 0 else offset
+    unit = "week" if count == 1 else "weeks"
+    when = "before due date" if offset < 0 else "after birth"
+    return f"{count} {unit} {when}"
+
+
+def due_iso_for_offset(offset: int) -> str:
+    """A due date that lands in the given week window for today's local date."""
+    today = date.today()
+    if offset < 0:
+        return (today + timedelta(days=(-offset - 1) * 7 + 3)).isoformat()
+    return (today - timedelta(days=(offset - 1) * 7 + 3)).isoformat()
+
+
 def expected_search_title(week: dict) -> str:
     offset = week["offset"]
     count = -offset if offset < 0 else offset
@@ -427,15 +448,70 @@ def check_week_seo() -> None:
             fail(f"{week['id']} JSON-LD headline is {article.get('headline')!r}")
         if article.get("description") != description:
             fail(f"{week['id']} JSON-LD description does not match the meta description")
-        code = f"W{week['offset']}" if week["offset"] < 0 else f"W+{week['offset']}"
+        label = plain_week_label(week["offset"])
+        crumb = f"{label}: {week['title']}"
         if f"<h1>{week['title']}</h1>" not in text:
             fail(f"{week['id']} changed the on-page heading")
-        if f"<span>{code}: {week['title']}</span>" not in text:
-            fail(f"{week['id']} changed the breadcrumb label")
+        if f"<span>{crumb}</span>" not in text:
+            fail(f"{week['id']} breadcrumb is not the plain week label")
+        if week["offset"] < 0:
+            eyebrow = f"{label} · roughly week {40 + week['offset']} of a 40-week pregnancy."
+        else:
+            eyebrow = label
+        if f"<p class=\"eyebrow\">{eyebrow}</p>" not in text:
+            fail(f"{week['id']} eyebrow is {eyebrow!r} missing")
+        found = SHORTHAND.search(text)
+        if found:
+            fail(f"{week['id']} still shows shorthand {found.group(0)}")
+        crumbs_ld = next((node for node in graph if node.get("@type") == "BreadcrumbList"), None)
+        if crumbs_ld is None:
+            fail(f"{week['id']} missing BreadcrumbList JSON-LD")
+        else:
+            names = [item.get("name") for item in crumbs_ld.get("itemListElement", [])]
+            if names != ["Home", "Timeline", crumb]:
+                fail(f"{week['id']} BreadcrumbList names are {names!r}")
+        index = weeks.index(week)
+        if index > 0:
+            previous = plain_week_label(weeks[index - 1]["offset"])
+            if f"Previous: {previous}" not in text:
+                fail(f"{week['id']} previous link is not {previous!r}")
+        if index < len(weeks) - 1:
+            nxt = plain_week_label(weeks[index + 1]["offset"])
+            if f"Next: {nxt}" not in text:
+                fail(f"{week['id']} next link is not {nxt!r}")
         if '<h2 class="buy-now">Buy now</h2>' not in text:
             fail(f"{week['id']} changed the buy-now heading")
         if f"/timeline/{week['id']}/" not in text:
             fail(f"{week['id']} changed its own URL")
+    for rel in ("index.html", "timeline/index.html", "gear/index.html", "llms.txt", "affiliate-disclosure/index.html"):
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        found = SHORTHAND.search(text)
+        if found:
+            fail(f"{rel} still shows shorthand {found.group(0)}")
+    timeline = (ROOT / "timeline" / "index.html").read_text(encoding="utf-8")
+    for week in weeks:
+        label = plain_week_label(week["offset"])
+        if f'<span class="week-code">{label}</span>' not in timeline:
+            fail(f"timeline index is missing the plain label for {week['id']}")
+        if f'"{label}: {week["title"]}"' not in timeline:
+            fail(f"timeline ItemList is missing the plain name for {week['id']}")
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    for sample, offset in (("w-28", -28), ("w-12", -12), ("w-plus-1", 1)):
+        if f'<p class="week-code">{plain_week_label(offset)}</p>' not in home:
+            fail(f"home preview is missing the plain label for {sample}")
+    week8 = (ROOT / "timeline" / "w-8" / "index.html").read_text(encoding="utf-8")
+    gear = (ROOT / "gear" / "index.html").read_text(encoding="utf-8")
+    if week8.count(TASK_PRODUCT) != 1 or gear.count(TASK_PRODUCT) != 1:
+        fail("only the detector check should be described as a task")
+    if week8.count(NEUTRAL_PRODUCT) != 1 or gear.count(NEUTRAL_PRODUCT) != 1:
+        fail("saline drops should use neutral wording instead of a task label")
+    affiliate = (ROOT / "affiliate-disclosure" / "index.html").read_text(encoding="utf-8")
+    if "Saline drops are a product" not in affiliate or "are tasks rather than a single product" in affiliate:
+        fail("affiliate disclosure still calls saline drops a task")
+    script = (ROOT / "assets" / "js" / "timeline.js").read_text(encoding="utf-8")
+    found = SHORTHAND.search(script)
+    if found:
+        fail(f"timeline.js still shows shorthand {found.group(0)}")
 
 
 def browser_check() -> None:
@@ -462,24 +538,44 @@ def browser_check() -> None:
     base = f"http://127.0.0.1:{port}/bump-to-baby"
     quiz = base + "/quiz/?tier=mid&space=nursery&feed=combo&season=fall&move=mix&first=yes&care=home&laundry=normal"
     checks = {
-        base + "/": ["What do you actually need?", "Start the quiz"],
+        base + "/": ["What do you actually need?", "Start the quiz", "28 weeks before due date", "1 week after birth"],
         quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', f"{BASE}/assets/img/products/sheets.webp", "Burt's Bees Baby fitted crib sheet"],
         base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
         base + "/timeline/w-12/": [
             "12 Weeks Before Your Due Date: Buy and Install the Car Seat | Bump to Baby",
+            "12 weeks before due date",
             "Buy and Install the Car Seat",
             "Buy now",
             "Car seat",
+            "Previous: 13 weeks before due date",
+            "Next: 11 weeks before due date",
         ],
         base + "/timeline/w-20/": [
             "20 Weeks Before Your Due Date: Halfway There | Bump to Baby",
+            "20 weeks before due date",
             "Halfway There",
             "Buy now",
         ],
+        base + "/timeline/w-8/": [
+            "8 Weeks Before Your Due Date: Health Kit | Bump to Baby",
+            "8 weeks before due date",
+            "Previous: 9 weeks before due date",
+            "Next: 7 weeks before due date",
+            NEUTRAL_PRODUCT,
+            TASK_PRODUCT,
+        ],
         base + "/timeline/w-plus-1/": [
             "1 Week After Birth: Welcome Home | Bump to Baby",
+            "1 week after birth",
             "Welcome Home",
             "Buy now",
+            "Previous: 1 week before due date",
+            "Next: 2 weeks after birth",
+        ],
+        base + "/timeline/?due=" + due_iso_for_offset(-8): [
+            "8 weeks before due date: Health Kit",
+            "Read 8 weeks before due date",
+            "This is your week.",
         ],
     }
     profiles: list[Path] = []

@@ -88,10 +88,21 @@
     return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   }
 
-  function codeFromId(id) {
+  function plainLabelFromId(id) {
     if (!id) return "";
-    if (id.indexOf("w-plus-") === 0) return "W+" + id.slice("w-plus-".length);
-    return id.replace("w-", "W-").toUpperCase().replace("W-", "W-");
+    var count;
+    var when;
+    if (id.indexOf("w-plus-") === 0) {
+      count = Number(id.slice("w-plus-".length));
+      when = "after birth";
+    } else if (id.indexOf("w-") === 0) {
+      count = Number(id.slice("w-".length));
+      when = "before due date";
+    } else {
+      return "";
+    }
+    if (!count) return "";
+    return count + " " + (count === 1 ? "week" : "weeks") + " " + when;
   }
 
   function readStoredDue() {
@@ -140,7 +151,7 @@
       var href = current ? current.getAttribute("data-week-href") : "#";
       var message;
       if (result.early) {
-        message = "You are more than 28 weeks out. Start with W-28. Nothing needs buying yet.";
+        message = "You are more than 28 weeks out. Start with 28 weeks before due date. Nothing needs buying yet.";
       } else if (result.past) {
         message = "You are past the last note in this timeline. The final page is still the most recent one.";
       } else {
@@ -149,13 +160,13 @@
       box.hidden = false;
       box.innerHTML = "";
       var heading = document.createElement("h2");
-      heading.textContent = codeFromId(result.id) + ": " + title;
+      heading.textContent = plainLabelFromId(result.id) + ": " + title;
       var paragraph = document.createElement("p");
       paragraph.textContent = message;
       var link = document.createElement("a");
       link.className = "button";
       link.href = href;
-      link.textContent = "Read " + codeFromId(result.id);
+      link.textContent = "Read " + plainLabelFromId(result.id);
       box.appendChild(heading);
       box.appendChild(paragraph);
       box.appendChild(link);
@@ -189,7 +200,7 @@
     } else {
       var link = document.createElement("a");
       link.href = basePath() + "/timeline/" + result.id + "/?due=" + encodeURIComponent(due);
-      link.textContent = "Your current week is " + codeFromId(result.id);
+      link.textContent = "Your current week is " + plainLabelFromId(result.id);
       paragraph.appendChild(link);
       paragraph.appendChild(document.createTextNode("."));
     }
@@ -202,6 +213,7 @@
     weekForDueDate: weekForDueDate,
     rangeForOffset: rangeForOffset,
     formatPretty: formatPretty,
+    plainLabelFromId: plainLabelFromId,
     mount: mount,
     storageKey: STORAGE_KEY
   };

@@ -77,9 +77,9 @@
         "City or transit families often love infant seats; drive-only families sometimes skip straight to convertible. Make sure it fits your car. Many stores let you test-fit."
       ],
       "buyNow": "Nothing yet.",
-      "canWait": "Car seat (buy around W-12).",
+      "canWait": "Car seat (buy about 12 weeks before your due date).",
       "items": ["car-seat"],
-      "links": [{"label": "Jump to the install week (W-12)", "path": "/timeline/w-12/"}]
+      "links": [{"label": "Jump to the install week (12 weeks before due date)", "path": "/timeline/w-12/"}]
     },
     {
       "id": "w-22",
