@@ -1285,7 +1285,7 @@
       "status": "must",
       "origin": "timeline",
       "picks": {},
-      "note": "Named in the week-8 health kit, with the thermometer and nasal aspirator. Ask your pediatrician which product to use."
+      "note": "Named with the thermometer and nasal aspirator in the health kit about 8 weeks before the due date. Ask your pediatrician which product to use."
     },
     {
       "id": "acetaminophen",
@@ -1350,6 +1350,7 @@
     {
       "id": "detectors",
       "link": false,
+      "task": true,
       "name": "Smoke and CO detectors checked",
       "category": "health",
       "status": "must",

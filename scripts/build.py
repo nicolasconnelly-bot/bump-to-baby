@@ -56,21 +56,26 @@ def jsonld(data: dict) -> str:
     return raw.replace("<", "\\u003c")
 
 
-def week_code(week: dict) -> str:
-    offset = week["offset"]
+def week_plain_label(offset: int) -> str:
+    """Visible week phrase, such as '8 weeks before due date' or '1 week after birth'."""
     if offset < 0:
-        return f"W{offset}"
-    return f"W+{offset}"
+        count = -offset
+        when = "before due date"
+    elif offset > 0:
+        count = offset
+        when = "after birth"
+    else:
+        raise ValueError(f"week offset must be non-zero, got {offset}")
+    unit = "week" if count == 1 else "weeks"
+    return f"{count} {unit} {when}"
 
 
-def timing_line(offset: int) -> str:
+def week_eyebrow(offset: int) -> str:
+    """Plain week label, plus the pregnancy week when the baby has not arrived."""
+    label = week_plain_label(offset)
     if offset < 0:
-        return (
-            f"About {-offset} weeks before your due date — roughly week {40 + offset} "
-            "of a 40-week pregnancy."
-        )
-    unit = "week" if offset == 1 else "weeks"
-    return f"About {offset} {unit} after your due date."
+        return f"{label} · roughly week {40 + offset} of a 40-week pregnancy."
+    return label
 
 
 def week_search_label(offset: int) -> str:
@@ -169,7 +174,12 @@ def affiliate_html(item: dict) -> str:
     if token is None:
         if item.get("unsafe"):
             return '<p class="affiliate">No product link. This item is unsafe for sleep, so it is not for sale here.</p>'
-        return '<p class="affiliate">No product link. This is a task, not a store listing.</p>'
+        if item.get("task"):
+            return '<p class="affiliate">No product link. This is a task, not a store listing.</p>'
+        return (
+            '<p class="affiliate">No product link. This is a real product, '
+            "and this list does not point to one store page.</p>"
+        )
     if token.startswith("http://") or token.startswith("https://"):
         return (
             f'<p class="affiliate"><a href="{esc(token)}" rel="sponsored nofollow noopener" '
@@ -395,7 +405,7 @@ def home_page() -> None:
         week = next(week for week in WEEKS if week["id"] == week_id)
         preview.append(
             f'<a class="week-link" href="{site_path("/timeline/" + week["id"] + "/")}">'
-            f'<p class="week-code">{esc(week_code(week))}</p>'
+            f'<p class="week-code">{esc(week_plain_label(week["offset"]))}</p>'
             f"<h3>{esc(week['title'])}</h3>"
             f'<p class="week-buy">Buy now: {esc(week["buyNow"])}</p></a>'
         )
@@ -433,7 +443,7 @@ def home_page() -> None:
 </section>
 <section class="section" aria-labelledby="due-heading">
   <h2 id="due-heading">What should you buy this week?</h2>
-  <p class="section-intro">W-1 is the 7 days ending on your due date. W+1 starts the next day. If you are earlier than 28 weeks out, begin at the welcome note. Nothing there needs buying yet.</p>
+  <p class="section-intro">The last week before your due date is the 7 days ending on that date. The first week after birth starts the next day. If you are earlier than 28 weeks out, begin at the welcome note. Nothing there needs buying yet.</p>
   <form class="due-form panel" data-due-redirect method="get" action="{site_path("/timeline/")}">
     <div class="field">
       <label for="home-due">Due date</label>
@@ -616,10 +626,11 @@ def timeline_index() -> None:
         for week_id in ids:
             week = by_week[week_id]
             href = site_path(f"/timeline/{week['id']}/")
+            label = week_plain_label(week["offset"])
             rows.append(
                 f'<li class="week-row" data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}" '
                 f'data-week-title="{esc(week["title"])}" data-week-href="{href}">'
-                f'<a href="{href}"><span class="week-code">{esc(week_code(week))}</span>'
+                f'<a href="{href}"><span class="week-code">{esc(label)}</span>'
                 f'<span class="week-title">{esc(week["title"])}</span>'
                 f'<span class="week-buy">Buy now: {esc(week["buyNow"])}</span></a>'
                 f'<p class="range-label" data-range hidden></p></li>'
@@ -627,7 +638,7 @@ def timeline_index() -> None:
             list_items.append({
                 "@type": "ListItem",
                 "position": position,
-                "name": f"{week_code(week)}: {week['title']}",
+                "name": f"{label}: {week['title']}",
                 "description": week["subject"],
                 "url": canonical(f"/timeline/{week['id']}/"),
             })
@@ -684,7 +695,8 @@ def week_pages() -> None:
                 shutil.rmtree(child)
     lookup = item_map()
     for index, week in enumerate(WEEKS):
-        code = week_code(week)
+        label = week_plain_label(week["offset"])
+        crumb = f"{label}: {week['title']}"
         path = f"/timeline/{week['id']}/"
         paragraphs = "".join(f"<p>{esc(paragraph)}</p>" for paragraph in week["paragraphs"])
         related = []
@@ -707,20 +719,26 @@ def week_pages() -> None:
         next_link = ""
         if index > 0:
             prev_week = WEEKS[index - 1]
-            prev_link = f'<a href="{site_path("/timeline/" + prev_week["id"] + "/")}">Previous: {esc(week_code(prev_week))}</a>'
+            prev_link = (
+                f'<a href="{site_path("/timeline/" + prev_week["id"] + "/")}">'
+                f'Previous: {esc(week_plain_label(prev_week["offset"]))}</a>'
+            )
         else:
             prev_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
         if index < len(WEEKS) - 1:
             next_week = WEEKS[index + 1]
-            next_link = f'<a href="{site_path("/timeline/" + next_week["id"] + "/")}">Next: {esc(week_code(next_week))}</a>'
+            next_link = (
+                f'<a href="{site_path("/timeline/" + next_week["id"] + "/")}">'
+                f'Next: {esc(week_plain_label(next_week["offset"]))}</a>'
+            )
         else:
             next_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
         description = meta_description(week)
         search_title = f"{week_search_label(week['offset'])}: {week['title']}"
         body = f"""
-{crumbs([("/timeline/", "Timeline"), (path, code + ": " + week["title"])])}
+{crumbs([("/timeline/", "Timeline"), (path, crumb)])}
 <article data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}">
-  <p class="eyebrow">{esc(code)} · {esc(timing_line(week["offset"]))}</p>
+  <p class="eyebrow">{esc(week_eyebrow(week["offset"]))}</p>
   <h1>{esc(week["title"])}</h1>
   <p class="dek">{esc(week["subject"])}</p>
   <div class="week-banner" data-week-banner hidden></div>
@@ -748,7 +766,7 @@ def week_pages() -> None:
             "@context": "https://schema.org",
             "@graph": [
                 website_node(),
-                breadcrumb_ld([("/timeline/", "Timeline"), (path, f"{code}: {week['title']}")]),
+                breadcrumb_ld([("/timeline/", "Timeline"), (path, crumb)]),
                 {
                     "@type": "Article",
                     "headline": search_title,
@@ -844,7 +862,7 @@ def affiliate_page() -> None:
   <p>Commercial items link to Amazon with Associates tag <code>bumptobaby0d-20</code>. A product-page link is used only when that ASIN was checked against the named product. Other items open an Amazon search for the product name. Links open in a new tab.</p>
   <p>The site owner may earn a commission when someone buys through these links. That commission does not add a fee on this site. Recommendations come from the editorial list, not from who pays a commission.</p>
   <h2>Items with no store link</h2>
-  <p>Smoke and carbon monoxide detectors, and saline drops, are tasks rather than a single product, so they have no store link. Crib bumpers and inclined sleepers are unsafe for sleep, so this site does not link to them for sale.</p>
+  <p>Checking smoke and carbon monoxide detectors is a task, not a store listing, so that item has no product link. Saline drops are a product, but this site does not have a checked product page for them, so that item has no store link. Crib bumpers and inclined sleepers are unsafe for sleep, so this site does not link to them for sale.</p>
   <h2>Example picks</h2>
   <p>Named products are widely sold examples so a list is easier to picture. They are not a promise that a model is current. Check the latest version, the manual, and any recall before you buy.</p>
 </div>
@@ -961,7 +979,7 @@ def llms() -> None:
     ]
     for week in WEEKS:
         lines.append(
-            f"- [{week_code(week)}: {week['title']}]({canonical('/timeline/' + week['id'] + '/')}): "
+            f"- [{week_plain_label(week['offset'])}: {week['title']}]({canonical('/timeline/' + week['id'] + '/')}): "
             f"{week['subject']} Buy now: {week['buyNow']} Can wait: {week['canWait']}"
         )
     lines.extend([
@@ -991,7 +1009,11 @@ def validate() -> None:
         if link is False:
             if item.get("image"):
                 raise SystemExit(f"{item['id']} should not have a product image")
+            if item.get("task") and item.get("unsafe"):
+                raise SystemExit(f"{item['id']} cannot be both a task and an unsafe product")
             continue
+        if item.get("task"):
+            raise SystemExit(f"{item['id']} is a task and should not have a store link")
         if not isinstance(link, str) or not link.startswith("https://www.amazon.com/"):
             raise SystemExit(f"{item['id']} needs an Amazon link or link:false")
         if tag not in link:

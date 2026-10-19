@@ -377,8 +377,9 @@ input[type="text"] {
 
 .pager {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.8rem;
+  gap: 0.8rem 1.2rem;
   margin-top: 1.4rem;
 }
 .pager a { font-weight: 700; }
