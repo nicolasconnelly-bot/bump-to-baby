@@ -23,6 +23,7 @@ NAME = SITE["name"]
 PUBLISHED = SITE["published"]
 OG_IMAGE = f"{ORIGIN}/assets/og.png"
 PLACEHOLDER = PRODUCTS["affiliatePlaceholder"]
+PAGE_TITLES: dict[str, str] = {}
 
 WEEK_GROUPS = [
     ("Before you buy much", ["w-28", "w-27", "w-26", "w-25", "w-24", "w-23", "w-22", "w-21", "w-20"]),
@@ -90,6 +91,27 @@ def week_search_label(offset: int) -> str:
         raise ValueError(f"week offset must be non-zero, got {offset}")
     unit = "Week" if count == 1 else "Weeks"
     return f"{count} {unit} {when}"
+
+
+# On-page headings that would push "N Weeks Before Your Due Date: …" past 60 characters.
+# The visible heading in data/weeks.json stays the longer wording.
+WEEK_TITLE_TOPICS = {
+    "w-22": "Stroller Shopping Made Simple",
+    "w-26": "Check Insurance for Your Pump",
+    "w-5": "Stock the Freezer and Pantry",
+}
+
+
+def week_document_title(week: dict) -> str:
+    """Search title for a week page: the week phrase plus the topic, at most 60 characters."""
+    label = week_search_label(week["offset"])
+    topic = WEEK_TITLE_TOPICS.get(week["id"], week["title"])
+    title = f"{label}: {topic}"
+    if len(title) > 60:
+        raise SystemExit(f"{week['id']} title is {len(title)} characters: {title}")
+    if week["id"] in WEEK_TITLE_TOPICS and len(f"{label}: {week['title']}") <= 60:
+        raise SystemExit(f"{week['id']} no longer needs a shorter title topic")
+    return title
 
 
 # Search snippets for each week page. On-page copy stays in data/weeks.json.
@@ -318,8 +340,17 @@ def crumbs(parts: list[tuple[str, str]]) -> str:
 
 def page(title: str, description: str, path: str, body: str, structured: dict | None = None,
          og_type: str = "website", robots: str | None = None, scripts: list[str] | None = None,
-         current: str = "", brand_sep: str = " · ") -> str:
-    full_title = title if title == NAME or title.startswith(NAME) else f"{title}{brand_sep}{NAME}"
+         current: str = "", brand: bool = True, brand_sep: str = " · ") -> str:
+    if brand and title != NAME and not title.startswith(NAME):
+        full_title = f"{title}{brand_sep}{NAME}"
+    else:
+        full_title = title
+    if len(full_title) > 60:
+        raise SystemExit(f"{path} title is {len(full_title)} characters: {full_title}")
+    other = PAGE_TITLES.get(full_title)
+    if other:
+        raise SystemExit(f"duplicate title for {path} and {other}: {full_title}")
+    PAGE_TITLES[full_title] = path
     robots_tag = f'\n  <meta name="robots" content="{esc(robots)}">' if robots else ""
     ld = ""
     if structured:
@@ -734,7 +765,7 @@ def week_pages() -> None:
         else:
             next_link = f'<a href="{site_path("/timeline/")}">All weeks</a>'
         description = meta_description(week)
-        search_title = f"{week_search_label(week['offset'])}: {week['title']}"
+        search_title = week_document_title(week)
         body = f"""
 {crumbs([("/timeline/", "Timeline"), (path, crumb)])}
 <article data-week-id="{esc(week["id"])}" data-offset="{week["offset"]}">
@@ -789,7 +820,7 @@ def week_pages() -> None:
             og_type="article",
             current="/timeline/",
             scripts=["/assets/js/timeline.js", "/assets/js/site.js"],
-            brand_sep=" | ",
+            brand=False,
         ))
 
 
@@ -1053,15 +1084,18 @@ def validate() -> None:
             if item_id not in ids:
                 raise SystemExit(f"{week['id']} references unknown item {item_id}")
         meta_description(week)
-        week_search_label(week["offset"])
+        week_document_title(week)
     if set(WEEK_DESCRIPTIONS) != seen:
         raise SystemExit("search descriptions do not match the week ids")
+    if not set(WEEK_TITLE_TOPICS).issubset(seen):
+        raise SystemExit("short title topics do not match week ids")
     grouped = [week_id for _, ids in WEEK_GROUPS for week_id in ids]
     if grouped != [week["id"] for week in WEEKS]:
         raise SystemExit("timeline groups do not match week order")
 
 
 def main() -> None:
+    PAGE_TITLES.clear()
     validate()
     home_page()
     quiz_page()

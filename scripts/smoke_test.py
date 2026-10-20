@@ -296,6 +296,7 @@ def check_html() -> None:
         if "scripts" not in path.parts and path not in pages
     )
     seen = set()
+    seen_titles: dict[str, Path] = {}
     for path in pages:
         if path in seen:
             continue
@@ -316,12 +317,16 @@ def check_html() -> None:
         parser = Parser()
         parser.feed(text)
         title = "".join(parser.title).strip()
-        is_week = path.parent.parent.name == "timeline" and path.parent.name.startswith("w-")
-        title_limit = 90 if is_week else 80
         if not title:
             fail(f"{path} missing title")
-        elif len(title) > title_limit:
-            fail(f"{path} title is {len(title)} characters: {title}")
+        elif len(title) > 60:
+            fail(f"{path.relative_to(ROOT)} title is {len(title)} characters: {title}")
+        else:
+            other = seen_titles.get(title)
+            if other:
+                fail(f"{path.relative_to(ROOT)} title duplicates {other.relative_to(ROOT)}: {title}")
+            else:
+                seen_titles[title] = path
         description = dict(parser.metas).get("description", "")
         if path.name != "404.html" and not (50 <= len(description) <= 170):
             fail(f"{path.relative_to(ROOT)} description length {len(description)}: {description}")
@@ -333,6 +338,8 @@ def check_html() -> None:
         for key in ("og:title", "og:description", "og:url", "og:image"):
             if not meta.get(key):
                 fail(f"{path.relative_to(ROOT)} missing {key}")
+        if title and (meta.get("og:title") != title or meta.get("twitter:title") != title):
+            fail(f"{path.relative_to(ROOT)} social title does not match the document title")
         if not parser.jsonld and path.name != "404.html":
             fail(f"{path.relative_to(ROOT)} missing JSON-LD")
         for block in parser.jsonld:
@@ -406,12 +413,21 @@ def due_iso_for_offset(offset: int) -> str:
     return (today - timedelta(days=(offset - 1) * 7 + 3)).isoformat()
 
 
-def expected_search_title(week: dict) -> str:
+# Kept in step with WEEK_TITLE_TOPICS in scripts/build.py.
+WEEK_TITLE_TOPICS = {
+    "w-22": "Stroller Shopping Made Simple",
+    "w-26": "Check Insurance for Your Pump",
+    "w-5": "Stock the Freezer and Pantry",
+}
+
+
+def expected_document_title(week: dict) -> str:
     offset = week["offset"]
     count = -offset if offset < 0 else offset
     unit = "Week" if count == 1 else "Weeks"
     when = "Before Your Due Date" if offset < 0 else "After Birth"
-    return f"{count} {unit} {when}: {week['title']}"
+    topic = WEEK_TITLE_TOPICS.get(week["id"], week["title"])
+    return f"{count} {unit} {when}: {topic}"
 
 
 def check_week_seo() -> None:
@@ -422,10 +438,11 @@ def check_week_seo() -> None:
         parser = Parser()
         parser.feed(text)
         title = "".join(parser.title).strip()
-        search = expected_search_title(week)
-        branded = f"{search} | Bump to Baby"
-        if title != branded:
+        expected = expected_document_title(week)
+        if title != expected:
             fail(f"{week['id']} title is {title!r}")
+        if len(title) > 60:
+            fail(f"{week['id']} title is {len(title)} characters: {title}")
         meta = dict(parser.metas)
         description = meta.get("description", "")
         if not 120 <= len(description) <= 160:
@@ -444,7 +461,7 @@ def check_week_seo() -> None:
         if article is None:
             fail(f"{week['id']} missing Article JSON-LD")
             continue
-        if article.get("headline") != search:
+        if article.get("headline") != expected:
             fail(f"{week['id']} JSON-LD headline is {article.get('headline')!r}")
         if article.get("description") != description:
             fail(f"{week['id']} JSON-LD description does not match the meta description")
@@ -542,7 +559,7 @@ def browser_check() -> None:
         quiz: ["Your Must-Have List (Middle · Nursery · Combo)", "We've hidden", "tag=bumptobaby0d-20", "sponsored nofollow noopener", "Video monitor", "4–6 bottles", 'data-form="nv7GCt"', f"{BASE}/assets/img/products/sheets.webp", "Burt's Bees Baby fitted crib sheet"],
         base + "/newsletter/": ["Weekly notes for your due date", 'data-form="nv7GCt"', "ml('account', '2715249')"],
         base + "/timeline/w-12/": [
-            "12 Weeks Before Your Due Date: Buy and Install the Car Seat | Bump to Baby",
+            "12 Weeks Before Your Due Date: Buy and Install the Car Seat",
             "12 weeks before due date",
             "Buy and Install the Car Seat",
             "Buy now",
@@ -551,13 +568,13 @@ def browser_check() -> None:
             "Next: 11 weeks before due date",
         ],
         base + "/timeline/w-20/": [
-            "20 Weeks Before Your Due Date: Halfway There | Bump to Baby",
+            "20 Weeks Before Your Due Date: Halfway There",
             "20 weeks before due date",
             "Halfway There",
             "Buy now",
         ],
         base + "/timeline/w-8/": [
-            "8 Weeks Before Your Due Date: Health Kit | Bump to Baby",
+            "8 Weeks Before Your Due Date: Health Kit",
             "8 weeks before due date",
             "Previous: 9 weeks before due date",
             "Next: 7 weeks before due date",
@@ -565,7 +582,7 @@ def browser_check() -> None:
             TASK_PRODUCT,
         ],
         base + "/timeline/w-plus-1/": [
-            "1 Week After Birth: Welcome Home | Bump to Baby",
+            "1 Week After Birth: Welcome Home",
             "1 week after birth",
             "Welcome Home",
             "Buy now",
